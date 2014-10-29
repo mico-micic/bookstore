@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Cart {
 
-    private final List<BookOrder> bookOrders = new ArrayList();
+    private final List<BookOrder> bookOrders = new ArrayList<>();
 
     public void addBook(Book book) {
         BookOrder bookOrder = new BookOrder(book);
