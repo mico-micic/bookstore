@@ -1,6 +1,0 @@
-org/books/persistence/Book.class
-org/books/application/Bookstore.class
-org/books/application/BookNotFoundException.class
-org/books/presentation/EnumSearchResult.class
-org/books/presentation/CatalogBean.class
-org/books/application/XmlParser.class
