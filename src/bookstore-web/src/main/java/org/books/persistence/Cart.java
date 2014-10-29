@@ -5,6 +5,7 @@
  */
 package org.books.persistence;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @author Sigi
  */
-public class Cart {
+public class Cart implements Serializable {
 
     private final List<BookOrder> bookOrders = new ArrayList<>();
 
@@ -45,7 +46,7 @@ public class Cart {
         return totalPrice;
     }
 
-    private static class BookOrder {
+    private class BookOrder implements Serializable {
 
         private final Book book;
         private final AtomicInteger count;
