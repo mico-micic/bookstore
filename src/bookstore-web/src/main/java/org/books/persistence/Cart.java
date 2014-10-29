@@ -5,6 +5,7 @@
  */
 package org.books.persistence;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,14 +16,33 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Cart {
 
-    private final List<BookOrder> books = new ArrayList();
+    private final List<BookOrder> bookOrders = new ArrayList<>();
 
     public void addBook(Book book) {
-        books.add(new BookOrder(book));
+        BookOrder bookOrder = new BookOrder(book);
+        if (bookOrders.contains(bookOrder)) {
+            bookOrders.get(bookOrders.indexOf(bookOrder)).incrementCount();
+        } else {
+            bookOrders.add(bookOrder);
+        }
+    }
+
+    public List<BookOrder> getBookOrders() {
+        return bookOrders;
     }
 
     public int getBookCount() {
-        return books.size();
+        return bookOrders.size();
+    }
+
+    public BigDecimal getTotalPrice() {
+        BigDecimal totalPrice = new BigDecimal(0);
+        for (BookOrder bookOrder : bookOrders) {
+            BigDecimal bookOrderPrice = bookOrder.getBook().getPrice();
+            BigDecimal orderCount = new BigDecimal(bookOrder.getCount());
+            totalPrice = totalPrice.add(bookOrderPrice.multiply(orderCount));
+        }
+        return totalPrice;
     }
 
     private static class BookOrder {
@@ -72,9 +92,7 @@ public class Cart {
             }
             return true;
         }
-        
-        
-        
+
     }
 
 }
