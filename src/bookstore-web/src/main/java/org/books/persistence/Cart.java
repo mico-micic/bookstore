@@ -46,7 +46,7 @@ public class Cart implements Serializable {
         return totalPrice;
     }
 
-    private class BookOrder implements Serializable {
+    public class BookOrder implements Serializable {
 
         private final Book book;
         private final AtomicInteger count;
