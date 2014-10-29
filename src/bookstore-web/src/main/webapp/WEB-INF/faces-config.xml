@@ -26,6 +26,11 @@
             <from-outcome>SUCCEED</from-outcome>
             <to-view-id>/bookDetails.xhtml</to-view-id>
         </navigation-case>
+        <from-view-id>/catalogSearch.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>SHOW_CART</from-outcome>
+            <to-view-id>/cart.xhtml</to-view-id>
+        </navigation-case>
         <navigation-case>
             <from-action>#{catalogBean.searchBooks()}</from-action>
             <from-outcome>SUCCEED</from-outcome>
@@ -35,6 +40,11 @@
             <from-action>#{catalogBean.setBookSelection(book)}</from-action>
             <from-outcome>SUCCEED</from-outcome>
             <to-view-id>/bookDetails.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{catalogBean.addToCart(book)}</from-action>
+            <from-outcome>SUCCEED</from-outcome>
+            <to-view-id>#{view.viewId}</to-view-id>
         </navigation-case>
     </navigation-rule>
     
