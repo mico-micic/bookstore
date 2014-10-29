@@ -7,6 +7,7 @@ package org.books.persistence;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -49,6 +50,31 @@ public class Cart {
         public int decrementCount() {
             return count.decrementAndGet();
         }
+
+        @Override
+        public int hashCode() {
+            int hash = 3;
+            hash = 73 * hash + Objects.hashCode(this.book);
+            return hash;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            final BookOrder other = (BookOrder) obj;
+            if (!Objects.equals(this.book, other.book)) {
+                return false;
+            }
+            return true;
+        }
+        
+        
+        
     }
 
 }

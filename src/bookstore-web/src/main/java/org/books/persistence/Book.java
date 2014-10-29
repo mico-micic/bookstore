@@ -2,6 +2,7 @@ package org.books.persistence;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class Book implements Serializable {
 
@@ -92,6 +93,30 @@ public class Book implements Serializable {
 	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 67 * hash + Objects.hashCode(this.isbn);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Book other = (Book) obj;
+        if (!Objects.equals(this.isbn, other.isbn)) {
+            return false;
+        }
+        return true;
+    }
+        
+        
 
 	@Override
 	public String toString() {
