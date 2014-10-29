@@ -85,60 +85,58 @@ public class CatalogBean implements Serializable {
         return cart;
     }
 
-    public EnumSearchResult findBook() {
+    public EnumActionResult findBook() {
         
-        EnumSearchResult ret;
+        EnumActionResult ret;
         book = null;
         message = null;
         
         try {
             book = bookstore.findBook(isbn);
-            ret = EnumSearchResult.SUCCEED;
+            ret = EnumActionResult.SUCCEED;
             
         } catch (BookNotFoundException ex) {
             message = "Book not found!!";
-            ret = EnumSearchResult.FAIL;
+            ret = EnumActionResult.FAIL;
         }
         
         return ret;
     }
     
-    public EnumSearchResult searchBooks() {
+    public EnumActionResult searchBooks() {
         
-        EnumSearchResult ret;
+        EnumActionResult ret;
         message = null;
         books = null;
         
         books = this.bookstore.searchBooks(this.searchKey);
         
         if (books != null && books.size() > 0) {
-            ret = EnumSearchResult.SUCCEED;
+            ret = EnumActionResult.SUCCEED;
         } else {
             message = "Nothing found!";
-            ret = EnumSearchResult.FAIL;
+            ret = EnumActionResult.FAIL;
         }
 
         return ret;
     }
     
-    public EnumSearchResult setBookSelection(Book book) {
+    public EnumActionResult setBookSelection(Book book) {
         this.book = book;
-        return EnumSearchResult.SUCCEED;
+        return EnumActionResult.SUCCEED;
     }
     
-    public EnumSearchResult addToCart(Book book) {
+    public EnumActionResult addToCart(Book book) {
         if (cart == null) { cart = new Cart(); }
         cart.addBook(book);
-        return EnumSearchResult.SUCCEED;
+        return EnumActionResult.SUCCEED;
     }
     
     public int getBooksInCart() {
-        
         return cart == null ? 0 : cart.getBookCount();
     }
     
-    public EnumSearchResult showShoppingCart() {
-        
-        return EnumSearchResult.SUCCEED;
+    public EnumActionResult showShoppingCart() {  
+        return EnumActionResult.SUCCEED;
     }
 }

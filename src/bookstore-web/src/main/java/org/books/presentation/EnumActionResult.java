@@ -9,7 +9,7 @@ package org.books.presentation;
  *
  * @author micic
  */
-public enum EnumSearchResult {
+public enum EnumActionResult {
     
     SUCCEED, FAIL
 }
