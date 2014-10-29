@@ -16,6 +16,7 @@ import javax.inject.Named;
 import org.books.application.BookNotFoundException;
 import org.books.application.Bookstore;
 import org.books.persistence.Book;
+import org.books.persistence.Cart;
 
 /**
  *
@@ -28,6 +29,8 @@ public class CatalogBean implements Serializable {
     @Inject
     private Bookstore bookstore;
 
+    private Cart cart;
+    
     private String isbn;
     
     private String searchKey;
@@ -54,7 +57,6 @@ public class CatalogBean implements Serializable {
         this.books = books;
     }
     
-
     public Bookstore getBookstore() {
         return bookstore;
     }
@@ -77,6 +79,10 @@ public class CatalogBean implements Serializable {
 
     public String getMessage() {
         return message;
+    }
+    
+    public Cart getCart() {
+        return cart;
     }
 
     public EnumSearchResult findBook() {
@@ -117,6 +123,22 @@ public class CatalogBean implements Serializable {
     
     public EnumSearchResult setBookSelection(Book book) {
         this.book = book;
+        return EnumSearchResult.SUCCEED;
+    }
+    
+    public EnumSearchResult addToCart(Book book) {
+        if (cart == null) { cart = new Cart(); }
+        cart.addBook(book);
+        return EnumSearchResult.SUCCEED;
+    }
+    
+    public int getBooksInCart() {
+        
+        return cart == null ? 0 : cart.getBookCount();
+    }
+    
+    public EnumSearchResult showShoppingCart() {
+        
         return EnumSearchResult.SUCCEED;
     }
 }

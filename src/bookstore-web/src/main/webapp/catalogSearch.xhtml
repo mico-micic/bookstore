@@ -11,6 +11,10 @@
         
         <h:outputText value="Book Search" class="heading" />
         
+        <h:form id="shoppingCartForm" >
+            <h:commandLink value="Shopping cart (#{catalogBean.booksInCart})" action="SHOW_CART" />
+        </h:form>
+        
         <h:form id="main" >
             <h:outputLabel for="isbn" value="ISBN:" />
             <h:panelGrid columns="2" class="searchGrid" >
@@ -36,6 +40,10 @@
             <h:column>
                 <f:facet name="header"><h:outputText value="Price"></h:outputText></f:facet>
                 <h:outputText value="#{book.price}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value=""></h:outputText></f:facet>
+                <h:commandLink value="Add to cart" action="#{catalogBean.addToCart(book)}" />
             </h:column>
         </h:dataTable>
         </h:form>
