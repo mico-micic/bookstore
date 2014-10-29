@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>ISBN Search</title>
+        <h:outputStylesheet name="styles.css" />
+    </h:head>
+    <h:body>
+        
+        <h:outputText value="Book Details" class="heading" />
+
+        <h:panelGrid columns="2" rendered="#{not empty catalogBean.book}" class="resultTable">
+            <h:outputText value="ISBN:" />
+            <h:outputText value="#{catalogBean.book.isbn}" />
+            
+            <h:outputText value="Title:" />
+            <h:outputText value="#{catalogBean.book.title}" />
+            
+            <h:outputText value="Price:" />
+            <h:outputText value="#{catalogBean.book.price}" />
+            
+            <h:outputText value="Pages:" />
+            <h:outputText value="#{catalogBean.book.numberOfPages}" />
+            
+            <h:outputText value="Authors:" />
+            <h:outputText value="#{catalogBean.book.authors}" />
+            
+            <h:outputText value="Publishers:" />
+            <h:outputText value="#{catalogBean.book.publisher}" />
+            
+            <h:outputText value="Binding:" />
+            <h:outputText value="#{catalogBean.book.binding}" />
+        </h:panelGrid>
+        
+        <h:form>
+            <h:commandLink value="&lt; Back" action="HOME" />
+        </h:form>
+        
+    </h:body>
+</html>
+
