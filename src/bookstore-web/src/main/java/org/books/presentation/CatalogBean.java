@@ -7,9 +7,6 @@ package org.books.presentation;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -94,7 +91,6 @@ public class CatalogBean implements Serializable {
         try {
             book = bookstore.findBook(isbn);
             ret = EnumActionResult.SUCCEED;
-            
         } catch (BookNotFoundException ex) {
             message = "Book not found!!";
             ret = EnumActionResult.FAIL;
