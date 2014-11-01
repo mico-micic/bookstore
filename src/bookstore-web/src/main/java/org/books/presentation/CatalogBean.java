@@ -92,7 +92,6 @@ public class CatalogBean implements Serializable {
             book = bookstore.findBook(isbn);
             ret = EnumActionResult.SUCCEED;
         } catch (BookNotFoundException ex) {
-            message = "Book not found!!";
             ret = EnumActionResult.FAIL;
         }
         
@@ -110,7 +109,7 @@ public class CatalogBean implements Serializable {
         if (books != null && books.size() > 0) {
             ret = EnumActionResult.SUCCEED;
         } else {
-            message = "Nothing found!";
+            message = "Sorry, nothing found!";
             ret = EnumActionResult.FAIL;
         }
 

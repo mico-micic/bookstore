@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition>
+
+            <div class="searchform">
+                <span class="searchBoxText"><h:outputText value="Free text search:" /></span>
+                <h:form id="freeSearch" styleClass="formsearch">
+                    <span>
+                        <h:inputText id="searchKey" value="#{catalogBean.searchKey}" class="editbox_search" maxlength="20" />
+                    </span>
+                    <h:commandButton action="#{catalogBean.searchBooks()}" styleClass="button_search" image="#{resource['default:img/search_btn.gif']}" />
+                </h:form>
+                <span class="searchBoxText"><h:outputText value="ISBN search:" /></span>
+                <h:form id="isbnSearch" styleClass="formsearch">
+                    <span>
+                        <h:inputText id="isbn" value="#{catalogBean.isbn}" class="editbox_search" maxlength="20" />
+                    </span>
+                    <h:commandButton action="#{catalogBean.findBook()}" styleClass="button_search" image="#{resource['default:img/search_btn.gif']}" />
+                </h:form>
+            </div>
+
+            <div class="gadget">
+                <h2 class="star">Shopping cart <h:outputText value="(${catalogBean.cart.bookCount})" rendered="#{not empty catalogBean.cart.bookOrders}"/></h2>
+                <div class="clr"></div>
+                <h:dataTable id="shoppingCartGadgetTable" value="#{catalogBean.cart.bookOrders}" var="bookOrder" rendered="#{not empty catalogBean.cart.bookOrders}" 
+                             styleClass="shoppingCartGadgetTable" columnClasses="shoppingCartGadgetTableNameCol,,shoppingCartTablePriceCol">
+                    <h:column>
+                        <h:outputText value="#{bookOrder.book.title}" />
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="#{bookOrder.count} Pcs." />
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="#{bookOrder.book.price}" />
+                    </h:column>
+                </h:dataTable>
+                
+                <h:dataTable id="shoppingCartGadgetTableTotal" value="#{catalogBean.cart}" var="cart" rendered="#{not empty catalogBean.cart.bookOrders}" 
+                             styleClass="shoppingCartGadgetTable shoppingCartTableTotal" columnClasses="shoppingCartGadgetTableNameCol,,shoppingCartTablePriceCol">
+                    <h:column>
+                        <h:outputText value="Total" />
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="" />
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="#{cart.totalPrice}" />
+                    </h:column>
+                </h:dataTable>
+                
+                <h:outputText value="Your shopping cart is empty :(" rendered="#{empty catalogBean.cart.bookOrders}" />
+                
+                <p style="text-align: right; width: 100%;">
+                    <h:outputLink value="cart.xhtml" rendered="#{not empty catalogBean.cart.bookOrders}"><h:outputText value="To shopping cart..." /></h:outputLink>
+                </p>
+            </div>
+
+            <div class="gadget">
+                <h2 class="star">Your profile</h2>
+                <div class="clr"></div>
+                <p>Name: Hans Muster</p>
+                <p>Address: Musterstr. 6, Musterhausen</p>
+                <a href="#">Edit...</a>
+            </div>
+
+<!--            <div class="gadget">
+                <h2 class="star"><span>Sidebar</span> Menu</h2>
+                <div class="clr"></div>
+                <ul class="sb_menu">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">TemplateInfo</a></li>
+                    <li><a href="#">Style Demo</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Archives</a></li>
+                </ul>
+            </div>
+
+            <div class="gadget">
+                <h2 class="star"><span>Other Links</span></h2>
+                <div class="clr"></div>
+                <ul class="ex_menu">
+                    <li><a href="#">Lorem ipsum dolor</a><br />
+                        Donec libero. Suspendisse bibendum</li>
+                    <li><a href="#">Dui pede condimentum</a><br />
+                        Phasellus suscipit, leo a pharetra</li>
+                    <li><a href="#">Condimentum lorem</a><br />
+                        Tellus eleifend magna eget</li>
+                </ul>
+            </div>-->
+
+        </ui:composition>
+
+    </body>
+</html>

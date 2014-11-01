@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:body>
+
+        <ui:composition template="template/default/defaultLayout.xhtml">
+
+            <ui:define name="mainbar">
+
+                <h:panelGroup layout="block" styleClass="article" rendered="#{not empty catalogBean.book}" >
+                    <h2><h:outputText value="Book &quot;#{catalogBean.book.title}&quot;" /></h2>
+                    <div class="clr"></div>
+
+                    <h:panelGrid columns="2" styleClass="bookDetails">
+                        <h:outputText value="ISBN:" />
+                        <h:outputText value="#{catalogBean.book.isbn}" />
+
+                        <h:outputText value="Title:" />
+                        <h:outputText value="#{catalogBean.book.title}" />
+
+                        <h:outputText value="Price:" />
+                        <h:outputText value="#{catalogBean.book.price}" />
+
+                        <h:outputText value="Pages:" />
+                        <h:outputText value="#{catalogBean.book.numberOfPages}" />
+
+                        <h:outputText value="Authors:" />
+                        <h:outputText value="#{catalogBean.book.authors}" />
+
+                        <h:outputText value="Publishers:" />
+                        <h:outputText value="#{catalogBean.book.publisher}" />
+
+                        <h:outputText value="Binding:" />
+                        <h:outputText value="#{catalogBean.book.binding}" />
+                    </h:panelGrid>
+                </h:panelGroup>
+
+                <h:panelGroup layout="block" styleClass="article" rendered="#{empty catalogBean.book}">
+                    <h2><h:outputText value="Sorry, book with ISBN &quot;#{catalogBean.isbn}&quot; not found!" /></h2>
+                    <div class="clr"></div>
+                </h:panelGroup>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+</html>
