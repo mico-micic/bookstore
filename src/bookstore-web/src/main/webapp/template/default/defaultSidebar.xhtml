@@ -16,46 +16,20 @@ and open the template in the editor.
 
             <ui:insert name="searchGadget" >
                 <div class="searchform">
-                    <ui:include src="/components/searchComponent.xhtml" >
+                    <ui:include src="/components/searchComp.xhtml" >
                         <ui:param name="idPrefix" value="searchGadget" />
                     </ui:include>
                 </div>
             </ui:insert>
 
             <div class="gadget">
-                <h2 class="star">Shopping cart <h:outputText value="(${catalogBean.cart.bookCount})" rendered="#{not empty catalogBean.cart.bookOrders}"/></h2>
-                <div class="clr"></div>
-                <h:dataTable id="shoppingCartGadgetTable" value="#{catalogBean.cart.bookOrders}" var="bookOrder" rendered="#{not empty catalogBean.cart.bookOrders}" 
-                             styleClass="shoppingCartGadgetTable" columnClasses="shoppingCartGadgetTableNameCol,,shoppingCartTablePriceCol">
-                    <h:column>
-                        <h:outputText value="#{bookOrder.book.title}" />
-                    </h:column>
-                    <h:column>
-                        <h:outputText value="#{bookOrder.count} Pcs." />
-                    </h:column>
-                    <h:column>
-                        <h:outputText value="#{bookOrder.book.price}" />
-                    </h:column>
-                </h:dataTable>
 
-                <h:dataTable id="shoppingCartGadgetTableTotal" value="#{catalogBean.cart}" var="cart" rendered="#{not empty catalogBean.cart.bookOrders}" 
-                             styleClass="shoppingCartGadgetTable shoppingCartTableTotal" columnClasses="shoppingCartGadgetTableNameCol,,shoppingCartTablePriceCol">
-                    <h:column>
-                        <h:outputText value="Total" />
-                    </h:column>
-                    <h:column>
-                        <h:outputText value="" />
-                    </h:column>
-                    <h:column>
-                        <h:outputText value="#{cart.totalPrice}" />
-                    </h:column>
-                </h:dataTable>
-
-                <h:outputText value="Your shopping cart is empty :(" rendered="#{empty catalogBean.cart.bookOrders}" />
-
-                <p style="text-align: right; width: 100%;">
-                    <h:outputLink value="cart.xhtml" rendered="#{not empty catalogBean.cart.bookOrders}"><h:outputText value="To shopping cart..." /></h:outputLink>
-                </p>
+                <ui:insert name="searchGadget" >
+                    <div class="searchform">
+                        <ui:include src="/components/cartGadgetComp.xhtml" />
+                    </div>
+                </ui:insert>
+                
             </div>
 
             <div class="gadget">

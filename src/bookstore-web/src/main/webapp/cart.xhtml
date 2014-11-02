@@ -21,11 +21,11 @@ and open the template in the editor.
                     <div class="clr"></div>
 
                     <h:form>
-                        <h:dataTable id="shoppingCartTable" value="#{catalogBean.cart.bookOrders}" var="bookOrder" rendered="#{not empty catalogBean.cart.bookOrders}" 
+                        <h:dataTable id="shoppingCartTable" value="#{cartBean.cart.bookOrders}" var="bookOrder" rendered="#{not empty cartBean.cart.bookOrders}" 
                                      styleClass="shoppingCartTable" columnClasses="shoppingCartTableRemoveCol,,,shoppingCartTablePriceCol">
                             <h:column>
                                 <f:facet name="header" />
-                                <h:commandButton alt="Remove" action="#{catalogBean.cart.remove(bookOrder)}" image="#{resource['default:img/remove.gif']}" />
+                                <h:commandButton alt="Remove" action="#{cartBean.cart.remove(bookOrder)}" image="#{resource['default:img/remove.gif']}" />
                             </h:column>
                             <h:column>
                                 <f:facet name="header"><h:outputText value="Name"></h:outputText></f:facet>
@@ -45,7 +45,7 @@ and open the template in the editor.
                         </h:dataTable>
                     </h:form>
 
-                    <h:dataTable id="shoppingCartTable" value="#{catalogBean.cart}" var="cart" rendered="#{not empty catalogBean.cart.bookOrders}" 
+                    <h:dataTable id="shoppingCartTable" value="#{cartBean.cart}" var="cart" rendered="#{not empty cartBean.cart.bookOrders}" 
                                  styleClass="shoppingCartTable shoppingCartTableTotal" columnClasses="shoppingCartTableRemoveCol,,,shoppingCartTablePriceCol  ">
                         <h:column>
                             <h:outputText value="&nbsp;" />
