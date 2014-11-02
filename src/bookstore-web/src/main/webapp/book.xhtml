@@ -43,6 +43,14 @@ and open the template in the editor.
                         <h:outputText value="Binding:" />
                         <h:outputText value="#{catalogBean.book.binding}" />
                     </h:panelGrid>
+                    <br/>
+                    <h:form>
+                        <h:commandButton alt="Add to cart" action="#{catalogBean.addToCart(catalogBean.book)}" image="#{resource['default:img/add_to_cart.png']}" />
+                    </h:form>
+                    <br/>
+                    <h:form>
+                        <h:commandLink value="Back..." action="#{catalogBean.navigateBack}" />
+                    </h:form>
                 </h:panelGroup>
 
                 <h:panelGroup layout="block" styleClass="article" rendered="#{empty catalogBean.book}">

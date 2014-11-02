@@ -402,6 +402,11 @@ tbody tr:hover, tbody tr:nth-child(even):hover  {
     background-color: #E3F3FA;
 }
 
+.shoppingCartTableRemoveCol {
+    text-align: center;
+    width: 20px;
+}
+
 .shoppingCartGadgetTableNameCol {
     width: 160px;
 }

@@ -38,6 +38,8 @@ public class CatalogBean implements Serializable {
     
     private String message;
     
+    private EnumActionResult wayBack;
+    
     public String getSearchKey() {
         return searchKey;
     }
@@ -116,9 +118,10 @@ public class CatalogBean implements Serializable {
         return ret;
     }
     
-    public EnumActionResult setBookSelection(Book book) {
+    public EnumActionResult setBookSelection(Book book, String wayBack) {
+        this.wayBack = EnumActionResult.valueOf(wayBack);
         this.book = book;
-        return EnumActionResult.SUCCEED;
+        return EnumActionResult.BOOK;
     }
     
     public EnumActionResult addToCart(Book book) {
@@ -134,4 +137,12 @@ public class CatalogBean implements Serializable {
     public EnumActionResult showShoppingCart() {  
         return EnumActionResult.SUCCEED;
     }
+    
+    public EnumActionResult navigateBack() {
+        if(wayBack == null) {
+            return EnumActionResult.HOME;
+        }
+        return wayBack;
+    }
+    
 }
