@@ -344,6 +344,9 @@ ol li .send {
     float:right;
     margin-bottom: 20px;
 }
+.searchpage {
+    float:left;
+}
 .formsearch {
     margin:0;
     //height:36px;

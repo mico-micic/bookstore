@@ -12,11 +12,19 @@ and open the template in the editor.
     <h:body>
 
         <ui:composition template="template/default/defaultLayout.xhtml">
+            <ui:define name="mainbar">
+                <div class="article">
+                    <h2>Search</h2>
+                    <div class="clr"></div>
 
-            <ui:insert name="searchGadget" >
-                <ui:include src="/components/searchComponent.xhtml" />
-            </ui:insert>
+                    <div class="searchpage">
+                        <ui:include src="/components/searchComponent.xhtml" >
+                            <ui:param name="idPrefix" value="searchPage" />
+                        </ui:include>
+                    </div>
 
+                </div>
+            </ui:define>
         </ui:composition>
 
     </h:body>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition>
+
+            <span class="searchBoxText"><h:outputText value="Free text search:" /></span>
+            <h:form id="#{idPrefix}_freeSearch" styleClass="formsearch">
+                <span>
+                    <h:inputText id="searchKey" value="#{catalogBean.searchKey}" class="editbox_search" maxlength="20" />
+                </span>
+                <h:commandButton action="#{catalogBean.searchBooks()}" styleClass="button_search" image="#{resource['default:img/search_btn.gif']}" />
+            </h:form>
+            <span class="searchBoxText"><h:outputText value="ISBN search:" /></span>
+            <h:form id="#{idPrefix}_isbnSearch" styleClass="formsearch">
+                <span>
+                    <h:inputText id="isbn" value="#{catalogBean.isbn}" class="editbox_search" maxlength="20" />
+                </span>
+                <h:commandButton action="#{catalogBean.findBook()}" styleClass="button_search" image="#{resource['default:img/search_btn.gif']}" />
+            </h:form>
+
+        </ui:composition>
+
+    </body>
+</html>
