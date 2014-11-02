@@ -32,6 +32,7 @@ h1 {
     font:normal 48px/1.2em Arial, Helvetica, sans-serif;
     letter-spacing:-4px;
     text-transform:uppercase;
+    font-weight: bold;
 }
 h1 a, h1 a:hover {
     color:#bbb;
@@ -43,6 +44,9 @@ h1 small {
     color:#fff;
     letter-spacing:normal;
     background-color:#62bee3;
+}
+.h1-inner {
+    font-weight: normal;
 }
 h2 {
     font:normal 24px/1.5em Arial, Helvetica, sans-serif;
