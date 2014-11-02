@@ -22,14 +22,21 @@ and open the template in the editor.
 
                     <h:form>
                         <h:dataTable id="shoppingCartTable" value="#{catalogBean.cart.bookOrders}" var="bookOrder" rendered="#{not empty catalogBean.cart.bookOrders}" 
-                                     styleClass="shoppingCartTable" columnClasses=",,shoppingCartTablePriceCol">
+                                     styleClass="shoppingCartTable" columnClasses="shoppingCartTableRemoveCol,,,shoppingCartTablePriceCol">
+                            <h:column>
+                                <f:facet name="header" />
+                                <h:commandButton alt="Remove" action="#{catalogBean.cart.remove(bookOrder)}" image="#{resource['default:img/remove.gif']}" />
+                            </h:column>
                             <h:column>
                                 <f:facet name="header"><h:outputText value="Name"></h:outputText></f:facet>
-                                <h:commandLink value="#{bookOrder.book.title}" action="#{catalogBean.setBookSelection(bookOrder.book)}" />
+                                <h:commandLink value="#{bookOrder.book.title}" action="#{catalogBean.setBookSelection(bookOrder.book, 'CART')}" />
                             </h:column>
                             <h:column>
                                 <f:facet name="header"><h:outputText value="Pcs."></h:outputText></f:facet>
                                 <h:outputText value="#{bookOrder.count}" />
+                                &nbsp;
+                                <h:commandButton alt="Increment" action="#{bookOrder.incrementCount()}" image="#{resource['default:img/plus.gif']}" />
+                                <h:commandButton alt="Decrement" action="#{bookOrder.decrementCount()}" image="#{resource['default:img/minus.gif']}" />
                             </h:column>
                             <h:column>
                                 <f:facet name="header"><h:outputText value="Price"></h:outputText></f:facet>
@@ -39,7 +46,10 @@ and open the template in the editor.
                     </h:form>
 
                     <h:dataTable id="shoppingCartTable" value="#{catalogBean.cart}" var="cart" rendered="#{not empty catalogBean.cart.bookOrders}" 
-                                 styleClass="shoppingCartTable shoppingCartTableTotal" columnClasses=",,shoppingCartTablePriceCol">
+                                 styleClass="shoppingCartTable shoppingCartTableTotal" columnClasses="shoppingCartTableRemoveCol,,,shoppingCartTablePriceCol  ">
+                        <h:column>
+                            <h:outputText value="&nbsp;" />
+                        </h:column>
                         <h:column>
                             <h:outputText value="Total" />
                         </h:column>
@@ -50,7 +60,11 @@ and open the template in the editor.
                             <h:outputText value="#{cart.totalPrice}" />
                         </h:column>
                     </h:dataTable>
-
+                    
+                    <br/>
+                    <h:form>
+                        <h:commandLink value="Checkout [TODO]" action="TODO"/>
+                    </h:form>
                 </div>
             </ui:define>
 
