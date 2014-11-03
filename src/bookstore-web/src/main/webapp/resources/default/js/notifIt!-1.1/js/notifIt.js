@@ -33,7 +33,7 @@ function notif(config) {
         height = defaults.height;
     }
 
-    var div = "<div id='ui_notifIt'><p>" + defaults.msg + "</p></div>";
+    var div = "<div id='ui_notifIt'>" + defaults.msg + "</div>";
     $("#ui_notifIt").remove();
     clearInterval(to);
     $("body").append(div);
@@ -55,19 +55,19 @@ function notif(config) {
 
     switch (defaults.type) {
         case "error":
-            $("#ui_notifIt").addClass("error");
+            $("#ui_notifIt").addClass("notif_error");
             break;
         case "success":
-            $("#ui_notifIt").addClass("success");
+            $("#ui_notifIt").addClass("notif_success");
             break;
         case "info":
-            $("#ui_notifIt").addClass("info");
+            $("#ui_notifIt").addClass("notif_info");
             break;
         case "warning":
-            $("#ui_notifIt").addClass("warning");
+            $("#ui_notifIt").addClass("notif_warning");
             break;
         default:
-            $("#ui_notifIt").addClass("default");
+            $("#ui_notifIt").addClass("notif_default");
             break;
     }
 
