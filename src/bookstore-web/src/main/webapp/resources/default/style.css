@@ -376,46 +376,52 @@ ol li .send {
     border:none;
     float:left;
 }
-
 .searchBoxText {
     float: left;
 }
-
 table th {
     padding-left: 2px;
     text-align: left;
     background-color: #E5E5E5;
 }
-
 .searchResultTable, .shoppingCartTable, .shoppingCartGadgetTable {
     width: 100%;
 }
-
 .searchResultTable .searchResultTableAddToCartCol {
     text-align: center;
 }
-
 tbody tr:nth-child(even) {
     background-color: #F2F1F1;
 }
-
 tbody tr:hover, tbody tr:nth-child(even):hover  {
     background-color: #E3F3FA;
 }
-
 .shoppingCartTableRemoveCol {
     text-align: center;
     width: 20px;
 }
-
 .shoppingCartGadgetTableNameCol {
     width: 160px;
 }
-
 .shoppingCartTablePriceCol {
     text-align: right;
 }
-
 .shoppingCartTableTotal {
     font-weight: bold;
+}
+.elementMessage {
+    position: relative;
+    left: -10px;
+    top: 20px;
+    visibility: hidden;
+    width: 0px;
+    height: 0px;
+}
+.toast-bottom-full-width {
+    margin-bottom: 20px;
+    width: 100%;
+}
+#toast-container.toast-bottom-full-width>div{
+    width: 75%;
+    margin: auto;
 }

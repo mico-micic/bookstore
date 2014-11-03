@@ -13,14 +13,16 @@ and open the template in the editor.
     <span class="searchBoxText"><h:outputText value="#{texts.freeTextSearch}" /></span>
     <h:form id="#{idPrefix}_freeSearch" styleClass="formsearch">
         <span>
-            <h:inputText id="searchKey" value="#{catalogBean.searchKey}" required="true" class="editbox_search" maxlength="20" />
+            <h:inputText id="searchKey" value="#{catalogBean.searchKey}" required="true" requiredMessage="#{texts.pleaseEnterSearchText}" class="editbox_search" maxlength="20" />
+            <h:message for="searchKey" styleClass="elementMessage" />
         </span>
         <h:commandButton action="#{catalogBean.searchBooks()}" styleClass="button_search" image="#{resource['default:img/search_btn.gif']}" />
     </h:form>
     <span class="searchBoxText"><h:outputText value="#{texts.isbnSearch}" /></span>
     <h:form id="#{idPrefix}_isbnSearch" styleClass="formsearch">
         <span>
-            <h:inputText id="isbn" value="#{catalogBean.isbn}" class="editbox_search" maxlength="20" />
+            <h:inputText id="isbn" value="#{catalogBean.isbn}" required="true" requiredMessage="#{texts.pleaseEnterIsbn}" class="editbox_search" maxlength="20" />
+            <h:message for="isbn" styleClass="elementMessage" />
         </span>
         <h:commandButton action="#{catalogBean.findBook()}" styleClass="button_search" image="#{resource['default:img/search_btn.gif']}" />
     </h:form>

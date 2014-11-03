@@ -11,14 +11,17 @@ and open the template in the editor.
 
     <h:head>
         <title>Bookstore</title>
+        <h:outputStylesheet library="default" name="js/qtip/jquery.qtip.min.css" />
+        <h:outputStylesheet library="default" name="js/toastr.min.css" />
         <h:outputStylesheet library="default" name="style.css" />
         <h:outputScript library="default" name="js/cufon-yui.js" />
         <h:outputScript library="default" name="js/arial.js" />
         <h:outputScript library="default" name="js/cuf_run.js" />
         <h:outputScript library="default" name="js/jquery-2.1.1.min.js" />
         <h:outputScript library="default" name="js/radius.js" />
-        <h:outputScript library="default" name="js/notifIt!-1.1/js/notifIt.js" />
-        <h:outputStylesheet library="default" name="js/notifIt!-1.1/css/notifIt.css" />
+        <h:outputScript library="default" name="js/qtip/jquery.qtip.min.js" />
+        <h:outputScript library="default" name="js/toastr.min.js" />
+
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     </h:head>
 
@@ -51,22 +54,64 @@ and open the template in the editor.
             </div>
         </div>
 
-        <div id="msgs" style="visibility: hidden;">
-            <h:messages globalOnly="true" />
+        <div id="globalMessages" style="visibility: hidden;">
+            <h:messages globalOnly="true" errorClass="globalMsgErr" infoClass="globalMsgInfo" fatalClass="globalMsgErr" warnClass="globalMsgWarn" />
         </div>
-        
+
         <script>
-            
-            var msg = $("#msgs").html().trim();
-            if (msg !== "") {
-                notif({
-                    type: "error",
-                    msg:  $("#msgs").html(),
-                    position: "bottom",
-                    width: 600,
-                    timeout: 5000
-                });
+
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "positionClass": "toast-bottom-full-width",
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "15000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
             }
+
+            // Grap global message elements to show global notification
+            $('#globalMessages').find('.globalMsgErr').each(function () {
+                showGlobalMessage(toastr, 'error', $(this).html().trim())
+            });
+
+            $('#globalMessages').find('.globalMsgInfo').each(function () {
+                showGlobalMessage(toastr, 'info', $(this).html().trim())
+            });
+
+            $('#globalMessages').find('.globalMsgWarn').each(function () {
+                showGlobalMessage(toastr, 'warn', $(this).html().trim())
+            });
+
+            function showGlobalMessage(toastr, type, html) {
+                if (html !== "") {
+                    if (type === "info") {
+                        toastr.info(html);
+                    } else if (type === "error") {
+                        toastr.error(html);
+                    } else if (type === "warn") {
+                        toastr.warning(html);
+                    }
+                }
+            }
+
+            // Grab element message elements to apply the tooltip to
+            $('.elementMessage').qtip({
+                content: {
+                    text: $('.elementMessage').html()
+                },
+                style: {
+                    classes: 'qtip-red'
+                },
+                show: {
+                    ready: true
+                }
+            })
 
         </script>
 
