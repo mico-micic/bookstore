@@ -6,69 +6,65 @@ and open the template in the editor.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"   
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="template/default/defaultTemplate.xhtml" 
+                xmlns="http://www.w3.org/1999/xhtml"   
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <h:body>
+    <ui:define name="mainbar">
+        
+        <div class="article">
+            <h2>Your shopping cart</h2>
+            <div class="clr"></div>
 
-        <ui:composition template="template/default/defaultLayout.xhtml">
+            <h:form>
+                <h:dataTable id="shoppingCartTable" value="#{cartBean.cart.bookOrders}" var="bookOrder" rendered="#{not empty cartBean.cart.bookOrders}" 
+                             styleClass="shoppingCartTable" columnClasses="shoppingCartTableRemoveCol,,,shoppingCartTablePriceCol">
+                    <h:column>
+                        <f:facet name="header" />
+                        <h:commandButton alt="Remove" action="#{cartBean.cart.remove(bookOrder)}" image="#{resource['default:img/remove.gif']}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Name"></h:outputText></f:facet>
+                        <h:commandLink value="#{bookOrder.book.title}" action="#{catalogBean.setBookSelection(bookOrder.book, 'CART')}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Pcs."></h:outputText></f:facet>
+                        <h:outputText value="#{bookOrder.count}" />
+                        &nbsp;
+                        <h:commandButton alt="Increment" action="#{bookOrder.incrementCount()}" image="#{resource['default:img/plus.gif']}" />
+                        <h:commandButton alt="Decrement" action="#{bookOrder.decrementCount()}" image="#{resource['default:img/minus.gif']}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Price"></h:outputText></f:facet>
+                        <h:outputText value="#{bookOrder.book.price}" />
+                    </h:column>
+                </h:dataTable>
+            </h:form>
 
-            <ui:define name="mainbar">
-                <div class="article">
-                    <h2>Your shopping cart</h2>
-                    <div class="clr"></div>
+            <h:dataTable id="shoppingCartTable" value="#{cartBean.cart}" var="cart" rendered="#{not empty cartBean.cart.bookOrders}" 
+                         styleClass="shoppingCartTable shoppingCartTableTotal" columnClasses="shoppingCartTableRemoveCol,,,shoppingCartTablePriceCol  ">
+                <h:column>
+                    <h:outputText value="&nbsp;" />
+                </h:column>
+                <h:column>
+                    <h:outputText value="Total" />
+                </h:column>
+                <h:column>
+                    <h:outputText value="" />
+                </h:column>
+                <h:column>
+                    <h:outputText value="#{cart.totalPrice}" />
+                </h:column>
+            </h:dataTable>
 
-                    <h:form>
-                        <h:dataTable id="shoppingCartTable" value="#{cartBean.cart.bookOrders}" var="bookOrder" rendered="#{not empty cartBean.cart.bookOrders}" 
-                                     styleClass="shoppingCartTable" columnClasses="shoppingCartTableRemoveCol,,,shoppingCartTablePriceCol">
-                            <h:column>
-                                <f:facet name="header" />
-                                <h:commandButton alt="Remove" action="#{cartBean.cart.remove(bookOrder)}" image="#{resource['default:img/remove.gif']}" />
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header"><h:outputText value="Name"></h:outputText></f:facet>
-                                <h:commandLink value="#{bookOrder.book.title}" action="#{catalogBean.setBookSelection(bookOrder.book, 'CART')}" />
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header"><h:outputText value="Pcs."></h:outputText></f:facet>
-                                <h:outputText value="#{bookOrder.count}" />
-                                &nbsp;
-                                <h:commandButton alt="Increment" action="#{bookOrder.incrementCount()}" image="#{resource['default:img/plus.gif']}" />
-                                <h:commandButton alt="Decrement" action="#{bookOrder.decrementCount()}" image="#{resource['default:img/minus.gif']}" />
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header"><h:outputText value="Price"></h:outputText></f:facet>
-                                <h:outputText value="#{bookOrder.book.price}" />
-                            </h:column>
-                        </h:dataTable>
-                    </h:form>
+            <br/>
+            <h:form>
+                <h:commandLink value="Checkout [TODO]" action="TODO"/>
+            </h:form>
+        </div>
+        
+    </ui:define>
 
-                    <h:dataTable id="shoppingCartTable" value="#{cartBean.cart}" var="cart" rendered="#{not empty cartBean.cart.bookOrders}" 
-                                 styleClass="shoppingCartTable shoppingCartTableTotal" columnClasses="shoppingCartTableRemoveCol,,,shoppingCartTablePriceCol  ">
-                        <h:column>
-                            <h:outputText value="&nbsp;" />
-                        </h:column>
-                        <h:column>
-                            <h:outputText value="Total" />
-                        </h:column>
-                        <h:column>
-                            <h:outputText value="" />
-                        </h:column>
-                        <h:column>
-                            <h:outputText value="#{cart.totalPrice}" />
-                        </h:column>
-                    </h:dataTable>
-                    
-                    <br/>
-                    <h:form>
-                        <h:commandLink value="Checkout [TODO]" action="TODO"/>
-                    </h:form>
-                </div>
-            </ui:define>
-
-        </ui:composition>
-
-    </h:body>
-</html>
+</ui:composition>

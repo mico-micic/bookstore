@@ -5,31 +5,23 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"   
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"   
+                xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <body>
+    <div class="header_resize">
+        <div class="logo">
+            <h1><a href="index.xhtml">Book<span class="h1-inner">store</span></a> <small>by Simi and Michi</small></h1>
+        </div>
+        <div class="menu_nav">
+            <ul>
+                <li class="active"><a href="index.xhtml">Shop</a></li>
+                <li><a href="search.xhtml">Search</a></li>
+                <li><a href="profile.xhtml">My Profile</a></li>
+                <li><a href="help.xhtml">Help</a></li>
+                <li><a href="contact.xhtml">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="clr"></div>
+    </div>
 
-        <ui:composition>
-
-            <div class="header_resize">
-                <div class="logo">
-                    <h1><a href="index.xhtml">Book<span class="h1-inner">store</span></a> <small>by Simi and Michi</small></h1>
-                </div>
-                <div class="menu_nav">
-                    <ul>
-                        <li class="active"><a href="index.xhtml">Shop</a></li>
-                        <li><a href="search.xhtml">Search</a></li>
-                        <li><a href="profile.xhtml">My Profile</a></li>
-                        <li><a href="help.xhtml">Help</a></li>
-                        <li><a href="contact.xhtml">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="clr"></div>
-            </div>
-
-        </ui:composition>
-
-    </body>
-</html>
+</ui:composition>

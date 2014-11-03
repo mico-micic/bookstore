@@ -6,44 +6,40 @@ and open the template in the editor.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"   
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="template/default/defaultTemplate.xhtml" 
+                xmlns="http://www.w3.org/1999/xhtml"   
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <h:body>
+    <ui:define name="mainbar">
+        
+        <div class="article">
+            <h2>Search results</h2>
+            <div class="clr"></div>
 
-        <ui:composition template="template/default/defaultLayout.xhtml">
+            <h:form>
+                <h:dataTable id="searchResultsTable" styleClass="searchResultTable" value="#{catalogBean.books}" var="book" rendered="#{not empty catalogBean.books}" 
+                             columnClasses=",,searchResultTableAddToCartCol">
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Name"></h:outputText></f:facet>
+                        <h:commandLink value="#{book.title}" action="#{catalogBean.setBookSelection(book, 'RESULTS')}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Price"></h:outputText></f:facet>
+                        <h:outputText value="#{book.price}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value=""></h:outputText></f:facet>
+                        <h:commandButton alt="Add to cart" action="#{cartBean.addToCart(book)}" image="#{resource['default:img/add_to_cart.png']}" />
+                    </h:column>
+                </h:dataTable>
+            </h:form>
 
-            <ui:define name="mainbar">
-                <div class="article">
-                    <h2>Search results</h2>
-                    <div class="clr"></div>
+            <h:outputText value="#{catalogBean.message}" rendered="#{not empty catalogBean.message}" class="error" />
 
-                    <h:form>
-                        <h:dataTable id="searchResultsTable" styleClass="searchResultTable" value="#{catalogBean.books}" var="book" rendered="#{not empty catalogBean.books}" 
-                                     columnClasses=",,searchResultTableAddToCartCol">
-                            <h:column>
-                                <f:facet name="header"><h:outputText value="Name"></h:outputText></f:facet>
-                                <h:commandLink value="#{book.title}" action="#{catalogBean.setBookSelection(book, 'RESULTS')}" />
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header"><h:outputText value="Price"></h:outputText></f:facet>
-                                <h:outputText value="#{book.price}" />
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header"><h:outputText value=""></h:outputText></f:facet>
-                                <h:commandButton alt="Add to cart" action="#{cartBean.addToCart(book)}" image="#{resource['default:img/add_to_cart.png']}" />
-                            </h:column>
-                        </h:dataTable>
-                    </h:form>
+        </div>
+        
+    </ui:define>
 
-                    <h:outputText value="#{catalogBean.message}" rendered="#{not empty catalogBean.message}" class="error" />
-                    
-                </div>
-            </ui:define>
-
-        </ui:composition>
-
-    </h:body>
-</html>
+</ui:composition>

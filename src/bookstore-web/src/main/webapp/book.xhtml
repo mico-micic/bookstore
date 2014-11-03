@@ -6,61 +6,55 @@ and open the template in the editor.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"   
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="template/default/defaultTemplate.xhtml" 
+                xmlns="http://www.w3.org/1999/xhtml"   
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <h:body>
+    <ui:define name="mainbar">
 
-        <ui:composition template="template/default/defaultLayout.xhtml">
+        <h:panelGroup layout="block" styleClass="article" rendered="#{not empty catalogBean.book}" >
+            <h2><h:outputText value="Book &quot;#{catalogBean.book.title}&quot;" /></h2>
+            <div class="clr"></div>
 
-            <ui:define name="mainbar">
+            <h:panelGrid columns="2" styleClass="bookDetails">
+                <h:outputText value="ISBN:" />
+                <h:outputText value="#{catalogBean.book.isbn}" />
 
-                <h:panelGroup layout="block" styleClass="article" rendered="#{not empty catalogBean.book}" >
-                    <h2><h:outputText value="Book &quot;#{catalogBean.book.title}&quot;" /></h2>
-                    <div class="clr"></div>
+                <h:outputText value="Title:" />
+                <h:outputText value="#{catalogBean.book.title}" />
 
-                    <h:panelGrid columns="2" styleClass="bookDetails">
-                        <h:outputText value="ISBN:" />
-                        <h:outputText value="#{catalogBean.book.isbn}" />
+                <h:outputText value="Price:" />
+                <h:outputText value="#{catalogBean.book.price}" />
 
-                        <h:outputText value="Title:" />
-                        <h:outputText value="#{catalogBean.book.title}" />
+                <h:outputText value="Pages:" />
+                <h:outputText value="#{catalogBean.book.numberOfPages}" />
 
-                        <h:outputText value="Price:" />
-                        <h:outputText value="#{catalogBean.book.price}" />
+                <h:outputText value="Authors:" />
+                <h:outputText value="#{catalogBean.book.authors}" />
 
-                        <h:outputText value="Pages:" />
-                        <h:outputText value="#{catalogBean.book.numberOfPages}" />
+                <h:outputText value="Publishers:" />
+                <h:outputText value="#{catalogBean.book.publisher}" />
 
-                        <h:outputText value="Authors:" />
-                        <h:outputText value="#{catalogBean.book.authors}" />
+                <h:outputText value="Binding:" />
+                <h:outputText value="#{catalogBean.book.binding}" />
+            </h:panelGrid>
+            <br/>
+            <h:form>
+                <h:commandButton alt="Add to cart" action="#{cartBean.addToCart(catalogBean.book)}" image="#{resource['default:img/add_to_cart.png']}" />
+            </h:form>
+            <br/>
+            <h:form>
+                <h:commandLink value="Back..." action="#{catalogBean.navigateBack}" />
+            </h:form>
+        </h:panelGroup>
 
-                        <h:outputText value="Publishers:" />
-                        <h:outputText value="#{catalogBean.book.publisher}" />
+        <h:panelGroup layout="block" styleClass="article" rendered="#{empty catalogBean.book}">
+            <h2><h:outputText value="Sorry, book with ISBN &quot;#{catalogBean.isbn}&quot; not found!" /></h2>
+            <div class="clr"></div>
+        </h:panelGroup>
 
-                        <h:outputText value="Binding:" />
-                        <h:outputText value="#{catalogBean.book.binding}" />
-                    </h:panelGrid>
-                    <br/>
-                    <h:form>
-                        <h:commandButton alt="Add to cart" action="#{cartBean.addToCart(catalogBean.book)}" image="#{resource['default:img/add_to_cart.png']}" />
-                    </h:form>
-                    <br/>
-                    <h:form>
-                        <h:commandLink value="Back..." action="#{catalogBean.navigateBack}" />
-                    </h:form>
-                </h:panelGroup>
+    </ui:define>
 
-                <h:panelGroup layout="block" styleClass="article" rendered="#{empty catalogBean.book}">
-                    <h2><h:outputText value="Sorry, book with ISBN &quot;#{catalogBean.isbn}&quot; not found!" /></h2>
-                    <div class="clr"></div>
-                </h:panelGroup>
-
-            </ui:define>
-
-        </ui:composition>
-
-    </h:body>
-</html>
+</ui:composition>

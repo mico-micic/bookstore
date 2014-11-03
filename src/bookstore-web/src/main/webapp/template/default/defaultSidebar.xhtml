@@ -5,42 +5,27 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"   
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <body>
+    <div class="searchform">
+        <ui:include src="/components/searchComp.xhtml" >
+            <ui:param name="idPrefix" value="searchGadget" />
+        </ui:include>
+    </div>
 
-        <ui:composition>
+    <div class="gadget">
+        <div class="searchform">
+            <ui:include src="/components/cartGadgetComp.xhtml" />
+        </div>
+    </div>
 
-            <ui:insert name="searchGadget" >
-                <div class="searchform">
-                    <ui:include src="/components/searchComp.xhtml" >
-                        <ui:param name="idPrefix" value="searchGadget" />
-                    </ui:include>
-                </div>
-            </ui:insert>
+    <div class="gadget">
+        <h2 class="star">Your profile</h2>
+        <div class="clr"></div>
+        <p>Name: Hans Muster</p>
+        <p>Address: Musterstr. 6, Musterhausen</p>
+        <a href="#">Edit...</a>
+    </div>
 
-            <div class="gadget">
-
-                <ui:insert name="searchGadget" >
-                    <div class="searchform">
-                        <ui:include src="/components/cartGadgetComp.xhtml" />
-                    </div>
-                </ui:insert>
-                
-            </div>
-
-            <div class="gadget">
-                <h2 class="star">Your profile</h2>
-                <div class="clr"></div>
-                <p>Name: Hans Muster</p>
-                <p>Address: Musterstr. 6, Musterhausen</p>
-                <a href="#">Edit...</a>
-            </div>
-
-        </ui:composition>
-
-    </body>
-</html>
+</ui:composition>
