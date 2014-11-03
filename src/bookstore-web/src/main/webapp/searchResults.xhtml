@@ -36,7 +36,7 @@ and open the template in the editor.
                 </h:dataTable>
             </h:form>
 
-            <h:outputText value="#{catalogBean.message}" rendered="#{not empty catalogBean.message}" class="error" />
+            <h:outputText value="#{texts.noBooksFound}" rendered="#{empty catalogBean.books}" class="error" />
 
         </div>
         
