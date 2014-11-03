@@ -10,14 +10,14 @@ and open the template in the editor.
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <span class="searchBoxText"><h:outputText value="Free text search:" /></span>
+    <span class="searchBoxText"><h:outputText value="#{texts.freeTextSearch}" /></span>
     <h:form id="#{idPrefix}_freeSearch" styleClass="formsearch">
         <span>
             <h:inputText id="searchKey" value="#{catalogBean.searchKey}" class="editbox_search" maxlength="20" />
         </span>
         <h:commandButton action="#{catalogBean.searchBooks()}" styleClass="button_search" image="#{resource['default:img/search_btn.gif']}" />
     </h:form>
-    <span class="searchBoxText"><h:outputText value="ISBN search:" /></span>
+    <span class="searchBoxText"><h:outputText value="#{texts.isbnSearch}" /></span>
     <h:form id="#{idPrefix}_isbnSearch" styleClass="formsearch">
         <span>
             <h:inputText id="isbn" value="#{catalogBean.isbn}" class="editbox_search" maxlength="20" />
