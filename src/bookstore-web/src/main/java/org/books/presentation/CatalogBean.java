@@ -5,6 +5,7 @@
  */
 package org.books.presentation;
 
+import org.books.type.EnumActionResult;
 import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
@@ -12,31 +13,26 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.books.application.BookNotFoundException;
 import org.books.application.Bookstore;
+import org.books.application.MessageFactory;
 import org.books.persistence.Book;
+import org.books.type.MessageKey;
 
 /**
- *
  * @author micic
  */
 @Named("catalogBean")
 @SessionScoped
 public class CatalogBean implements Serializable {
-    
+
     @Inject
     private Bookstore bookstore;
-    
-    private String isbn;
-    
-    private String searchKey;
 
+    private String isbn;
+    private String searchKey;
     private Book book;
-    
     private List<Book> books;
-    
-    private String message;
-    
     private EnumActionResult wayBack;
-    
+
     public String getSearchKey() {
         return searchKey;
     }
@@ -52,7 +48,7 @@ public class CatalogBean implements Serializable {
     public void setBooks(List<Book> books) {
         this.books = books;
     }
-    
+
     public Bookstore getBookstore() {
         return bookstore;
     }
@@ -73,52 +69,41 @@ public class CatalogBean implements Serializable {
         return book;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
     public EnumActionResult findBook() {
-        
-        EnumActionResult ret;
-        book = null;
-        message = null;
-        
+
         try {
             book = bookstore.findBook(isbn);
-            ret = EnumActionResult.BOOK;
         } catch (BookNotFoundException ex) {
-            ret = EnumActionResult.BOOK;
+            MessageFactory.warning(MessageKey.BOOK_NOT_FOUND_BY_ISDN, isbn);
         }
-        
-        return ret;
+
+        return EnumActionResult.BOOK;
     }
-    
+
     public EnumActionResult searchBooks() {
-        
+
         EnumActionResult ret;
-        message = null;
         books = null;
-        
+
         books = this.bookstore.searchBooks(this.searchKey);
-        
+
         if (books != null && books.size() > 0) {
             ret = EnumActionResult.RESULTS;
         } else {
-            message = "Sorry, nothing found!";
             ret = EnumActionResult.RESULTS;
         }
 
         return ret;
     }
-    
+
     public EnumActionResult setBookSelection(Book book, String wayBack) {
         this.wayBack = EnumActionResult.valueOf(wayBack);
         this.book = book;
         return EnumActionResult.BOOK;
     }
-    
+
     public EnumActionResult navigateBack() {
-        if(wayBack == null) {
+        if (wayBack == null) {
             return EnumActionResult.HOME;
         }
         return wayBack;
