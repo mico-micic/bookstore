@@ -10,7 +10,7 @@ and open the template in the editor.
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <h2 class="star">Shopping cart <h:outputText value="(${cartBean.cart.bookCount})" rendered="#{not empty cartBean.cart.bookOrders}"/></h2>
+    <h2 class="star">#{texts.shoppingCart} <h:outputText value="(${cartBean.cart.bookCount})" rendered="#{not empty cartBean.cart.bookOrders}"/></h2>
     <div class="clr"></div>
     
     <h:dataTable id="shoppingCartGadgetTable" value="#{cartBean.cart.bookOrders}" var="bookOrder" rendered="#{not empty cartBean.cart.bookOrders}" 
@@ -39,10 +39,10 @@ and open the template in the editor.
         </h:column>
     </h:dataTable>
 
-    <h:outputText value="Your shopping cart is empty :(" rendered="#{empty cartBean.cart.bookOrders}" />
+    <h:outputText value="#{texts.cartEmpty}" rendered="#{empty cartBean.cart.bookOrders}" />
 
     <p style="text-align: right; width: 100%;">
-        <h:outputLink value="cart.xhtml" rendered="#{not empty cartBean.cart.bookOrders}"><h:outputText value="To shopping cart..." /></h:outputLink>
+        <h:outputLink value="cart.xhtml" rendered="#{not empty cartBean.cart.bookOrders}"><h:outputText value="#{texts.goToCart}" /></h:outputLink>
     </p>
 
 </ui:composition>
