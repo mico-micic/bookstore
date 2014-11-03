@@ -13,7 +13,7 @@ and open the template in the editor.
     <span class="searchBoxText"><h:outputText value="#{texts.freeTextSearch}" /></span>
     <h:form id="#{idPrefix}_freeSearch" styleClass="formsearch">
         <span>
-            <h:inputText id="searchKey" value="#{catalogBean.searchKey}" class="editbox_search" maxlength="20" />
+            <h:inputText id="searchKey" value="#{catalogBean.searchKey}" required="true" class="editbox_search" maxlength="20" />
         </span>
         <h:commandButton action="#{catalogBean.searchBooks()}" styleClass="button_search" image="#{resource['default:img/search_btn.gif']}" />
     </h:form>
