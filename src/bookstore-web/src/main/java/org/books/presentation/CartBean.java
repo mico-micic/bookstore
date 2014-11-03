@@ -25,14 +25,11 @@ public class CartBean implements Serializable {
         return cart;
     }
 
-    public EnumActionResult addToCart(Book book) {
-
+    public void addToCart(Book book) {
         if (cart == null) {
             cart = new Cart();
         }
-
         cart.addBook(book);
-        return EnumActionResult.SUCCEED;
     }
 
     public int getBooksInCart() {

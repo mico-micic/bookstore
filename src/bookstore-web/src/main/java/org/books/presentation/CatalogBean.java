@@ -85,9 +85,9 @@ public class CatalogBean implements Serializable {
         
         try {
             book = bookstore.findBook(isbn);
-            ret = EnumActionResult.SUCCEED;
+            ret = EnumActionResult.BOOK;
         } catch (BookNotFoundException ex) {
-            ret = EnumActionResult.FAIL;
+            ret = EnumActionResult.BOOK;
         }
         
         return ret;
@@ -102,10 +102,10 @@ public class CatalogBean implements Serializable {
         books = this.bookstore.searchBooks(this.searchKey);
         
         if (books != null && books.size() > 0) {
-            ret = EnumActionResult.SUCCEED;
+            ret = EnumActionResult.RESULTS;
         } else {
             message = "Sorry, nothing found!";
-            ret = EnumActionResult.FAIL;
+            ret = EnumActionResult.RESULTS;
         }
 
         return ret;
@@ -115,10 +115,6 @@ public class CatalogBean implements Serializable {
         this.wayBack = EnumActionResult.valueOf(wayBack);
         this.book = book;
         return EnumActionResult.BOOK;
-    }
-    
-    public EnumActionResult showShoppingCart() {  
-        return EnumActionResult.SUCCEED;
     }
     
     public EnumActionResult navigateBack() {

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.books.presentation.EnumActionResult;
 
 /**
  * @author Sigi
@@ -47,9 +46,8 @@ public class Cart implements Serializable {
         return totalPrice;
     }
 
-    public String remove(BookOrder bookOrder) {
+    public void remove(BookOrder bookOrder) {
         bookOrders.remove(bookOrder);
-        return null;
     }
 
     public class BookOrder implements Serializable {

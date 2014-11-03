@@ -24,12 +24,8 @@
     
     <navigation-rule>
         <navigation-case>
-            <from-action>#{catalogBean.findBook()}</from-action>
+            <from-outcome>BOOK</from-outcome>
             <to-view-id>/book.xhtml</to-view-id>
-        </navigation-case>
-        <navigation-case>
-            <from-action>#{catalogBean.searchBooks()}</from-action>
-            <to-view-id>/searchResults.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-outcome>RESULTS</from-outcome>
@@ -42,25 +38,6 @@
         <navigation-case>
             <from-outcome>BOOK</from-outcome>
             <to-view-id>/book.xhtml</to-view-id>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>SHOW_CART</from-outcome>
-            <to-view-id>/cart.xhtml</to-view-id>
-        </navigation-case>
-        <navigation-case>
-            <from-action>#{cartBean.addToCart(book)}</from-action>
-            <from-outcome>SUCCEED</from-outcome>
-            <to-view-id>#{view.viewId}</to-view-id>
-        </navigation-case>
-        <navigation-case>
-            <from-action>#{cartBean.addToCart(catalogBean.book)}</from-action>
-            <from-outcome>SUCCEED</from-outcome>
-            <to-view-id>#{view.viewId}</to-view-id>
-        </navigation-case>
-        <navigation-case>
-            <from-action>#{catalogBean.showShoppingCart}</from-action>
-            <from-outcome>SUCCEED</from-outcome>
-            <to-view-id>/cart.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     
