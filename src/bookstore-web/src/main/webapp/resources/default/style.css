@@ -93,9 +93,10 @@ a.com {
     width:974px;
 }
 .menu_nav {
+    text-align: right;
     float:right;
     margin:0;
-    padding:38px 24px 0 0;
+    padding:15px 24px 0 0;
     height:54px;
 }
 .menu_nav ul {

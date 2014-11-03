@@ -14,6 +14,11 @@ and open the template in the editor.
             <h1><a href="index.xhtml"><h:outputText value="#{texts.book}"/><span class="h1-inner"><h:outputText value="#{texts.store}"/></span></a> <small>by Mico and Sigi</small></h1>
         </div>
         <div class="menu_nav">
+            <h:form>
+                <h:commandLink value="de" action="#{localeBean.updateLocale('de')}" />
+                |
+                <h:commandLink value="en" action="#{localeBean.updateLocale('en')}" />
+            </h:form>
             <ul>
                 <li class="active"><a href="index.xhtml"><h:outputText value="#{texts.shop}"/></a></li>
                 <li><a href="search.xhtml"><h:outputText value="#{texts.search}"/></a></li>
