@@ -37,8 +37,8 @@
             <to-view-id>/cart.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
-            <from-outcome>BOOK</from-outcome>
-            <to-view-id>/book.xhtml</to-view-id>
+            <from-outcome>ORDER</from-outcome>
+            <to-view-id>/order.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     
