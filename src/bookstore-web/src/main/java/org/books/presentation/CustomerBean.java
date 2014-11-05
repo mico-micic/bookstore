@@ -6,13 +6,8 @@
 package org.books.presentation;
 
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
-import org.books.application.Bookstore;
-import org.books.application.exception.CustomerNotFoundException;
 import org.books.persistence.Customer;
 
 /**
@@ -21,19 +16,8 @@ import org.books.persistence.Customer;
 @Named
 @SessionScoped
 public class CustomerBean implements Serializable {
-    
-    @Inject
-    private Bookstore bookstore;
-    
+       
     private Customer customer;
-
-    public void findCustomer() {
-        try {
-            customer = bookstore.findCustomer("alice@example.org");
-        } catch (CustomerNotFoundException ex) {
-            // TODO
-        }
-    }
     
     public Customer getCustomer() {
         return customer;
@@ -41,6 +25,5 @@ public class CustomerBean implements Serializable {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
-    }
-    
+    }   
 }

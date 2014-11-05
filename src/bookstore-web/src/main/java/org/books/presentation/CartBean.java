@@ -7,7 +7,6 @@ package org.books.presentation;
 
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import org.books.application.MessageFactory;
 import org.books.persistence.Book;
@@ -22,10 +21,7 @@ import org.books.type.MessageKey;
 @Named("cartBean")
 @SessionScoped
 public class CartBean implements Serializable {
-
-    @Inject
-    private CustomerBean customerBean;
-    
+   
     private Cart cart;
 
     public Cart getCart() {
@@ -37,17 +33,14 @@ public class CartBean implements Serializable {
             cart = new Cart();
         }
         cart.addBook(book);
+        
+        MessageFactory.info(MessageKey.BOOK_ADDED_TO_CART);
     }
 
     public int getBooksInCart() {
         return cart == null ? 0 : cart.getBookCount();
     }
-    
-    public EnumActionResult checkout() {
-        customerBean.findCustomer();
-        return EnumActionResult.ORDER;
-    }
-    
+
     public EnumActionResult confirmOrder() {
         MessageFactory.info(MessageKey.ORDER_CONFIRMED);
         cart.reset();

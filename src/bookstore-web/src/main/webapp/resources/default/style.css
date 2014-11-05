@@ -434,3 +434,9 @@ tbody tr:hover, tbody tr:nth-child(even):hover  {
 .simpleTable tbody tr:hover, tbody tr:nth-child(even):hover  {
     background-color: white;
 }
+.simpleTable td {
+    padding-left: 0px;
+}
+.simpleTable {
+    border-spacing: 0px;
+}

@@ -6,14 +6,13 @@
 package org.books.presentation;
 
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import org.books.application.Bookstore;
 import org.books.application.MessageFactory;
 import org.books.application.exception.InvalidCredentialsException;
+import org.books.persistence.Customer;
 import org.books.type.EnumActionResult;
 import org.books.type.MessageKey;
 
@@ -28,8 +27,11 @@ public class LoginBean implements Serializable {
     @Inject
     private Bookstore bookstore;
 
-    private String email;
+    @Inject
+    private CustomerBean customerBean;
 
+    private String nextPage;
+    private String email;
     private String password;
 
     public String getPassword() {
@@ -48,16 +50,35 @@ public class LoginBean implements Serializable {
         this.password = password;
     }
 
-    public String doLogin() {
-        
-        try {
-            bookstore.authenticateCustomer(this.email, this.password);
-        } catch (InvalidCredentialsException ex) {
-            MessageFactory.error(MessageKey.INVALID_USER);
-            return null;
+    public EnumActionResult openAuthorized(String nextPage) {
+
+        this.nextPage = nextPage;
+
+        if (this.customerBean.getCustomer() == null) {
+            return EnumActionResult.LOGIN;
+        } else {
+            return EnumActionResult.valueOf(nextPage);
         }
-        
-        MessageFactory.info(MessageKey.LOGIN_SUCCESS);
-        return null;
+    }
+
+    public EnumActionResult doLogin() {
+
+        Customer customer = this.customerBean.getCustomer();
+
+        if (customer == null) {
+            try {
+                customer = bookstore.authenticateCustomer(this.email, this.password);
+                this.customerBean.setCustomer(customer);
+            } catch (InvalidCredentialsException ex) {
+                MessageFactory.error(MessageKey.INVALID_USER);
+                return null;
+            }
+
+            MessageFactory.info(MessageKey.LOGIN_SUCCESS);
+        }
+
+        return (this.nextPage == null || this.nextPage.isEmpty())
+                ? EnumActionResult.HOME
+                : EnumActionResult.valueOf(this.nextPage);
     }
 }
