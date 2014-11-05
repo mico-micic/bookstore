@@ -22,27 +22,22 @@ and open the template in the editor.
                 <h:panelGrid columns="2" styleClass="simpleTable">
 
                     <h:column>
-                        <h:outputText value="#{texts.username}" />
+                        <h:outputText value="#{texts.email}:" />
                     </h:column>
-
                     <h:column >
-                        <h:inputText id="username" value="#{loginBean.username}" required="true" requiredMessage="#{texts.pleaseEnterUsername}" />
+                        <h:inputText id="username" value="#{loginBean.email}" required="true" requiredMessage="#{texts.pleaseEnterUsername}" />
                         <div class="elementMessageDiv"><h:message for="username" styleClass="elementMessage" /></div>
                     </h:column>
 
                     <h:column>
-                        <h:outputText value="#{texts.password}" />
+                        <h:outputText value="#{texts.password}:" />
                     </h:column>
-
                     <h:column>
                         <h:inputSecret id="password" value="#{loginBean.password}" required="true" requiredMessage="#{texts.pleaseEnterPassword}" />
                         <div class="elementMessageDiv"><h:message for="password" styleClass="elementMessage" /></div>
                     </h:column>
 
-                    <h:column>
-
-                    </h:column>
-
+                    <h:column> </h:column>
                     <h:column>
                         <h:commandButton action="#{loginBean.doLogin()}" value="#{texts.login}" />
                     </h:column>
