@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="template/default/defaultTemplate.xhtml" 
+                xmlns="http://www.w3.org/1999/xhtml"   
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="mainbar">
+
+        <div class="article">
+            <h2>#{texts.yourOrder}</h2>
+            <div class="clr"></div>
+            
+            <h4><h:outputText value="#{texts.yourDetails}:" /></h4>
+            <h:panelGrid columns="2">
+                <h:outputText value="#{texts.firstName}" />
+                <h:outputText value="#{customerBean.customer.firstName}" />
+                <h:outputText value="#{texts.lastName}" />
+                <h:outputText value="#{customerBean.customer.lastName}" />
+                <h:outputText value="#{texts.street}" />
+                <h:outputText value="#{customerBean.customer.address.street}" />
+                <h:outputText value="#{texts.postalCode}" />
+                <h:outputText value="#{customerBean.customer.address.postalCode}" />
+                <h:outputText value="#{texts.city}" />
+                <h:outputText value="#{customerBean.customer.address.city}" />
+                <h:outputText value="#{texts.country}" />
+                <h:outputText value="#{customerBean.customer.address.country}" />
+                <h:outputText value="#{texts.email}" />
+                <h:outputText value="#{customerBean.customer.email}" />
+            </h:panelGrid>
+            <p/>
+            <h4><h:outputText value="#{texts.creditCard}:" /></h4>
+            <h:panelGrid columns="2">
+                <h:outputText value="#{texts.type}" />
+                <h:outputText value="#{customerBean.customer.creditCard.type}" />
+                <h:outputText value="#{texts.number}" />
+                <h:outputText value="#{customerBean.customer.creditCard.number}" />
+            </h:panelGrid>
+            <p/>
+            <h:form>
+               <h:commandLink value="#{texts.change}" action="ACCOUNT" />
+            </h:form>
+            <p/>
+            <h:form>
+                <h:dataTable id="shoppingCartTable" value="#{cartBean.cart.bookOrders}" var="bookOrder" rendered="#{not empty cartBean.cart.bookOrders}" 
+                             styleClass="shoppingCartTable" columnClasses=",,shoppingCartTablePriceCol">
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="#{texts.book}"></h:outputText></f:facet>
+                        <h:commandLink value="#{bookOrder.book.title}" action="#{catalogBean.setBookSelection(bookOrder.book, 'ORDER')}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="#{texts.pcs}"></h:outputText></f:facet>
+                        <h:outputText value="#{bookOrder.count}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="#{texts.price}"></h:outputText></f:facet>
+                        <h:outputText value="#{bookOrder.book.price}" />
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+            <h:dataTable id="shoppingCartTable" value="#{cartBean.cart}" var="cart" rendered="#{not empty cartBean.cart.bookOrders}" 
+                         styleClass="shoppingCartTable shoppingCartTableTotal" columnClasses=",,shoppingCartTablePriceCol  ">
+                <h:column>
+                    <h:outputText value="Total" />
+                </h:column>
+                <h:column>
+                    <h:outputText value="" />
+                </h:column>
+                <h:column>
+                    <h:outputText value="#{cart.totalPrice}" />
+                </h:column>
+            </h:dataTable>
+            <p/>
+            <h:form>
+                <h:commandLink value="#{texts.buy}" action="#{cartBean.confirmOrder()}" />
+            </h:form>
+        </div>
+    </ui:define>
+
+</ui:composition>

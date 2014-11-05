@@ -13,7 +13,7 @@ and open the template in the editor.
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="mainbar">
-        
+
         <div class="article">
             <h2>Your shopping cart</h2>
             <div class="clr"></div>
@@ -26,7 +26,7 @@ and open the template in the editor.
                         <h:commandButton alt="Remove" action="#{cartBean.cart.remove(bookOrder)}" image="#{resource['default:img/remove.gif']}" />
                     </h:column>
                     <h:column>
-                        <f:facet name="header"><h:outputText value="Name"></h:outputText></f:facet>
+                        <f:facet name="header"><h:outputText value="#{texts.book}"></h:outputText></f:facet>
                         <h:commandLink value="#{bookOrder.book.title}" action="#{catalogBean.setBookSelection(bookOrder.book, 'CART')}" />
                     </h:column>
                     <h:column>
@@ -61,10 +61,10 @@ and open the template in the editor.
 
             <br/>
             <h:form>
-                <h:commandLink value="Checkout [TODO]" action="TODO"/>
+                <h:commandLink value="#{texts.checkout}" action="#{cartBean.checkout()}"/>
             </h:form>
         </div>
-        
+
     </ui:define>
 
 </ui:composition>

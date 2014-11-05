@@ -11,7 +11,8 @@ package org.books.type;
  */
 public enum MessageKey {
 
-    BOOK_NOT_FOUND_BY_ISDN("org.books.presentation.CatalogBean.BOOK_NOT_FOUND");
+    BOOK_NOT_FOUND_BY_ISDN("org.books.presentation.CatalogBean.BOOK_NOT_FOUND"),
+    ORDER_CONFIRMED("org.books.presentation.CartBean.ORDER_CONFIRMED");
 
     private final String key;
 
