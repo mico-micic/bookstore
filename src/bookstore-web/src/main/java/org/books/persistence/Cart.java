@@ -50,6 +50,10 @@ public class Cart implements Serializable {
         bookOrders.remove(bookOrder);
     }
 
+    public void reset() {
+        bookOrders.clear();
+    }
+
     public class BookOrder implements Serializable {
 
         private final Book book;
