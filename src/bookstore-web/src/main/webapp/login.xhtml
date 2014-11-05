@@ -19,12 +19,12 @@ and open the template in the editor.
             <div class="clr"></div>
 
             <h:form id="loginForm">
-                <h:panelGrid columns="2">
+                <h:panelGrid columns="2" styleClass="simpleTable">
 
                     <h:column>
                         <h:outputText value="#{texts.username}" />
                     </h:column>
-                    
+
                     <h:column >
                         <h:inputText id="username" value="#{loginBean.username}" required="true" requiredMessage="#{texts.pleaseEnterUsername}" />
                         <div class="elementMessageDiv"><h:message for="username" styleClass="elementMessage" /></div>
@@ -33,17 +33,22 @@ and open the template in the editor.
                     <h:column>
                         <h:outputText value="#{texts.password}" />
                     </h:column>
-                    
+
                     <h:column>
                         <h:inputSecret id="password" value="#{loginBean.password}" required="true" requiredMessage="#{texts.pleaseEnterPassword}" />
                         <div class="elementMessageDiv"><h:message for="password" styleClass="elementMessage" /></div>
                     </h:column>
+
+                    <h:column>
+
+                    </h:column>
+
+                    <h:column>
+                        <h:commandButton action="#{loginBean.doLogin()}" value="#{texts.login}" />
+                    </h:column>
+
                 </h:panelGrid>
-
-                <h:commandButton action="#{loginBean.doLogin()}" value="#{texts.login}" />
-
             </h:form>
-
         </div>
 
     </ui:define>

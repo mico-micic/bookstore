@@ -424,3 +424,13 @@ tbody tr:hover, tbody tr:nth-child(even):hover  {
     width: 75%;
     margin: auto;
 }
+.qtip-red{
+    margin-top: -10px;
+    margin-left: -4px;
+}
+.simpleTable tbody tr:nth-child(even) {
+    background-color: white;
+}
+.simpleTable tbody tr:hover, tbody tr:nth-child(even):hover  {
+    background-color: white;
+}

@@ -14,7 +14,7 @@ and open the template in the editor.
     <h:form id="#{idPrefix}_freeSearch" styleClass="formsearch">
         <span>
             <h:inputText id="searchKey" value="#{catalogBean.searchKey}" required="true" requiredMessage="#{texts.pleaseEnterSearchText}" class="editbox_search" maxlength="20" />
-            <h:message for="searchKey" styleClass="elementMessage" />
+            <div class="elementMessageDiv"><h:message for="searchKey" styleClass="elementMessage" /></div>
         </span>
         <h:commandButton action="#{catalogBean.searchBooks()}" styleClass="button_search" image="#{resource['default:img/search_btn.gif']}" />
     </h:form>
@@ -22,7 +22,7 @@ and open the template in the editor.
     <h:form id="#{idPrefix}_isbnSearch" styleClass="formsearch">
         <span>
             <h:inputText id="isbn" value="#{catalogBean.isbn}" required="true" requiredMessage="#{texts.pleaseEnterIsbn}" class="editbox_search" maxlength="20" />
-            <h:message for="isbn" styleClass="elementMessage" />
+            <div class="elementMessageDiv"><h:message for="isbn" styleClass="elementMessage" /></div>
         </span>
         <h:commandButton action="#{catalogBean.findBook()}" styleClass="button_search" image="#{resource['default:img/search_btn.gif']}" />
     </h:form>
