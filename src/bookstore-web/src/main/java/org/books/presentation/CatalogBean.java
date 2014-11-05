@@ -11,9 +11,9 @@ import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.books.application.BookNotFoundException;
 import org.books.application.Bookstore;
 import org.books.application.MessageFactory;
+import org.books.application.exception.BookNotFoundException;
 import org.books.persistence.Book;
 import org.books.type.MessageKey;
 

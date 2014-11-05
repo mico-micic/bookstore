@@ -1,16 +1,20 @@
 package org.books.persistence;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Book implements Serializable {
+public class Book extends IdentifiableObject {
+
+	public enum Binding {
+
+		Hardcover, Paperback
+	}
 
 	private String isbn;
 	private String title;
 	private String authors;
 	private String publisher;
 	private Integer publicationYear;
-	private String binding;
+	private Binding binding;
 	private Integer numberOfPages;
 	private BigDecimal price;
 
@@ -18,7 +22,7 @@ public class Book implements Serializable {
 	}
 
 	public Book(String isbn, String title, String authors, String publisher,
-			Integer publicationYear, String binding, Integer numberOfPages, BigDecimal price) {
+			Integer publicationYear, Binding binding, Integer numberOfPages, BigDecimal price) {
 		this.isbn = isbn;
 		this.title = title;
 		this.authors = authors;
@@ -69,11 +73,11 @@ public class Book implements Serializable {
 		this.publicationYear = publicationYear;
 	}
 
-	public String getBinding() {
+	public Binding getBinding() {
 		return binding;
 	}
 
-	public void setBinding(String binding) {
+	public void setBinding(Binding binding) {
 		this.binding = binding;
 	}
 
@@ -91,12 +95,5 @@ public class Book implements Serializable {
 
 	public void setPrice(BigDecimal price) {
 		this.price = price;
-	}
-
-	@Override
-	public String toString() {
-		return "Book{" + "isbn=" + isbn + ", title=" + title + ", authors=" + authors + ", publisher=" + publisher
-				+ ", publicationYear=" + publicationYear + ", binding=" + binding + ", numberOfPages=" + numberOfPages
-				+ ", price=" + price + '}';
 	}
 }
