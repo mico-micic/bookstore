@@ -411,9 +411,8 @@ tbody tr:hover, tbody tr:nth-child(even):hover  {
 }
 .elementMessage {
     position: relative;
-    left: -10px;
-    top: 20px;
-    visibility: hidden;
+    display: none;
+    overflow: hidden;
     width: 0px;
     height: 0px;
 }

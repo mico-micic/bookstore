@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="template/default/defaultTemplate.xhtml" 
+                xmlns="http://www.w3.org/1999/xhtml"   
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="mainbar">
+
+        <div class="article">
+            <h2><h:outputText value="#{texts.login}" /></h2>
+            <div class="clr"></div>
+
+            <h:form id="loginForm">
+                <h:panelGrid columns="2">
+
+                    <h:column>
+                        <h:outputText value="#{texts.username}" />
+                    </h:column>
+                    
+                    <h:column >
+                        <h:inputText id="username" value="#{loginBean.username}" required="true" requiredMessage="#{texts.pleaseEnterUsername}" />
+                        <div class="elementMessageDiv"><h:message for="username" styleClass="elementMessage" /></div>
+                    </h:column>
+
+                    <h:column>
+                        <h:outputText value="#{texts.password}" />
+                    </h:column>
+                    
+                    <h:column>
+                        <h:inputSecret id="password" value="#{loginBean.password}" required="true" requiredMessage="#{texts.pleaseEnterPassword}" />
+                        <div class="elementMessageDiv"><h:message for="password" styleClass="elementMessage" /></div>
+                    </h:column>
+                </h:panelGrid>
+
+                <h:commandButton action="#{loginBean.doLogin()}" value="#{texts.login}" />
+
+            </h:form>
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>

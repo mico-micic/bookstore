@@ -15,43 +15,50 @@ and open the template in the editor.
     <ui:define name="mainbar">
 
         <h:panelGroup layout="block" styleClass="article" rendered="#{not empty catalogBean.book}" >
-            <h2><h:outputText value="Book &quot;#{catalogBean.book.title}&quot;" /></h2>
+            <h2><h:outputFormat value="#{texts.bookDetailTitle}">
+                    <f:param value="&quot;#{catalogBean.book.title}&quot;" />
+                </h:outputFormat>
+                
+            </h2>
             <div class="clr"></div>
 
             <h:panelGrid columns="2" styleClass="bookDetails">
                 <h:outputText value="ISBN:" />
                 <h:outputText value="#{catalogBean.book.isbn}" />
 
-                <h:outputText value="Title:" />
+                <h:outputText value="#{texts.title}" />
                 <h:outputText value="#{catalogBean.book.title}" />
 
-                <h:outputText value="Price:" />
+                <h:outputText value="#{texts.price}" />
                 <h:outputText value="#{catalogBean.book.price}" />
 
-                <h:outputText value="Pages:" />
+                <h:outputText value="#{texts.pages}" />
                 <h:outputText value="#{catalogBean.book.numberOfPages}" />
 
-                <h:outputText value="Authors:" />
+                <h:outputText value="#{texts.author}" />
                 <h:outputText value="#{catalogBean.book.authors}" />
 
-                <h:outputText value="Publishers:" />
+                <h:outputText value="#{texts.publisher}" />
                 <h:outputText value="#{catalogBean.book.publisher}" />
 
-                <h:outputText value="Binding:" />
+                <h:outputText value="#{texts.binding}" />
                 <h:outputText value="#{catalogBean.book.binding}" />
             </h:panelGrid>
             <br/>
             <h:form>
-                <h:commandButton alt="Add to cart" action="#{cartBean.addToCart(catalogBean.book)}" image="#{resource['default:img/add_to_cart.png']}" />
+                <h:commandButton alt="#{texts.addToCart}" action="#{cartBean.addToCart(catalogBean.book)}" image="#{resource['default:img/add_to_cart.png']}" />
             </h:form>
             <br/>
             <h:form>
-                <h:commandLink value="Back..." action="#{catalogBean.navigateBack}" />
+                <h:commandLink value="#{texts.back}" action="#{catalogBean.navigateBack}" />
             </h:form>
         </h:panelGroup>
 
         <h:panelGroup layout="block" styleClass="article" rendered="#{empty catalogBean.book}">
-            <h2><h:outputText value="Sorry, book with ISBN &quot;#{catalogBean.isbn}&quot; not found!" /></h2>
+            <h2><h:outputFormat value="#{texts.sorryBookNotFound}" >
+                    <f:param value="&quot;#{catalogBean.isbn}&quot;" />
+                </h:outputFormat>
+            </h2>
             <div class="clr"></div>
         </h:panelGroup>
 
