@@ -16,7 +16,6 @@ import javax.inject.Named;
 @Named
 public class LocaleBean {
 
-
     public void updateLocale(String loc) {
         Locale locale = new Locale(loc);
         FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);

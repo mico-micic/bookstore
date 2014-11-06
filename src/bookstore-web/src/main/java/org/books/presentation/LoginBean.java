@@ -9,8 +9,12 @@ import java.io.Serializable;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
+import org.books.application.Bookstore;
+import org.books.application.MessageFactory;
+import org.books.application.exception.InvalidCredentialsException;
+import org.books.persistence.Customer;
 import org.books.type.EnumActionResult;
-
+import org.books.type.MessageKey;
 
 /**
  *
@@ -19,32 +23,62 @@ import org.books.type.EnumActionResult;
 @Named("loginBean")
 @SessionScoped
 public class LoginBean implements Serializable {
-    
+
+    @Inject
+    private Bookstore bookstore;
+
     @Inject
     private CustomerBean customerBean;
-    
-    private String username;
-    
+
+    private String nextPage;
+    private String email;
     private String password;
 
     public String getPassword() {
         return password;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String username) {
+        this.email = username;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    } 
-    
-    public EnumActionResult doLoginAndContinueTo(String actionName) {
-        customerBean.findCustomer();
-        return EnumActionResult.valueOf(actionName);
+    }
+
+    public EnumActionResult openAuthorized(String nextPage) {
+
+        this.nextPage = nextPage;
+
+        if (this.customerBean.getCustomer() == null) {
+            return EnumActionResult.LOGIN;
+        } else {
+            return EnumActionResult.valueOf(nextPage);
+        }
+    }
+
+    public EnumActionResult doLogin() {
+
+        Customer customer = this.customerBean.getCustomer();
+
+        if (customer == null) {
+            try {
+                customer = bookstore.authenticateCustomer(this.email, this.password);
+                this.customerBean.setCustomer(customer);
+            } catch (InvalidCredentialsException ex) {
+                MessageFactory.error(MessageKey.INVALID_USER);
+                return null;
+            }
+
+            MessageFactory.info(MessageKey.LOGIN_SUCCESS);
+        }
+
+        return (this.nextPage == null || this.nextPage.isEmpty())
+                ? EnumActionResult.HOME
+                : EnumActionResult.valueOf(this.nextPage);
     }
 }

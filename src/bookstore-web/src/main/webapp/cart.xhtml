@@ -15,7 +15,7 @@ and open the template in the editor.
     <ui:define name="mainbar">
 
         <div class="article">
-            <h2>Your shopping cart</h2>
+            <h2><h:outputFormat value="#{texts.yourShoppingCart}" /></h2>
             <div class="clr"></div>
 
             <h:form>
@@ -61,7 +61,7 @@ and open the template in the editor.
 
             <br/>
             <h:form>
-                <h:commandLink value="#{texts.checkout}" action="#{loginBean.doLoginAndContinueTo('ORDER')}"/>
+                <h:commandLink value="#{texts.checkout}" action="#{loginBean.openAuthorized('ORDER')}"/>
             </h:form>
         </div>
 

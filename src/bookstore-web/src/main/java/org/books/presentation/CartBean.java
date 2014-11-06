@@ -45,6 +45,8 @@ public class CartBean implements Serializable {
             cart = new Cart();
         }
         cart.addBook(book);
+
+        MessageFactory.info(MessageKey.BOOK_ADDED_TO_CART);
     }
 
     public int getBooksInCart() {
