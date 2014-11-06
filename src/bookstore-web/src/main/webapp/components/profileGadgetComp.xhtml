@@ -29,6 +29,6 @@ and open the template in the editor.
     <p><h:outputText value="#{texts.notLoggedIn}" rendered="#{empty customerBean.customer}" /></p>
     <p><h:link outcome="/login.xhtml" rendered="#{empty customerBean.customer}">#{texts.login}</h:link></p>  
 
-    <h:link target="/profile.xhtml" rendered="#{not empty customerBean.customer}"><h:outputText value="#{texts.edit}" /></h:link>
+    <h:link outcome="/profile.xhtml" rendered="#{not empty customerBean.customer}"><h:outputText value="#{texts.edit}" /></h:link>
 
 </ui:composition>
