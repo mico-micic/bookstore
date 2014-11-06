@@ -390,6 +390,9 @@ table th {
 .searchResultTable .searchResultTableAddToCartCol {
     text-align: center;
 }
+.customerDetailTable .customerDetailTableLabelCol {
+    width: 60px;
+}
 tbody tr:nth-child(even) {
     background-color: #F2F1F1;
 }

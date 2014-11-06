@@ -10,5 +10,5 @@ package org.books.type;
  * @author micic
  */
 public enum EnumActionResult {
-    SUCCEED, FAIL, BOOK, HOME, RESULTS, CART, ORDER, LOGIN;
+    SUCCEED, FAIL, BOOK, HOME, RESULTS, CART, ORDER, LOGIN, ACCOUNT, EDIT_ACCOUNT;
 }

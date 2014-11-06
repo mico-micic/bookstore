@@ -61,7 +61,7 @@ and open the template in the editor.
 
             <br/>
             <h:form>
-                <h:commandLink value="#{texts.checkout}" action="#{cartBean.checkout()}"/>
+                <h:commandLink value="#{texts.checkout}" action="#{loginBean.doLoginAndContinueTo('ORDER')}"/>
             </h:form>
         </div>
 

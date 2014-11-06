@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="template/default/defaultTemplate.xhtml" 
+                xmlns="http://www.w3.org/1999/xhtml"   
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="mainbar">
+
+        <div class="article">
+            <h2>#{texts.profile}</h2>
+            <div class="clr"></div>
+
+            <ui:include src="/components/accountComp.xhtml" />
+            <p/>
+            <h:form>
+                <h:commandLink value="#{texts.change}" action="#{customerBean.editAccount('ACCOUNT')}" />
+            </h:form>
+            <p/>
+            <p/>
+            <h4><h:outputText value="#{texts.yourOrders}:" /></h4>
+            <h:dataTable var="order" value="#{customerBean.getAllOrdersOfYear(2014)}" >
+                <h:column>
+                    <f:facet name="Header"><h:outputText value="#{texts.number}"/></f:facet>
+                    <h:outputText value="#{order.number}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="Header"><h:outputText value="#{texts.date}"/></f:facet>
+                    <h:outputText value="#{order.date}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="Header"><h:outputText value="#{texts.status}"/></f:facet>
+                    <h:outputText value="#{order.status}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="Header"><h:outputText value="#{texts.price}"/></f:facet>
+                    <h:outputText value="#{order.amount}" />
+                </h:column>
+            </h:dataTable>
+        </div>
+    </ui:define>
+
+</ui:composition>

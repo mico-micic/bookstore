@@ -17,35 +17,11 @@ and open the template in the editor.
         <div class="article">
             <h2>#{texts.yourOrder}</h2>
             <div class="clr"></div>
-            
-            <h4><h:outputText value="#{texts.yourDetails}:" /></h4>
-            <h:panelGrid columns="2">
-                <h:outputText value="#{texts.firstName}" />
-                <h:outputText value="#{customerBean.customer.firstName}" />
-                <h:outputText value="#{texts.lastName}" />
-                <h:outputText value="#{customerBean.customer.lastName}" />
-                <h:outputText value="#{texts.street}" />
-                <h:outputText value="#{customerBean.customer.address.street}" />
-                <h:outputText value="#{texts.postalCode}" />
-                <h:outputText value="#{customerBean.customer.address.postalCode}" />
-                <h:outputText value="#{texts.city}" />
-                <h:outputText value="#{customerBean.customer.address.city}" />
-                <h:outputText value="#{texts.country}" />
-                <h:outputText value="#{customerBean.customer.address.country}" />
-                <h:outputText value="#{texts.email}" />
-                <h:outputText value="#{customerBean.customer.email}" />
-            </h:panelGrid>
-            <p/>
-            <h4><h:outputText value="#{texts.creditCard}:" /></h4>
-            <h:panelGrid columns="2">
-                <h:outputText value="#{texts.type}" />
-                <h:outputText value="#{customerBean.customer.creditCard.type}" />
-                <h:outputText value="#{texts.number}" />
-                <h:outputText value="#{customerBean.customer.creditCard.number}" />
-            </h:panelGrid>
+
+            <ui:include src="/components/accountComp.xhtml" />
             <p/>
             <h:form>
-               <h:commandLink value="#{texts.change}" action="ACCOUNT" />
+                <h:commandLink value="#{texts.change}" action="#{customerBean.editAccount('ORDER')}" />
             </h:form>
             <p/>
             <h:form>
@@ -79,7 +55,7 @@ and open the template in the editor.
             </h:dataTable>
             <p/>
             <h:form>
-                <h:commandLink value="#{texts.buy}" action="#{cartBean.confirmOrder()}" />
+                <h:commandLink value="#{texts.buy}" action="#{cartBean.confirmOrder}" />
             </h:form>
         </div>
     </ui:define>

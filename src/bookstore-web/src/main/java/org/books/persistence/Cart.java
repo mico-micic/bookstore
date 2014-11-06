@@ -72,15 +72,14 @@ public class Cart implements Serializable {
             return count.get();
         }
 
-        public int incrementCount() {
-            return count.incrementAndGet();
+        public void incrementCount() {
+            count.incrementAndGet();
         }
 
-        public int decrementCount() {
+        public void decrementCount() {
             if (count.get() > 0) {
-                return count.decrementAndGet();
+                count.decrementAndGet();
             }
-            return count.get();
         }
 
         @Override

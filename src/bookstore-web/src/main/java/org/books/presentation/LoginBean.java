@@ -8,6 +8,8 @@ package org.books.presentation;
 import java.io.Serializable;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
+import org.books.type.EnumActionResult;
 
 
 /**
@@ -17,6 +19,9 @@ import javax.enterprise.context.SessionScoped;
 @Named("loginBean")
 @SessionScoped
 public class LoginBean implements Serializable {
+    
+    @Inject
+    private CustomerBean customerBean;
     
     private String username;
     
@@ -38,7 +43,8 @@ public class LoginBean implements Serializable {
         this.password = password;
     } 
     
-    public void doLogin() {
-        
+    public EnumActionResult doLoginAndContinueTo(String actionName) {
+        customerBean.findCustomer();
+        return EnumActionResult.valueOf(actionName);
     }
 }

@@ -22,7 +22,7 @@ and open the template in the editor.
             <ul>
                 <li class="active"><a href="index.xhtml"><h:outputText value="#{texts.shop}"/></a></li>
                 <li><a href="search.xhtml"><h:outputText value="#{texts.search}"/></a></li>
-                <li><a href="profile.xhtml"><h:outputText value="#{texts.profile}"/></a></li>
+                <li><h:form><h:commandLink value="#{texts.profile}" action="#{loginBean.doLoginAndContinueTo('ACCOUNT')}"/></h:form></li>
                 <li><a href="help.xhtml"><h:outputText value="#{texts.help}"/></a></li>
                 <li><a href="contact.xhtml"><h:outputText value="#{texts.contact}"/></a></li>
             </ul>

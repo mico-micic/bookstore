@@ -44,6 +44,14 @@
             <from-outcome>LOGIN</from-outcome>
             <to-view-id>/login.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>ACCOUNT</from-outcome>
+            <to-view-id>/account.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>EDIT_ACCOUNT</from-outcome>
+            <to-view-id>/editAccount.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     
 </faces-config>
