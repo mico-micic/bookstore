@@ -19,12 +19,13 @@ and open the template in the editor.
             <div class="clr"></div>
 
             <ui:include src="/components/accountComp.xhtml" />
-            <p/>
+
             <h:form>
                 <h:commandLink value="#{texts.change}" action="#{customerBean.editAccount('ACCOUNT')}" />
             </h:form>
-            <p/>
-            <p/>
+            
+            <p class="spec" />
+            
             <h4><h:outputText value="#{texts.yourOrders}:" /></h4>
             <h:dataTable var="order" value="#{customerBean.getAllOrdersOfYear(2014)}" >
                 <h:column>

@@ -18,7 +18,6 @@ and open the template in the editor.
             <h2><h:outputFormat value="#{texts.bookDetailTitle}">
                     <f:param value="&quot;#{catalogBean.book.title}&quot;" />
                 </h:outputFormat>
-                
             </h2>
             <div class="clr"></div>
 
@@ -43,6 +42,10 @@ and open the template in the editor.
 
                 <h:outputText value="#{texts.binding}:" />
                 <h:outputText value="#{catalogBean.book.binding}" />
+
+                <h:outputText value="#{texts.publicationYear}:" />
+                <h:outputText value="#{catalogBean.book.publicationYear}" />
+                
             </h:panelGrid>
             <br/>
             <h:form>

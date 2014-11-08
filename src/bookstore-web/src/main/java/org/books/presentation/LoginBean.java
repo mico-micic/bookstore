@@ -81,4 +81,10 @@ public class LoginBean implements Serializable {
                 ? EnumActionResult.HOME
                 : EnumActionResult.valueOf(this.nextPage);
     }
+    
+    public EnumActionResult doLogout() {
+        this.customerBean.setCustomer(null);
+        MessageFactory.info(MessageKey.LOGOUT_SUCCESS);
+        return EnumActionResult.HOME;
+    }
 }

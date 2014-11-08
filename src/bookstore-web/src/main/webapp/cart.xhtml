@@ -18,50 +18,14 @@ and open the template in the editor.
             <h2><h:outputFormat value="#{texts.yourShoppingCart}" /></h2>
             <div class="clr"></div>
 
-            <h:form>
-                <h:dataTable id="shoppingCartTable" value="#{cartBean.cart.lineItems}" var="lineItem" rendered="#{not empty cartBean.cart.lineItems}" 
-                             styleClass="shoppingCartTable" columnClasses="shoppingCartTableRemoveCol,,,shoppingCartTablePriceCol">
-                    <h:column>
-                        <f:facet name="header" />
-                        <h:commandButton alt="Remove" action="#{cartBean.cart.remove(lineItem)}" image="#{resource['default:img/remove.gif']}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header"><h:outputText value="#{texts.book}"></h:outputText></f:facet>
-                        <h:commandLink value="#{lineItem.book.title}" action="#{catalogBean.setBookSelection(lineItem.book, 'CART')}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header"><h:outputText value="Pcs."></h:outputText></f:facet>
-                        <h:outputText value="#{lineItem.quantity}" />
-                        &nbsp;
-                        <h:commandButton alt="Increment" action="#{cartBean.cart.incrementQuantity(lineItem)}" image="#{resource['default:img/plus.gif']}" />
-                        <h:commandButton alt="Decrement" action="#{cartBean.cart.decrementQuantity(lineItem)}" image="#{resource['default:img/minus.gif']}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header"><h:outputText value="Price"></h:outputText></f:facet>
-                        <h:outputText value="#{lineItem.book.price}" />
-                    </h:column>
-                </h:dataTable>
-            </h:form>
-
-            <h:dataTable id="shoppingCartTable" value="#{cartBean.cart}" var="cart" rendered="#{not empty cartBean.cart.lineItems}" 
-                         styleClass="shoppingCartTable shoppingCartTableTotal" columnClasses="shoppingCartTableRemoveCol,,,shoppingCartTablePriceCol  ">
-                <h:column>
-                    <h:outputText value="&nbsp;" />
-                </h:column>
-                <h:column>
-                    <h:outputText value="Total" />
-                </h:column>
-                <h:column>
-                    <h:outputText value="" />
-                </h:column>
-                <h:column>
-                    <h:outputText value="#{cart.totalPrice}" />
-                </h:column>
-            </h:dataTable>
-
-            <br/>
-            <h:form>
-                <h:commandLink value="#{texts.checkout}" action="#{loginBean.openAuthorized('ORDER')}"/>
+            <ui:include src="/components/cartViewComp.xhtml" >
+                <ui:param name="editable" value="true" />
+                <ui:param name="showLinks" value="true" />
+                <ui:param name="showHeader" value="true" />
+            </ui:include>
+            
+            <h:form rendered="#{not empty cartBean.cart.lineItems}">
+                <p style="text-align: right;"><h:commandLink value="#{texts.checkout} &gt;" action="#{loginBean.openAuthorized('ORDER')}"/></p>
             </h:form>
         </div>
 

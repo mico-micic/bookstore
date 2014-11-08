@@ -23,12 +23,21 @@ and open the template in the editor.
 
         <h:outputFormat value="#{texts.email}:" />
         <h:outputFormat value="#{customerBean.customer.email}" />
-        
+
     </h:panelGrid>
 
     <p><h:outputText value="#{texts.notLoggedIn}" rendered="#{empty customerBean.customer}" /></p>
-    <p><h:link outcome="/login.xhtml" rendered="#{empty customerBean.customer}">#{texts.login}</h:link></p>  
+    <p><h:link outcome="LOGIN" rendered="#{empty customerBean.customer}">#{texts.login}</h:link></p>  
 
-    <h:link outcome="/account.xhtml" rendered="#{not empty customerBean.customer}"><h:outputText value="#{texts.edit}" /></h:link>
+    <span style="float:left ">
+        <h:link outcome="ACCOUNT" rendered="#{not empty customerBean.customer}"><h:outputText value="#{texts.edit}" /></h:link>
+    </span>
+   
+    <span style="float:next ">
+        <h:form id="logoutForm" rendered="#{not empty customerBean.customer}">
+             &nbsp; | &nbsp;
+            <h:commandLink value="#{texts.logout}" action="#{loginBean.doLogout()}" />
+        </h:form>
+    </span>
 
 </ui:composition>

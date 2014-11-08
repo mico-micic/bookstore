@@ -13,33 +13,32 @@ and open the template in the editor.
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="mainbar">
-        
+
         <div class="article">
-            <h2>Search results</h2>
+            <h2>#{texts.searchResults}</h2>
             <div class="clr"></div>
 
             <h:form>
                 <h:dataTable id="searchResultsTable" styleClass="searchResultTable" value="#{catalogBean.books}" var="book" rendered="#{not empty catalogBean.books}" 
                              columnClasses=",,searchResultTableAddToCartCol">
                     <h:column>
-                        <f:facet name="header"><h:outputText value="Name"></h:outputText></f:facet>
+                        <f:facet name="header"><h:outputText value="#{texts.book}"></h:outputText></f:facet>
                         <h:commandLink value="#{book.title}" action="#{catalogBean.setBookSelection(book, 'RESULTS')}" />
                     </h:column>
                     <h:column>
-                        <f:facet name="header"><h:outputText value="Price"></h:outputText></f:facet>
+                        <f:facet name="header"><h:outputText value="#{texts.price}"></h:outputText></f:facet>
                         <h:outputText value="#{book.price}" />
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value=""></h:outputText></f:facet>
-                        <h:commandButton alt="Add to cart" action="#{cartBean.addToCart(book)}" image="#{resource['default:img/add_to_cart.png']}" />
+                        <h:commandButton alt="#{texts.addToCart}" action="#{cartBean.addToCart(book)}" image="#{resource['default:img/add_to_cart.png']}" />
                     </h:column>
                 </h:dataTable>
             </h:form>
 
             <h:outputText value="#{texts.noBooksFound}" rendered="#{empty catalogBean.books}" class="error" />
-
         </div>
-        
+
     </ui:define>
 
 </ui:composition>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"   
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:form>
+        <h:dataTable id="shoppingCartTable" value="#{cartBean.cart.lineItems}" var="lineItem" rendered="#{not empty cartBean.cart.lineItems}" 
+                     styleClass="shoppingCartTable" footerClass="shoppingCartTableTotal">
+            <h:column rendered="#{editable == true}">
+                <f:facet name="#{showHeader == null or showHeader == true ? 'header' : ''}" />
+                <div id="remove"><h:commandButton alt="#{texts.remove}" action="#{cartBean.cart.remove(lineItem)}" image="#{resource['default:img/remove.gif']}" /></div>
+            </h:column>
+            <h:column>
+                <f:facet name="#{showHeader == null or showHeader == true ? 'header' : ''}"><h:outputText value="#{texts.book}"></h:outputText></f:facet>
+                <f:facet name="footer"><h:outputText value="#{texts.total}"></h:outputText></f:facet>
+                <h:commandLink value="#{lineItem.book.title}" action="#{catalogBean.setBookSelection(lineItem.book, 'CART')}" rendered="#{showLinks == true}" />
+                <h:outputText value="#{lineItem.book.title}" rendered="#{showLinks == false}" />     
+            </h:column>
+            <h:column>
+                <f:facet name="#{showHeader == null or showHeader == true ? 'header' : ''}"><h:outputText value="#{texts.pcs}"></h:outputText></f:facet>
+                <h:outputText value="#{lineItem.quantity}" />
+                &nbsp;
+                <h:commandButton alt="Increment" action="#{cartBean.cart.incrementQuantity(lineItem)}" rendered="#{editable == true}" image="#{resource['default:img/plus.gif']}" />
+                <h:commandButton alt="Decrement" action="#{cartBean.cart.decrementQuantity(lineItem)}" rendered="#{editable == true}" image="#{resource['default:img/minus.gif']}" />
+            </h:column>
+            <h:column>
+                <f:facet name="#{showHeader == null or showHeader == true ? 'header' : ''}"><h:outputText value="#{texts.price}"></h:outputText></f:facet>
+                <f:facet name="footer"><div id="price"><h:outputText value="#{cartBean.cart.totalPrice}"></h:outputText></div></f:facet>
+                <div id="price"><h:outputText value="#{lineItem.book.price}" /></div>
+            </h:column>
+        </h:dataTable>
+    </h:form>
+
+    <h:outputText value="#{texts.cartEmpty}" rendered="#{empty cartBean.cart.lineItems}" />
+
+</ui:composition>

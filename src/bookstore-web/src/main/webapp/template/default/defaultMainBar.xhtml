@@ -6,27 +6,35 @@ and open the template in the editor.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"   
-                xmlns:ui="http://java.sun.com/jsf/facelets">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <div class="article">
-        <h2>Welcome</h2>
+        <h2>#{texts.welcome}</h2>
         <div class="clr"></div>
-        <p>Hier sollte irgend ein schlauer Text sein oder schon einige Buch-Vorschläge erscheinen. Momentan
-            kann man aber nur die Suche (rechts) verwenden.</p>
-        <p class="spec"><a href="#" class="rm">Read more &raquo;</a></p>
+        <p>Hier sollte irgend ein schlauer Text sein oder schon einige Buch-Vorschläge erscheinen. 
+            Momentan kann man aber nur die Suche (rechts) verwenden.</p>
+        <p class="spec" />
     </div>
     <div class="article">
-        <h2>Special offers</h2>
+        <h2>#{texts.specialOffers}</h2>
         <div class="clr"></div>
-        <p><span class="date">Date: <a href="#">15.03.2010</a></span> </p>
+        <p><span class="date">#{texts.date}: 15.03.2010</span> </p>
         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum. Cras id urna. 
             <a href="#">Morbi tincidunt, orci ac convallis aliquam, lectus turpis varius lorem, eu posuere nunc justo tempus leo.</a> 
             Donec mattis, purus nec placerat bibendum, dui pede condimentum odio, ac blandit ante orci ut diam. Cras fringilla magna. 
             Phasellus suscipit, leo a pharetra condimentum, lorem tellus eleifend magna, eget fringilla velit magna id neque. Curabitur 
             vel urna. In tristique orci porttitor ipsum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse 
             bibendum. Cras id urna. Morbi tincidunt, orci ac convallis aliquam.</p>
-        <p class="spec"><a href="#" class="rm">Read more &raquo;</a></p>
+        <p class="spec"><a href="#" class="rm">#{texts.readMore} &raquo;</a></p>
     </div>
-    <p class="pages"><small>Page 1 of 2 &nbsp;&nbsp;&nbsp;</small> <span>1</span> <a href="#">2</a> <a href="#">&raquo;</a></p>
+    <p class="pages">
+        <small><h:outputFormat value="#{texts.pageXofY}">
+                <f:param value="1"/>
+                <f:param value="2"/>
+            </h:outputFormat></small> <span>1</span> 
+        <a href="#">2</a> <a href="#">&raquo;</a>
+    </p>
 
 </ui:composition>

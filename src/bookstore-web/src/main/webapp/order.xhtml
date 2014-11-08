@@ -15,48 +15,30 @@ and open the template in the editor.
     <ui:define name="mainbar">
 
         <div class="article">
+
             <h2>#{texts.yourOrder}</h2>
             <div class="clr"></div>
 
             <ui:include src="/components/accountComp.xhtml" />
+
+            <h:form>
+                <h:commandLink value="#{texts.change} &gt;" action="#{customerBean.editAccount('ORDER')}" />
+            </h:form>
+
+            <p class="spec"/>
+            <h:form>
+                <ui:include src="/components/cartViewComp.xhtml" >
+                    <ui:param name="editable" value="false" />
+                    <ui:param name="showLinks" value="true" />
+                    <ui:param name="showHeader" value="true" />
+                </ui:include>
+            </h:form>
+
             <p/>
             <h:form>
-                <h:commandLink value="#{texts.change}" action="#{customerBean.editAccount('ORDER')}" />
+                <h:commandLink value="#{texts.buy} &gt;" action="#{cartBean.confirmOrder}" />
             </h:form>
-            <p/>
-            <h:form>
-                <h:dataTable id="shoppingCartTable" value="#{cartBean.cart.lineItems}" var="lineItem" rendered="#{not empty cartBean.cart.lineItems}" 
-                             styleClass="shoppingCartTable" columnClasses=",,shoppingCartTablePriceCol">
-                    <h:column>
-                        <f:facet name="header"><h:outputText value="#{texts.book}"></h:outputText></f:facet>
-                        <h:commandLink value="#{lineItem.book.title}" action="#{catalogBean.setBookSelection(lineItem.book, 'ORDER')}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header"><h:outputText value="#{texts.pcs}"></h:outputText></f:facet>
-                        <h:outputText value="#{lineItem.quantity}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header"><h:outputText value="#{texts.price}"></h:outputText></f:facet>
-                        <h:outputText value="#{lineItem.book.price}" />
-                    </h:column>
-                </h:dataTable>
-            </h:form>
-            <h:dataTable id="shoppingCartTable" value="#{cartBean.cart}" var="cart" rendered="#{not empty cartBean.cart.lineItems}" 
-                         styleClass="shoppingCartTable shoppingCartTableTotal" columnClasses=",,shoppingCartTablePriceCol  ">
-                <h:column>
-                    <h:outputText value="Total" />
-                </h:column>
-                <h:column>
-                    <h:outputText value="" />
-                </h:column>
-                <h:column>
-                    <h:outputText value="#{cart.totalPrice}" />
-                </h:column>
-            </h:dataTable>
-            <p/>
-            <h:form>
-                <h:commandLink value="#{texts.buy}" action="#{cartBean.confirmOrder}" />
-            </h:form>
+
         </div>
     </ui:define>
 

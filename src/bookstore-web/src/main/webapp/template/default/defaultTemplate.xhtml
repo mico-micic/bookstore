@@ -10,7 +10,7 @@ and open the template in the editor.
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <h:head>
-        <title>Bookstore</title>
+        <title>#{texts.book}#{texts.store}</title>
         <h:outputStylesheet library="default" name="js/qtip/jquery.qtip.min.css" />
         <h:outputStylesheet library="default" name="js/toastr.min.css" />
         <h:outputStylesheet library="default" name="style.css" />
@@ -100,20 +100,12 @@ and open the template in the editor.
                 }
             }
 
-
-
             // Grab element message elements to apply the tooltip to
             $('.elementMessage').parent().prev().qtip({
-                content: {
-                    text: $('.elementMessage').html()
-                },
-                style: {
-                    classes: 'qtip-red'
-                },
-                show: {
-                    ready: true
-                }
-            })
+                content: { text: $('.elementMessage').html() },
+                style:   { classes: 'qtip-red' },
+                show:    { ready: true }
+            });
 
         </script>
 

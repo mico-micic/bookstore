@@ -54,6 +54,9 @@ h2 {
     margin:4px 0;
     color:#323a3f;
 }
+h4 {
+    margin-bottom: 5px;
+}
 p {
     margin:8px 0;
     padding:0 0 8px 0;
@@ -384,7 +387,7 @@ table th {
     text-align: left;
     background-color: #E5E5E5;
 }
-.searchResultTable, .shoppingCartTable, .shoppingCartGadgetTable {
+.searchResultTable, .shoppingCartTable {
     width: 100%;
 }
 .searchResultTable .searchResultTableAddToCartCol {
@@ -399,18 +402,18 @@ tbody tr:nth-child(even) {
 tbody tr:hover, tbody tr:nth-child(even):hover  {
     background-color: #E3F3FA;
 }
-.shoppingCartTableRemoveCol {
-    text-align: center;
-    width: 20px;
+td #remove {
+    width: 50%; 
+    margin: 0 auto; 
 }
-.shoppingCartGadgetTableNameCol {
-    width: 160px;
-}
-.shoppingCartTablePriceCol {
+td div#price {
     text-align: right;
 }
 .shoppingCartTableTotal {
     font-weight: bold;
+}
+.shoppingCartTableTotal #price {
+    text-align: right;
 }
 .elementMessage {
     position: relative;
@@ -442,4 +445,14 @@ tbody tr:hover, tbody tr:nth-child(even):hover  {
 }
 .simpleTable {
     border-spacing: 0px;
+}
+.profileMainDiv {
+    overflow: auto; 
+    padding-bottom: 10px;
+}
+.profileMainDiv div {
+    float: left;
+}
+.profileMainDiv .creditCardDiv {
+    padding-left: 20px;
 }
