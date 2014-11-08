@@ -25,23 +25,23 @@ and open the template in the editor.
             </h:form>
             <p/>
             <h:form>
-                <h:dataTable id="shoppingCartTable" value="#{cartBean.cart.bookOrders}" var="bookOrder" rendered="#{not empty cartBean.cart.bookOrders}" 
+                <h:dataTable id="shoppingCartTable" value="#{cartBean.cart.lineItems}" var="lineItem" rendered="#{not empty cartBean.cart.lineItems}" 
                              styleClass="shoppingCartTable" columnClasses=",,shoppingCartTablePriceCol">
                     <h:column>
                         <f:facet name="header"><h:outputText value="#{texts.book}"></h:outputText></f:facet>
-                        <h:commandLink value="#{bookOrder.book.title}" action="#{catalogBean.setBookSelection(bookOrder.book, 'ORDER')}" />
+                        <h:commandLink value="#{lineItem.book.title}" action="#{catalogBean.setBookSelection(lineItem.book, 'ORDER')}" />
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="#{texts.pcs}"></h:outputText></f:facet>
-                        <h:outputText value="#{bookOrder.count}" />
+                        <h:outputText value="#{lineItem.quantity}" />
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="#{texts.price}"></h:outputText></f:facet>
-                        <h:outputText value="#{bookOrder.book.price}" />
+                        <h:outputText value="#{lineItem.book.price}" />
                     </h:column>
                 </h:dataTable>
             </h:form>
-            <h:dataTable id="shoppingCartTable" value="#{cartBean.cart}" var="cart" rendered="#{not empty cartBean.cart.bookOrders}" 
+            <h:dataTable id="shoppingCartTable" value="#{cartBean.cart}" var="cart" rendered="#{not empty cartBean.cart.lineItems}" 
                          styleClass="shoppingCartTable shoppingCartTableTotal" columnClasses=",,shoppingCartTablePriceCol  ">
                 <h:column>
                     <h:outputText value="Total" />

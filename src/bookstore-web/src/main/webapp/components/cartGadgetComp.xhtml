@@ -10,23 +10,23 @@ and open the template in the editor.
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <h2 class="star">#{texts.shoppingCart} <h:outputText value="(${cartBean.cart.bookCount})" rendered="#{not empty cartBean.cart.bookOrders}"/></h2>
+    <h2 class="star">#{texts.shoppingCart} <h:outputText value="(${cartBean.cart.totalBooksInCart})" rendered="#{not empty cartBean.cart.lineItems}"/></h2>
     <div class="clr"></div>
     
-    <h:dataTable id="shoppingCartGadgetTable" value="#{cartBean.cart.bookOrders}" var="bookOrder" rendered="#{not empty cartBean.cart.bookOrders}" 
+    <h:dataTable id="shoppingCartGadgetTable" value="#{cartBean.cart.lineItems}" var="lineItem" rendered="#{not empty cartBean.cart.lineItems}" 
                  styleClass="shoppingCartGadgetTable" columnClasses="shoppingCartGadgetTableNameCol,,shoppingCartTablePriceCol">
         <h:column>
-            <h:outputText value="#{bookOrder.book.title}" />
+            <h:outputText value="#{lineItem.book.title}" />
         </h:column>
         <h:column>
-            <h:outputText value="#{bookOrder.count} Pcs." />
+            <h:outputText value="#{lineItem.quantity} Pcs." />
         </h:column>
         <h:column>
-            <h:outputText value="#{bookOrder.book.price}" />
+            <h:outputText value="#{lineItem.book.price}" />
         </h:column>
     </h:dataTable>
 
-    <h:dataTable id="shoppingCartGadgetTableTotal" value="#{cartBean.cart}" var="cart" rendered="#{not empty cartBean.cart.bookOrders}" 
+    <h:dataTable id="shoppingCartGadgetTableTotal" value="#{cartBean.cart}" var="cart" rendered="#{not empty cartBean.cart.lineItems}" 
                  styleClass="shoppingCartGadgetTable shoppingCartTableTotal" columnClasses="shoppingCartGadgetTableNameCol,,shoppingCartTablePriceCol">
         <h:column>
             <h:outputText value="Total" />
@@ -39,10 +39,10 @@ and open the template in the editor.
         </h:column>
     </h:dataTable>
 
-    <h:outputText value="#{texts.cartEmpty}" rendered="#{empty cartBean.cart.bookOrders}" />
+    <h:outputText value="#{texts.cartEmpty}" rendered="#{empty cartBean.cart.lineItems}" />
 
     <p style="text-align: right; width: 100%;">
-        <h:outputLink value="cart.xhtml" rendered="#{not empty cartBean.cart.bookOrders}"><h:outputText value="#{texts.goToCart}" /></h:outputLink>
+        <h:outputLink value="cart.xhtml" rendered="#{not empty cartBean.cart.lineItems}"><h:outputText value="#{texts.goToCart}" /></h:outputLink>
     </p>
 
 </ui:composition>

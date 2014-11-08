@@ -19,31 +19,31 @@ and open the template in the editor.
             <div class="clr"></div>
 
             <h:form>
-                <h:dataTable id="shoppingCartTable" value="#{cartBean.cart.bookOrders}" var="bookOrder" rendered="#{not empty cartBean.cart.bookOrders}" 
+                <h:dataTable id="shoppingCartTable" value="#{cartBean.cart.lineItems}" var="lineItem" rendered="#{not empty cartBean.cart.lineItems}" 
                              styleClass="shoppingCartTable" columnClasses="shoppingCartTableRemoveCol,,,shoppingCartTablePriceCol">
                     <h:column>
                         <f:facet name="header" />
-                        <h:commandButton alt="Remove" action="#{cartBean.cart.remove(bookOrder)}" image="#{resource['default:img/remove.gif']}" />
+                        <h:commandButton alt="Remove" action="#{cartBean.cart.remove(lineItem)}" image="#{resource['default:img/remove.gif']}" />
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="#{texts.book}"></h:outputText></f:facet>
-                        <h:commandLink value="#{bookOrder.book.title}" action="#{catalogBean.setBookSelection(bookOrder.book, 'CART')}" />
+                        <h:commandLink value="#{lineItem.book.title}" action="#{catalogBean.setBookSelection(lineItem.book, 'CART')}" />
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Pcs."></h:outputText></f:facet>
-                        <h:outputText value="#{bookOrder.count}" />
+                        <h:outputText value="#{lineItem.quantity}" />
                         &nbsp;
-                        <h:commandButton alt="Increment" action="#{bookOrder.incrementCount()}" image="#{resource['default:img/plus.gif']}" />
-                        <h:commandButton alt="Decrement" action="#{bookOrder.decrementCount()}" image="#{resource['default:img/minus.gif']}" />
+                        <h:commandButton alt="Increment" action="#{cartBean.cart.incrementQuantity(lineItem)}" image="#{resource['default:img/plus.gif']}" />
+                        <h:commandButton alt="Decrement" action="#{cartBean.cart.decrementQuantity(lineItem)}" image="#{resource['default:img/minus.gif']}" />
                     </h:column>
                     <h:column>
                         <f:facet name="header"><h:outputText value="Price"></h:outputText></f:facet>
-                        <h:outputText value="#{bookOrder.book.price}" />
+                        <h:outputText value="#{lineItem.book.price}" />
                     </h:column>
                 </h:dataTable>
             </h:form>
 
-            <h:dataTable id="shoppingCartTable" value="#{cartBean.cart}" var="cart" rendered="#{not empty cartBean.cart.bookOrders}" 
+            <h:dataTable id="shoppingCartTable" value="#{cartBean.cart}" var="cart" rendered="#{not empty cartBean.cart.lineItems}" 
                          styleClass="shoppingCartTable shoppingCartTableTotal" columnClasses="shoppingCartTableRemoveCol,,,shoppingCartTablePriceCol  ">
                 <h:column>
                     <h:outputText value="&nbsp;" />

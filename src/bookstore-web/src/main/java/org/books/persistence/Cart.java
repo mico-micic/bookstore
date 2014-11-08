@@ -6,104 +6,62 @@
 package org.books.persistence;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Sigi
  */
 public class Cart implements Serializable {
 
-    private final List<BookOrder> bookOrders = new ArrayList<>();
+    private final List<LineItem> lineItems = new ArrayList<>();
 
     public void addBook(Book book) {
-        BookOrder bookOrder = new BookOrder(book);
-        if (bookOrders.contains(bookOrder)) {
-            bookOrders.get(bookOrders.indexOf(bookOrder)).incrementCount();
+                
+        LineItem existing = getExistingLineItem(book);
+
+        if (existing != null) {
+            incrementQuantity(existing);
         } else {
-            bookOrders.add(bookOrder);
+            lineItems.add(new LineItem(book, 1));
         }
     }
-
-    public List<BookOrder> getBookOrders() {
-        return bookOrders;
+    
+    private LineItem getExistingLineItem(Book book) {
+        return this.lineItems.stream().filter(item -> item.getBook().equals(book)).findFirst().orElse(null);
     }
 
-    public int getBookCount() {
-        return bookOrders.size();
+    public List<LineItem> getLineItems() {
+        return lineItems;
     }
 
-    public BigDecimal getTotalPrice() {
-        BigDecimal totalPrice = new BigDecimal(0);
-        for (BookOrder bookOrder : bookOrders) {
-            BigDecimal bookOrderPrice = bookOrder.getBook().getPrice();
-            BigDecimal orderCount = new BigDecimal(bookOrder.getCount());
-            totalPrice = totalPrice.add(bookOrderPrice.multiply(orderCount));
-        }
-        return totalPrice;
+    public int getTotalBooksInCart() {
+        return lineItems.stream().mapToInt(LineItem::getQuantity).sum();
     }
 
-    public void remove(BookOrder bookOrder) {
-        bookOrders.remove(bookOrder);
+    public double getTotalPrice() {
+        double sum = lineItems.stream()
+                .mapToDouble(item -> item.getQuantity() * item.getBook().getPrice().doubleValue())
+                .sum();
+        return Math.round(100.0 * sum) / 100.0;
+    }
+
+    public void remove(LineItem lineItem) {
+        lineItems.remove(lineItem);
     }
 
     public void reset() {
-        bookOrders.clear();
+        lineItems.clear();
     }
-
-    public class BookOrder implements Serializable {
-
-        private final Book book;
-        private final AtomicInteger count;
-
-        public BookOrder(Book book) {
-            this.book = book;
-            this.count = new AtomicInteger(1);
-        }
-
-        public Book getBook() {
-            return book;
-        }
-
-        public int getCount() {
-            return count.get();
-        }
-
-        public void incrementCount() {
-            count.incrementAndGet();
-        }
-
-        public void decrementCount() {
-            if (count.get() > 0) {
-                count.decrementAndGet();
-            }
-        }
-
-        @Override
-        public int hashCode() {
-            int hash = 3;
-            hash = 73 * hash + Objects.hashCode(this.book);
-            return hash;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (obj == null) {
-                return false;
-            }
-            if (getClass() != obj.getClass()) {
-                return false;
-            }
-            final BookOrder other = (BookOrder) obj;
-            if (!Objects.equals(this.book, other.book)) {
-                return false;
-            }
-            return true;
-        }
-
+    
+    public void incrementQuantity(LineItem item) {
+        item.setQuantity(item.getQuantity() + 1);
     }
-
+    
+    public void decrementQuantity(LineItem item) {
+        int currQuantity = item.getQuantity();
+        if (currQuantity > 1) {
+            item.setQuantity(currQuantity - 1);
+        }
+    }
 }

@@ -6,8 +6,6 @@
 package org.books.presentation;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -16,7 +14,6 @@ import org.books.application.MessageFactory;
 import org.books.application.exception.PaymentFailedException;
 import org.books.persistence.Book;
 import org.books.persistence.Cart;
-import org.books.persistence.LineItem;
 import org.books.type.EnumActionResult;
 import org.books.type.MessageKey;
 
@@ -49,13 +46,9 @@ public class CartBean implements Serializable {
         MessageFactory.info(MessageKey.BOOK_ADDED_TO_CART);
     }
 
-    public int getBooksInCart() {
-        return cart == null ? 0 : cart.getBookCount();
-    }
-
     public EnumActionResult confirmOrder() {
         try {
-            bookstore.placeOrder(customerBean.getCustomer(), toLineItems(cart.getBookOrders()));
+            bookstore.placeOrder(customerBean.getCustomer(), cart.getLineItems());
             MessageFactory.info(MessageKey.ORDER_CONFIRMED);
             cart.reset();
             return EnumActionResult.HOME;
@@ -63,13 +56,5 @@ public class CartBean implements Serializable {
             MessageFactory.error(MessageKey.ORDER_DECLINED);
             return null;
         }
-    }
-
-    private List<LineItem> toLineItems(List<Cart.BookOrder> bookOrders) {
-        List<LineItem> lineItems = new ArrayList<>();
-        for (Cart.BookOrder bookOrder : bookOrders) {
-            lineItems.add(new LineItem(bookOrder.getBook(), bookOrder.getCount()));
-        }
-        return lineItems;
     }
 }
