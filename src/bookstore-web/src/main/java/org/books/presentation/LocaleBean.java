@@ -5,20 +5,30 @@
  */
 package org.books.presentation;
 
+import java.io.Serializable;
 import java.util.Locale;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 /**
- *
+ * User locale management.
+ * 
  * @author Sigi
+ * @author Mico
  */
 @Named
-public class LocaleBean {
+@SessionScoped
+public class LocaleBean implements Serializable {
 
+    private Locale locale;
+    
     public void updateLocale(String loc) {
-        Locale locale = new Locale(loc);
+        locale = new Locale(loc);
         FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
     }
-
+    
+    public Locale getLocale() {
+        return this.locale;
+    }
 }

@@ -17,8 +17,15 @@ import org.books.type.EnumActionResult;
 import org.books.type.MessageKey;
 
 /**
- *
- * @author micic
+ * Login / logout functionality.
+ * 
+ * Use the method {@link LoginBean#openAuthorized(java.lang.String) to open a
+ * page that requires an authenticated user. If the current user is not logged
+ * id, the login page is shown automatically an the user is redirected after
+ * successful login.
+ * 
+ * @author Sigi
+ * @author Mico
  */
 @Named("loginBean")
 @SessionScoped
