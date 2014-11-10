@@ -36,13 +36,22 @@ and open the template in the editor.
                     <h:outputText value="#{texts.email}" />
                     <h:inputText value="#{customerBean.customer.email}" />
                 </h:panelGrid>
-                
+
                 <h4><h:outputText value="#{texts.creditCard}:" /></h4>
                 <h:panelGrid columns="2">
                     <h:outputText value="#{texts.type}" />
-                    <h:inputText value="#{customerBean.customer.creditCard.type}" />
-                    <h:outputText value="#{texts.number}" />
-                    <h:inputText value="#{customerBean.customer.creditCard.number}" />
+                    <h:inputText id="creditCardType" value="#{customerBean.customer.creditCard.type}" />
+                    <h:outputLabel for="creditCardNumber" value="#{texts.number}" />
+                    <h:panelGroup>
+                        <h:inputText id="creditCardNumber" value="#{customerBean.customer.creditCard.number}" label="#{texts.number}" >
+                            <f:converter converterId="org.books.presentation.converter.CreditCardNumberConverter" />
+                            <f:validateLength minimum="16" maximum="16" />
+                            <f:validator validatorId="org.books.presentation.validator.CreditCardValidator" />
+                        </h:inputText>
+                        <div class="elementMessageDiv">
+                            <h:message for="creditCardNumber" styleClass="elementMessage" showSummary="true" showDetail="false" />
+                        </div>
+                    </h:panelGroup>
                 </h:panelGrid>
                 <p/>
                 <h:commandLink value="#{texts.save}" action="#{customerBean.updateCustomer}" />

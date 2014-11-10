@@ -33,11 +33,11 @@ public class MessageFactory {
     }
 
     private static void addMessageToContext(Severity severity, String key, Object... params) {
-        FacesMessage message = createMessage(key, params, severity);
+        FacesMessage message = createMessage(severity, key, params);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
-    private static FacesMessage createMessage(String key, Object[] params, FacesMessage.Severity severity) {
+    public static FacesMessage createMessage(FacesMessage.Severity severity, String key, Object... params) {
 
         String summary = "???" + key + "???";
         String detail = null;

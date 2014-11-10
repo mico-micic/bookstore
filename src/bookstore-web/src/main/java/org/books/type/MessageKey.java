@@ -19,7 +19,8 @@ public enum MessageKey {
     BOOK_ADDED_TO_CART("org.books.presentation.CartBean.BOOK_ADDED_TO_CART"),
     ORDER_DECLINED("org.books.presentation.CartBean.ORDER_DECLINED"),
     SAVE_SUCCESSFUL("org.books.presentation.CustomerBean.SAVE_SUCCESSFUL"),
-    SAVE_UNSUCCESSFUL("org.books.presentation.CustomerBean.SAVE_UNSUCCESSFUL"),;
+    SAVE_UNSUCCESSFUL("org.books.presentation.CustomerBean.SAVE_UNSUCCESSFUL"),
+    CREDIT_CARD_NOT_VALID("org.books.presentation.validator.CreditCardValidator.CREDIT_CARD_NUMER");
 
     private final String key;
 
