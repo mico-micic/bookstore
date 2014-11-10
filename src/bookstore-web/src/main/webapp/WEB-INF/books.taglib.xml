@@ -1,6 +1,6 @@
 <facelet-taglib version="2.0" xmlns="http://java.sun.com/xml/ns/javaee" >
 
-    <namespace>http://org.books/bookstore</namespace>
+    <namespace>http://books.org/bookstore</namespace>
 
     <tag>
         <tag-name>validateCreditCard</tag-name>
