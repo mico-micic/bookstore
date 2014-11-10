@@ -17,7 +17,8 @@ import org.books.application.MessageFactory;
 import org.books.type.MessageKey;
 
 /**
- *
+ * Password validator that is able to compare two password fields.
+ * 
  * @author micic
  */
 @FacesValidator("org.books.presentation.validator.PasswordValidator")
