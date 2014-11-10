@@ -20,31 +20,74 @@ and open the template in the editor.
             <h4><h:outputText value="#{texts.yourDetails}:" /></h4>
             <h:form id="editAccount">
                 <h:panelGrid columns="2">
-                    <h:outputText value="#{texts.firstName}" />
-                    <h:inputText id="firstName" value="#{cc.attrs.value.customer.firstName}" />
-                    <h:outputText value="#{texts.lastName}" />
-                    <h:inputText id="lastName" value="#{cc.attrs.value.customer.lastName}" />
-                    <h:outputText value="#{texts.street}" />
-                    <h:inputText id="street" value="#{cc.attrs.value.customer.address.street}" />
-                    <h:outputText value="#{texts.postalCode}" />
-                    <h:inputText id="postalCode" value="#{cc.attrs.value.customer.address.postalCode}" />
-                    <h:outputText value="#{texts.city}" />
-                    <h:inputText id="city" value="#{cc.attrs.value.customer.address.city}" />
-                    <h:outputText value="#{texts.country}" />
-                    <h:inputText id="country" value="#{cc.attrs.value.customer.address.country}" />
-                    <h:outputText value="#{texts.email}" />
-                    <h:inputText id="email" value="#{cc.attrs.value.customer.email}" />
+                    
+                    <h:outputLabel for="firstName" value="#{texts.firstName}" />
+                    <h:panelGroup>
+                        <h:inputText id="firstName" value="#{cc.attrs.value.customer.firstName}" label="#{texts.firstName}" required="true" />
+                        <div class="elementMessageDiv">
+                            <h:message for="firstName" styleClass="elementMessage" />
+                        </div>
+                    </h:panelGroup>
+                    
+                    <h:outputLabel for="lastName" value="#{texts.lastName}" />
+                    <h:panelGroup>
+                        <h:inputText id="lastName" value="#{cc.attrs.value.customer.lastName}" label="#{texts.lastName}" required="true" />
+                        <div class="elementMessageDiv">
+                            <h:message for="lastName" styleClass="elementMessage" />
+                        </div>
+                    </h:panelGroup>
+                    
+                    <h:outputLabel for="street" value="#{texts.street}" />
+                    <h:panelGroup>
+                        <h:inputText id="street" value="#{cc.attrs.value.customer.address.street}" label="#{texts.street}" required="true" />
+                        <div class="elementMessageDiv">
+                            <h:message for="street" styleClass="elementMessage" />
+                        </div>
+                    </h:panelGroup>
+                    
+                    <h:outputLabel for="postalCode" value="#{texts.postalCode}" />
+                    <h:panelGroup>
+                        <h:inputText id="postalCode" value="#{cc.attrs.value.customer.address.postalCode}" label="#{texts.postalCode}" required="true" />
+                        <div class="elementMessageDiv">
+                            <h:message for="postalCode" styleClass="elementMessage" />
+                        </div>
+                    </h:panelGroup>
+                    
+                    <h:outputLabel for="city" value="#{texts.city}" />
+                    <h:panelGroup>
+                        <h:inputText id="city" value="#{cc.attrs.value.customer.address.city}" label="#{texts.city}" required="true" />
+                        <div class="elementMessageDiv">
+                            <h:message for="city" styleClass="elementMessage" />
+                        </div>
+                    </h:panelGroup>
+                    
+                    <h:outputLabel for="country" value="#{texts.country}" />
+                    <h:panelGroup>
+                        <h:inputText id="country" value="#{cc.attrs.value.customer.address.country}" label="#{texts.country}" required="true" />
+                        <div class="elementMessageDiv">
+                            <h:message for="country" styleClass="elementMessage" />
+                        </div>
+                    </h:panelGroup>
+                    
+                    <h:outputLabel for="email" value="#{texts.email}" />
+                    <h:panelGroup>
+                        <h:inputText id="email" value="#{cc.attrs.value.customer.email}" label="#{texts.email}" required="true" />
+                        <div class="elementMessageDiv">
+                            <h:message for="email" styleClass="elementMessage" />
+                        </div>
+                    </h:panelGroup>
                 </h:panelGrid>
 
                 <h:panelGroup id="passwordGroup" rendered="#{cc.attrs.isNew == true}">
                     <h4><h:outputText value="#{texts.password}:" /></h4>
                     <h:panelGrid columns="2" >
-                        <h:outputText value="#{texts.password}" />
-                        <h:inputSecret id="password" value="#{cc.attrs.value.customer.password}" />
+                        
+                        <h:outputLabel for="password" value="#{texts.password}" />
+                        <h:inputSecret id="password" value="#{cc.attrs.value.customer.password}" label="#{texts.password}" required="true" />
 
-                        <h:outputText value="#{texts.confirmPassword}" />
+                        <h:outputLabel for="passwordConfirm" value="#{texts.confirmPassword}" />
                         <h:panelGroup>
-                            <h:inputSecret id="passwordConfirm" value="#{cc.attrs.value.customer.password}">
+                            <h:inputSecret id="passwordConfirm" value="#{cc.attrs.value.customer.password}" label="#{texts.confirmPassword}" required="true">
                                 <b:validatePassword firstPassFieldId="password" />
                             </h:inputSecret>
                             <div class="elementMessageDiv">
@@ -56,8 +99,10 @@ and open the template in the editor.
 
                 <h4><h:outputText value="#{texts.creditCard}:" /></h4>
                 <h:panelGrid id="creditCard" columns="2">
-                    <h:outputText value="#{texts.type}" />
+                    
+                    <h:outputLabel for="creditCardType" value="#{texts.type}" />
                     <h:inputText id="creditCardType" value="#{cc.attrs.value.customer.creditCard.type}" />
+                    
                     <h:outputLabel for="creditCardNumber" value="#{texts.number}" />
                     <h:panelGroup>
                         <h:inputText id="creditCardNumber" value="#{cc.attrs.value.customer.creditCard.number}" label="#{texts.number}" >
