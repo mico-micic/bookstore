@@ -76,6 +76,7 @@ public class LoginBean implements Serializable {
             try {
                 customer = bookstore.authenticateCustomer(this.email, this.password);
                 this.customerBean.setCustomer(customer);
+                this.customerBean.setLoggedIn(true);
             } catch (InvalidCredentialsException ex) {
                 MessageFactory.error(MessageKey.INVALID_USER);
                 return null;
@@ -91,6 +92,7 @@ public class LoginBean implements Serializable {
     
     public EnumActionResult doLogout() {
         this.customerBean.setCustomer(null);
+        this.customerBean.setLoggedIn(false);
         MessageFactory.info(MessageKey.LOGOUT_SUCCESS);
         return EnumActionResult.HOME;
     }

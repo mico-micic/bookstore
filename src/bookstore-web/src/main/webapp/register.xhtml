@@ -15,16 +15,13 @@ and open the template in the editor.
     <ui:define name="mainbar">
 
         <div class="article">
-            <h2>#{texts.profile}</h2>
+            <h2>#{texts.register}</h2>
             <div class="clr"></div>
 
             <ui:include src="/components/accountEditComp.xhtml">
-                <ui:param name="isNew" value="false" />
+                <ui:param name="isNew" value="true" />
             </ui:include>
-
-            <h:form>
-                <h:commandLink value="#{texts.back}" action="#{customerBean.navigateBack}" />
-            </h:form>
+            
         </div>
     </ui:define>
 

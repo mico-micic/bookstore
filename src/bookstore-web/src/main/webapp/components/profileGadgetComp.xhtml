@@ -13,7 +13,7 @@ and open the template in the editor.
     <h2 class="star">#{texts.yourProfile}</h2>
     <div class="clr"></div>
 
-    <h:panelGrid columns="2" styleClass="simpleTable" rendered="#{not empty customerBean.customer}">
+    <h:panelGrid columns="2" styleClass="simpleTable" rendered="#{customerBean.loggedIn == true}">
 
         <h:outputFormat value="#{texts.firstName}:" />
         <h:outputFormat value="#{customerBean.customer.firstName}" />
@@ -26,17 +26,23 @@ and open the template in the editor.
 
     </h:panelGrid>
 
-    <p><h:outputText value="#{texts.notLoggedIn}" rendered="#{empty customerBean.customer}" /></p>
-    <p><h:link outcome="LOGIN" rendered="#{empty customerBean.customer}">#{texts.login}</h:link></p>  
+    <p><h:outputText value="#{texts.notLoggedIn}" rendered="#{customerBean.loggedIn == false}" /></p>
+    <p>
+        <span style="float:left ">
+            <h:link outcome="LOGIN" rendered="#{customerBean.loggedIn == false}">#{texts.login}</h:link>
+        </span>
+        <h:outputFormat style="float:next" rendered="#{customerBean.loggedIn == false}">
+            &nbsp; | &nbsp;<h:link outcome="REGISTER">#{texts.register}</h:link>
+        </h:outputFormat>
+    </p>
 
     <span style="float:left ">
-        <h:link outcome="ACCOUNT" rendered="#{not empty customerBean.customer}"><h:outputText value="#{texts.edit}" /></h:link>
+        <h:link outcome="ACCOUNT" rendered="#{customerBean.loggedIn == true}"><h:outputText value="#{texts.edit}" /></h:link>
     </span>
-   
+
     <span style="float:next ">
-        <h:form id="logoutForm" rendered="#{not empty customerBean.customer}">
-             &nbsp; | &nbsp;
-            <h:commandLink value="#{texts.logout}" action="#{loginBean.doLogout()}" />
+        <h:form id="logoutForm" rendered="#{customerBean.loggedIn == true}">
+            &nbsp; | &nbsp;<h:commandLink value="#{texts.logout}" action="#{loginBean.doLogout()}" />
         </h:form>
     </span>
 

@@ -29,8 +29,18 @@ public class CustomerBean implements Serializable {
     @Inject
     private Bookstore bookstore;
 
+    private boolean loggedIn = false;
+
     private Customer customer;
     private String wayBack;
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
 
     public List<Order> getAllOrdersOfYear(Integer year) {
         return bookstore.searchOrders(customer, year);
@@ -50,6 +60,10 @@ public class CustomerBean implements Serializable {
             MessageFactory.error(MessageKey.SAVE_UNSUCCESSFUL);
             return null;
         }
+    }
+
+    public EnumActionResult createCustomer() {
+        return null;
     }
 
     public Customer getCustomer() {
