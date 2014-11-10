@@ -53,7 +53,6 @@ and open the template in the editor.
                     <f:converter converterId="org.books.presentation.converter.CreditCardNumberConverter" />
                     <f:validateLength minimum="16" maximum="16" />
                     <b:validateCreditCard cardTypeFieldId="creditCardType" />
-                    <f:validator validatorId="org.books.presentation.validator.CreditCardValidator" />
                 </h:inputText>
                 <div class="elementMessageDiv">
                     <h:message for="creditCardNumber" styleClass="elementMessage" showSummary="true" showDetail="false" />

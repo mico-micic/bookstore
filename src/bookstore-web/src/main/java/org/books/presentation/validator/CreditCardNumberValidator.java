@@ -8,6 +8,7 @@ package org.books.presentation.validator;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
@@ -31,10 +32,14 @@ public class CreditCardNumberValidator implements Validator, StateHolder {
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         String number = String.valueOf(value);
-        checkLuhnDigit(number);
 
-        UIComponent cardTypeComponent = context.getViewRoot().findComponent(cardTypeFieldId);
-        Object fieldValue = cardTypeComponent.getAttributes().get("value");
+        checkLuhnDigit(number);
+        checkCartTypeFormat(component, number);
+    }
+
+    private void checkCartTypeFormat(UIComponent component, String number) {
+        UIInput cardTypeComponent = (UIInput) component.findComponent(cardTypeFieldId);
+        String fieldValue = String.valueOf(cardTypeComponent.getValue());
         CreditCard.Type cardType = CreditCard.Type.valueOf(String.valueOf(fieldValue));
         if (CreditCard.Type.MasterCard == cardType) {
             assertThatNumberMatches(number, MASTERCARD_PATTERN);
@@ -62,6 +67,10 @@ public class CreditCardNumberValidator implements Validator, StateHolder {
 
     private FacesMessage getMessage() {
         return MessageFactory.createMessage(FacesMessage.SEVERITY_ERROR, MessageKey.CREDIT_CARD_NOT_VALID.value());
+    }
+
+    public void setCardTypeFieldId(String cardTypeFieldId) {
+        this.cardTypeFieldId = cardTypeFieldId;
     }
 
     @Override
