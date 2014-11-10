@@ -7,6 +7,8 @@ package org.books.presentation;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -63,8 +65,18 @@ public class CustomerBean implements Serializable {
     }
 
     public EnumActionResult createCustomer() {
-        this.setLoggedIn(true);
-        return EnumActionResult.HOME;
+        
+        try {
+            bookstore.registerCustomer(this.customer);
+            MessageFactory.info(MessageKey.REGISTRATION_SUCCESSFUL);
+            this.setLoggedIn(true);
+            return EnumActionResult.ACCOUNT;
+        } catch (EmailAlreadyUsedException ex) {
+            Logger.getLogger(CustomerBean.class.getName()).log(Level.SEVERE, null, ex);
+            MessageFactory.info(MessageKey.EMAIL_ALREADY_EXISTS);
+            
+            return null;
+        }
     }
 
     public Customer getCustomer() {

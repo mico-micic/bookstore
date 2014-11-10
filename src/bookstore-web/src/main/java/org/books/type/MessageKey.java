@@ -20,6 +20,8 @@ public enum MessageKey {
     ORDER_DECLINED("org.books.presentation.CartBean.ORDER_DECLINED"),
     SAVE_SUCCESSFUL("org.books.presentation.CustomerBean.SAVE_SUCCESSFUL"),
     SAVE_UNSUCCESSFUL("org.books.presentation.CustomerBean.SAVE_UNSUCCESSFUL"),
+    REGISTRATION_SUCCESSFUL("org.books.presentation.CustomerBean.REGISTRATION_SUCCESSFUL"),
+    EMAIL_ALREADY_EXISTS("org.books.presentation.CustomerBean.EMAIL_ALREADY_EXISTS"),
     CREDIT_CARD_NOT_VALID("org.books.presentation.validator.CreditCardValidator.CREDIT_CARD_NUMER");
 
     private final String key;

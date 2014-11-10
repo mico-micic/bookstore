@@ -61,7 +61,7 @@ public class LoginBean implements Serializable {
 
         this.nextPage = nextPage;
 
-        if (this.customerBean.getCustomer() == null) {
+        if (!this.customerBean.isLoggedIn()) {
             return EnumActionResult.LOGIN;
         } else {
             return EnumActionResult.valueOf(nextPage);
@@ -70,11 +70,9 @@ public class LoginBean implements Serializable {
 
     public EnumActionResult doLogin() {
 
-        Customer customer = this.customerBean.getCustomer();
-
-        if (customer == null) {
+        if (!this.customerBean.isLoggedIn()) {
             try {
-                customer = bookstore.authenticateCustomer(this.email, this.password);
+                Customer customer = bookstore.authenticateCustomer(this.email, this.password);
                 this.customerBean.setCustomer(customer);
                 this.customerBean.setLoggedIn(true);
             } catch (InvalidCredentialsException ex) {
