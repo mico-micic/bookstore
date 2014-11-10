@@ -40,11 +40,19 @@ public class CreditCardNumberValidator implements Validator, StateHolder {
     private void checkCartTypeFormat(UIComponent component, String number) {
         UIInput cardTypeComponent = (UIInput) component.findComponent(cardTypeFieldId);
         String fieldValue = String.valueOf(cardTypeComponent.getValue());
-        CreditCard.Type cardType = CreditCard.Type.valueOf(String.valueOf(fieldValue));
+        CreditCard.Type cardType = convertToEnum(fieldValue);
         if (CreditCard.Type.MasterCard == cardType) {
             assertThatNumberMatches(number, MASTERCARD_PATTERN);
         } else {
             assertThatNumberMatches(number, VISACARD_PATTERN);
+        }
+    }
+
+    private CreditCard.Type convertToEnum(String fieldValue) throws ValidatorException {
+        try {
+            return CreditCard.Type.valueOf(String.valueOf(fieldValue));
+        } catch (IllegalArgumentException | NullPointerException e) {
+            throw new ValidatorException(getMessage());
         }
     }
 

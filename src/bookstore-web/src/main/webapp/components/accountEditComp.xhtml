@@ -13,25 +13,25 @@ and open the template in the editor.
                 xmlns:b="http://org.books/bookstore">
 
     <h4><h:outputText value="#{texts.yourDetails}:" /></h4>
-    <h:form>
+    <h:form id="editAccount">
         <h:panelGrid columns="2">
             <h:outputText value="#{texts.firstName}" />
-            <h:inputText value="#{customerBean.customer.firstName}" />
+            <h:inputText id="firstName" value="#{customerBean.customer.firstName}" />
             <h:outputText value="#{texts.lastName}" />
-            <h:inputText value="#{customerBean.customer.lastName}" />
+            <h:inputText id="lastName" value="#{customerBean.customer.lastName}" />
             <h:outputText value="#{texts.street}" />
-            <h:inputText value="#{customerBean.customer.address.street}" />
+            <h:inputText id="street" value="#{customerBean.customer.address.street}" />
             <h:outputText value="#{texts.postalCode}" />
-            <h:inputText value="#{customerBean.customer.address.postalCode}" />
+            <h:inputText id="postalCode" value="#{customerBean.customer.address.postalCode}" />
             <h:outputText value="#{texts.city}" />
-            <h:inputText value="#{customerBean.customer.address.city}" />
+            <h:inputText id="city" value="#{customerBean.customer.address.city}" />
             <h:outputText value="#{texts.country}" />
-            <h:inputText value="#{customerBean.customer.address.country}" />
+            <h:inputText id="country" value="#{customerBean.customer.address.country}" />
             <h:outputText value="#{texts.email}" />
-            <h:inputText value="#{customerBean.customer.email}" />
+            <h:inputText id="email" value="#{customerBean.customer.email}" />
         </h:panelGrid>
 
-        <h:panelGroup rendered="#{isNew == true}">
+        <h:panelGroup id="passwordGroup" rendered="#{isNew == true}">
             <h4><h:outputText value="#{texts.password}:" /></h4>
             <h:panelGrid columns="2" >
                 <h:outputText value="#{texts.password}" />
@@ -50,7 +50,7 @@ and open the template in the editor.
         </h:panelGroup>
 
         <h4><h:outputText value="#{texts.creditCard}:" /></h4>
-        <h:panelGrid columns="2">
+        <h:panelGrid id="creditCard" columns="2">
             <h:outputText value="#{texts.type}" />
             <h:inputText id="creditCardType" value="#{customerBean.customer.creditCard.type}" />
             <h:outputLabel for="creditCardNumber" value="#{texts.number}" />
