@@ -6,25 +6,41 @@
 package org.books.presentation.validator;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
-import javax.inject.Inject;
-import org.books.application.Bookstore;
 import org.books.application.MessageFactory;
+import org.books.persistence.CreditCard;
 import org.books.type.MessageKey;
 
 /**
  * @author Sigi
  */
 @FacesValidator("org.books.presentation.validator.CreditCardValidator")
-public class CreditCardNumberValidator implements Validator {
+public class CreditCardNumberValidator implements Validator, StateHolder {
+
+    private static final String VISACARD_PATTERN = "4[0-3]d{14}";
+    private static final String MASTERCARD_PATTERN = "5[0-5]d{14}";
+
+    private String cardTypeFieldId;
+    private boolean isTransient; // false := default
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        checkLuhnDigit(String.valueOf(value));
+        String number = String.valueOf(value);
+        checkLuhnDigit(number);
+
+        UIComponent cardTypeComponent = context.getViewRoot().findComponent(cardTypeFieldId);
+        Object fieldValue = cardTypeComponent.getAttributes().get("value");
+        CreditCard.Type cardType = CreditCard.Type.valueOf(String.valueOf(fieldValue));
+        if (CreditCard.Type.MasterCard == cardType) {
+            assertThatNumberMatches(number, MASTERCARD_PATTERN);
+        } else {
+            assertThatNumberMatches(number, VISACARD_PATTERN);
+        }
     }
 
     private void checkLuhnDigit(String number) throws ValidatorException {
@@ -46,6 +62,32 @@ public class CreditCardNumberValidator implements Validator {
 
     private FacesMessage getMessage() {
         return MessageFactory.createMessage(FacesMessage.SEVERITY_ERROR, MessageKey.CREDIT_CARD_NOT_VALID.value());
+    }
+
+    @Override
+    public Object saveState(FacesContext context) {
+        return cardTypeFieldId;
+    }
+
+    @Override
+    public void restoreState(FacesContext context, Object state) {
+        cardTypeFieldId = String.valueOf(state);
+    }
+
+    @Override
+    public boolean isTransient() {
+        return isTransient;
+    }
+
+    @Override
+    public void setTransient(boolean newTransientValue) {
+        isTransient = newTransientValue;
+    }
+
+    private void assertThatNumberMatches(String number, String pattern) {
+        if (!number.matches(pattern)) {
+            throw new ValidatorException(getMessage());
+        }
     }
 
 }
