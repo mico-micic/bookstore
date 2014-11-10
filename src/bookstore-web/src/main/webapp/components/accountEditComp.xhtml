@@ -9,7 +9,8 @@ and open the template in the editor.
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"   
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:b="http://org.books/bookstore">
 
     <h4><h:outputText value="#{texts.yourDetails}:" /></h4>
     <h:form>
@@ -39,6 +40,7 @@ and open the template in the editor.
                 <h:inputText id="creditCardNumber" value="#{customerBean.customer.creditCard.number}" label="#{texts.number}" >
                     <f:converter converterId="org.books.presentation.converter.CreditCardNumberConverter" />
                     <f:validateLength minimum="16" maximum="16" />
+                    <b:validateCreditCard cardTypeFieldId="creditCardType" />
                     <f:validator validatorId="org.books.presentation.validator.CreditCardValidator" />
                 </h:inputText>
                 <div class="elementMessageDiv">
