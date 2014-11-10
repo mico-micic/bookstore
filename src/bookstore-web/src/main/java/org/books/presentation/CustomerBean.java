@@ -63,10 +63,14 @@ public class CustomerBean implements Serializable {
     }
 
     public EnumActionResult createCustomer() {
-        return null;
+        this.setLoggedIn(true);
+        return EnumActionResult.HOME;
     }
 
     public Customer getCustomer() {
+        if (this.customer == null) {
+            this.customer = new Customer();
+        }
         return customer;
     }
 
