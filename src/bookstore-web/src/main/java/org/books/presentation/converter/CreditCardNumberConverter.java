@@ -20,7 +20,7 @@ public class CreditCardNumberConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) throws ConverterException {
-        return value.replaceAll("[ ]", "");
+        return value.replaceAll("(\\s+|[\\-])", "");
     }
 
     @Override
