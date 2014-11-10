@@ -20,10 +20,7 @@ import org.books.type.MessageKey;
  * @author Sigi
  */
 @FacesValidator("org.books.presentation.validator.CreditCardValidator")
-public class CreditCardValidator implements Validator {
-
-    @Inject
-    private Bookstore bookstore;
+public class CreditCardNumberValidator implements Validator {
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
@@ -31,6 +28,9 @@ public class CreditCardValidator implements Validator {
     }
 
     private void checkLuhnDigit(String number) throws ValidatorException {
+        if (!number.matches("\\d+")) {
+            throw new ValidatorException(getMessage());
+        }
         int sum = 0;
         for (int i = 0; i < number.length(); i++) {
             int d = Character.digit(number.charAt(i), 10);
