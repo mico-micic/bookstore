@@ -8,16 +8,16 @@ and open the template in the editor.
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"   
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:cc="http://xmlns.jcp.org/jsf/composite/component">
 
     <h2 class="star">#{texts.shoppingCart} <h:outputText value="(${cartBean.cart.totalBooksInCart})" rendered="#{not empty cartBean.cart.lineItems}"/></h2>
     <div class="clr"></div>
 
-    <ui:include src="/components/cartViewComp.xhtml" >
-        <ui:param name="editable" value="false" />
-        <ui:param name="showLinks" value="false" />
-        <ui:param name="showHeader" value="false" />
-    </ui:include>
+    <cc:cartView value="#{cartBean.cart}" 
+                 editable="false" 
+                 showLinks="false" 
+                 showHeader="false" />
 
     <p style="text-align: right; width: 100%;">
         <h:link outcome="CART" rendered="#{not empty cartBean.cart.lineItems}"><h:outputText value="#{texts.goToCart} &gt;" /></h:link>

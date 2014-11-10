@@ -10,7 +10,8 @@ and open the template in the editor.
                 xmlns="http://www.w3.org/1999/xhtml"   
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:cc="http://xmlns.jcp.org/jsf/composite/component">
 
     <ui:define name="mainbar">
 
@@ -26,14 +27,11 @@ and open the template in the editor.
             </h:form>
 
             <p class="spec"/>
-            <h:form>
-                <ui:include src="/components/cartViewComp.xhtml" >
-                    <ui:param name="editable" value="false" />
-                    <ui:param name="showLinks" value="true" />
-                    <ui:param name="showHeader" value="true" />
-                </ui:include>
-            </h:form>
-
+            <cc:cartView value="#{cartBean.cart}" 
+                         editable="false" 
+                         showLinks="true" 
+                         showHeader="true"
+                         bookSelectionMethod="#{catalogBean.setBookSelection(lineItem.book, 'ORDER')}"/>
             <p/>
             <h:form>
                 <h:commandLink value="#{texts.buy} &gt;" action="#{cartBean.confirmOrder}" />

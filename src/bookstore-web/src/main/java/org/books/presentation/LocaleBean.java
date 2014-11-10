@@ -21,7 +21,7 @@ import javax.inject.Named;
 @SessionScoped
 public class LocaleBean implements Serializable {
 
-    private Locale locale;
+    private Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
     
     public void updateLocale(String loc) {
         locale = new Locale(loc);

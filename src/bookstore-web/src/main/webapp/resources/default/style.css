@@ -387,7 +387,7 @@ table th {
     text-align: left;
     background-color: #E5E5E5;
 }
-.searchResultTable, .shoppingCartTable {
+.searchResultTable {
     width: 100%;
 }
 .searchResultTable .searchResultTableAddToCartCol {
@@ -409,12 +409,7 @@ td #remove {
 td div#price {
     text-align: right;
 }
-.shoppingCartTableTotal {
-    font-weight: bold;
-}
-.shoppingCartTableTotal #price {
-    text-align: right;
-}
+
 .elementMessage {
     position: relative;
     display: none;
