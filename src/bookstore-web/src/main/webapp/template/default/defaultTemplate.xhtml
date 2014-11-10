@@ -104,10 +104,12 @@ and open the template in the editor.
                 }
 
                 // Grab element message elements to apply the tooltip to
-                $('.elementMessage').parent().prev().qtip({
-                    content: {text: $('.elementMessage').html()},
-                    style: {classes: 'qtip-red'},
-                    show: {ready: true}
+                $('.elementMessage').each(function (idx, obj) {
+                    $(obj).parent().prev().qtip({
+                        content: {text: $(obj).html()},
+                        style: {classes: 'qtip-red'},
+                        show: {ready: true}
+                    });
                 });
 
             </script>
