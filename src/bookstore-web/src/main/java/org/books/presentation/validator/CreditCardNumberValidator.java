@@ -23,8 +23,8 @@ import org.books.type.MessageKey;
 @FacesValidator("org.books.presentation.validator.CreditCardValidator")
 public class CreditCardNumberValidator implements Validator, StateHolder {
 
-    private static final String VISACARD_PATTERN = "4[0-3]d{14}";
-    private static final String MASTERCARD_PATTERN = "5[0-5]d{14}";
+    private static final String VISACARD_PATTERN = "4[0-3]\\d{14}";
+    private static final String MASTERCARD_PATTERN = "5[0-5]\\d{14}";
 
     private String cardTypeFieldId;
     private boolean isTransient; // false := default
