@@ -35,11 +35,17 @@ and open the template in the editor.
             <h4><h:outputText value="#{texts.password}:" /></h4>
             <h:panelGrid columns="2" >
                 <h:outputText value="#{texts.password}" />
-                <h:inputText id="password" value="#{customerBean.customer.password}" />
+                <h:inputSecret id="password" value="#{customerBean.customer.password}" />
+
                 <h:outputText value="#{texts.confirmPassword}" />
-                <h:inputText id="passwordConfirm" value="#{customerBean.customer.password}">
-                    <!--<b:PasswordValidator firstPassFieldId="password">-->
-                </h:inputText>
+                <h:panelGroup>
+                    <h:inputSecret id="passwordConfirm" value="#{customerBean.customer.password}">
+                        <b:validatePassword firstPassFieldId="password" />
+                    </h:inputSecret>
+                    <div class="elementMessageDiv">
+                        <h:message for="passwordConfirm" styleClass="elementMessage" />
+                    </div>
+                </h:panelGroup>
             </h:panelGrid>
         </h:panelGroup>
 

@@ -10,5 +10,13 @@
             </validator-id>
         </validator>
     </tag>
+    <tag>
+        <tag-name>validatePassword</tag-name>
+        <validator>
+            <validator-id>
+                org.books.presentation.validator.PasswordValidator
+            </validator-id>
+        </validator>
+    </tag>
     
 </facelet-taglib>

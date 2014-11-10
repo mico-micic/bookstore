@@ -17,7 +17,8 @@ import org.books.application.MessageFactory;
 import org.books.type.MessageKey;
 
 /**
- *
+ * Password validator that is able to compare two password fields.
+ * 
  * @author micic
  */
 @FacesValidator("org.books.presentation.validator.PasswordValidator")
@@ -31,7 +32,7 @@ public class PasswordValidator implements Validator, StateHolder {
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 
         if (firstPassFieldId != null) {
-            UIComponent comp = context.getViewRoot().findComponent(firstPassFieldId);
+            UIComponent comp = component.findComponent(firstPassFieldId);
             if (comp != null && comp instanceof UIInput) {
                 String compValue = (String) ((UIInput) comp).getValue();
                 if (!value.equals(compValue)) {
@@ -40,6 +41,10 @@ public class PasswordValidator implements Validator, StateHolder {
                 }
             }
         }
+    }
+
+    public void setFirstPassFieldId(String id) {
+        firstPassFieldId = id;
     }
 
     @Override
