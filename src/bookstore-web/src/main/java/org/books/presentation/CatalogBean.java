@@ -18,7 +18,10 @@ import org.books.persistence.Book;
 import org.books.type.MessageKey;
 
 /**
- * @author micic
+ * Bean providing methods to search and look up books.
+ * 
+ * @author Sigi
+ * @author Mico
  */
 @Named("catalogBean")
 @SessionScoped
@@ -70,7 +73,6 @@ public class CatalogBean implements Serializable {
     }
 
     public EnumActionResult findBook() {
-
         try {
             book = bookstore.findBook(isbn);
         } catch (BookNotFoundException ex) {
@@ -83,7 +85,6 @@ public class CatalogBean implements Serializable {
     public EnumActionResult searchBooks() {
 
         EnumActionResult ret;
-        books = null;
 
         books = this.bookstore.searchBooks(this.searchKey);
 

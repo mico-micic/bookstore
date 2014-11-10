@@ -12,7 +12,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.books.application.Bookstore;
 import org.books.application.MessageFactory;
-import org.books.application.exception.CustomerNotFoundException;
 import org.books.application.exception.EmailAlreadyUsedException;
 import org.books.persistence.Customer;
 import org.books.persistence.Order;
@@ -21,6 +20,7 @@ import org.books.type.MessageKey;
 
 /**
  * @author Sigi
+ * @author Mico
  */
 @Named
 @SessionScoped
@@ -31,14 +31,6 @@ public class CustomerBean implements Serializable {
 
     private Customer customer;
     private String wayBack;
-
-    public void findCustomer() {
-        try {
-            customer = bookstore.findCustomer("alice@example.org");
-        } catch (CustomerNotFoundException ex) {
-            // TODO
-        }
-    }
 
     public List<Order> getAllOrdersOfYear(Integer year) {
         return bookstore.searchOrders(customer, year);
@@ -74,5 +66,4 @@ public class CustomerBean implements Serializable {
         }
         return EnumActionResult.valueOf(wayBack);
     }
-
 }

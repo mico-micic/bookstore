@@ -18,8 +18,16 @@ import org.books.type.EnumActionResult;
 import org.books.type.MessageKey;
 
 /**
+ * Bean containing the shopping cart functionality. 
+ * 
+ * The book orders are stored in the persistence class {@link Cart} and
+ * handled by {@link Bookstore}.
+ * 
+ * @see Cart
+ * @see Bookstore
  *
- * @author micic
+ * @author Sigi
+ * @author Mico
  */
 @Named("cartBean")
 @SessionScoped

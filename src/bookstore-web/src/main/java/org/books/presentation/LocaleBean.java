@@ -12,18 +12,23 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 /**
- *
+ * User locale management.
+ * 
  * @author Sigi
+ * @author Mico
  */
 @Named
 @SessionScoped
 public class LocaleBean implements Serializable {
 
     private Locale locale;
-
+    
     public void updateLocale(String loc) {
         locale = new Locale(loc);
         FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
     }
-
+    
+    public Locale getLocale() {
+        return this.locale;
+    }
 }

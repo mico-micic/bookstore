@@ -5,109 +5,114 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <h:head>
-        <title>#{texts.book}#{texts.store}</title>
-        <h:outputStylesheet library="default" name="js/qtip/jquery.qtip.min.css" />
-        <h:outputStylesheet library="default" name="js/toastr.min.css" />
-        <h:outputStylesheet library="default" name="style.css" />
-        <h:outputScript library="default" name="js/cufon-yui.js" />
-        <h:outputScript library="default" name="js/arial.js" />
-        <h:outputScript library="default" name="js/cuf_run.js" />
-        <h:outputScript library="default" name="js/jquery-2.1.1.min.js" />
-        <h:outputScript library="default" name="js/radius.js" />
-        <h:outputScript library="default" name="js/qtip/jquery.qtip.min.js" />
-        <h:outputScript library="default" name="js/toastr.min.js" />
+    <f:view locale="#{localeBean.locale}">
+        <h:head>
+            <title>#{texts.book}#{texts.store}</title>
+            <h:outputStylesheet library="default" name="js/qtip/jquery.qtip.min.css" />
+            <h:outputStylesheet library="default" name="js/toastr.min.css" />
+            <h:outputStylesheet library="default" name="style.css" />
+            <h:outputScript library="default" name="js/cufon-yui.js" />
+            <h:outputScript library="default" name="js/arial.js" />
+            <h:outputScript library="default" name="js/cuf_run.js" />
+            <h:outputScript library="default" name="js/jquery-2.1.1.min.js" />
+            <h:outputScript library="default" name="js/radius.js" />
+            <h:outputScript library="default" name="js/qtip/jquery.qtip.min.js" />
+            <h:outputScript library="default" name="js/toastr.min.js" />
 
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    </h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        </h:head>
 
-    <h:body>
+        <h:body>
 
-        <div class="main">
+            <div class="main">
 
-            <div class="header">
-                <ui:insert name="header" >
-                    <ui:include src="/template/default/defaultHeader.xhtml" />
-                </ui:insert>
+                <div class="header">
+                    <ui:insert name="header" >
+                        <ui:include src="/template/default/defaultHeader.xhtml" />
+                    </ui:insert>
+                </div>
+
+                <div class="content">
+                    <ui:insert name="content" >
+                        <ui:include src="/template/default/defaultContent.xhtml" />
+                    </ui:insert>
+                </div>
+
+                <div class="preFooter">
+                    <ui:insert name="preFooter" >
+                        <ui:include src="/template/default/defaultPreFooter.xhtml" />
+                    </ui:insert>
+                </div>
+
+                <div class="footer">
+                    <ui:insert name="footer" >
+                        <ui:include src="/template/default/defaultFooter.xhtml" />
+                    </ui:insert>
+                </div>
             </div>
 
-            <div class="content">
-                <ui:insert name="content" >
-                    <ui:include src="/template/default/defaultContent.xhtml" />
-                </ui:insert>
+            <div id="globalMessages" style="visibility: hidden;">
+                <h:messages globalOnly="true" errorClass="globalMsgErr" infoClass="globalMsgInfo" fatalClass="globalMsgErr" warnClass="globalMsgWarn" />
             </div>
 
-            <div class="preFooter">
-                <ui:insert name="preFooter" >
-                    <ui:include src="/template/default/defaultPreFooter.xhtml" />
-                </ui:insert>
-            </div>
+            <script>
 
-            <div class="footer">
-                <ui:insert name="footer" >
-                    <ui:include src="/template/default/defaultFooter.xhtml" />
-                </ui:insert>
-            </div>
-        </div>
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "positionClass": "toast-bottom-full-width",
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "15000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
 
-        <div id="globalMessages" style="visibility: hidden;">
-            <h:messages globalOnly="true" errorClass="globalMsgErr" infoClass="globalMsgInfo" fatalClass="globalMsgErr" warnClass="globalMsgWarn" />
-        </div>
+                // Grap global message elements to show global notification
+                $('#globalMessages').find('.globalMsgErr').each(function () {
+                    showGlobalMessage(toastr, 'error', $(this).html().trim())
+                });
 
-        <script>
+                $('#globalMessages').find('.globalMsgInfo').each(function () {
+                    showGlobalMessage(toastr, 'info', $(this).html().trim())
+                });
 
-            toastr.options = {
-                "closeButton": false,
-                "debug": false,
-                "positionClass": "toast-bottom-full-width",
-                "onclick": null,
-                "showDuration": "300",
-                "hideDuration": "1000",
-                "timeOut": "15000",
-                "extendedTimeOut": "1000",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            }
+                $('#globalMessages').find('.globalMsgWarn').each(function () {
+                    showGlobalMessage(toastr, 'warn', $(this).html().trim())
+                });
 
-            // Grap global message elements to show global notification
-            $('#globalMessages').find('.globalMsgErr').each(function () {
-                showGlobalMessage(toastr, 'error', $(this).html().trim())
-            });
-
-            $('#globalMessages').find('.globalMsgInfo').each(function () {
-                showGlobalMessage(toastr, 'info', $(this).html().trim())
-            });
-
-            $('#globalMessages').find('.globalMsgWarn').each(function () {
-                showGlobalMessage(toastr, 'warn', $(this).html().trim())
-            });
-
-            function showGlobalMessage(toastr, type, html) {
-                if (html !== "") {
-                    if (type === "info") {
-                        toastr.info(html);
-                    } else if (type === "error") {
-                        toastr.error(html);
-                    } else if (type === "warn") {
-                        toastr.warning(html);
+                function showGlobalMessage(toastr, type, html) {
+                    if (html !== "") {
+                        if (type === "info") {
+                            toastr.info(html);
+                        } else if (type === "error") {
+                            toastr.error(html);
+                        } else if (type === "warn") {
+                            toastr.warning(html);
+                        }
                     }
                 }
-            }
 
-            // Grab element message elements to apply the tooltip to
-            $('.elementMessage').parent().prev().qtip({
-                content: { text: $('.elementMessage').html() },
-                style:   { classes: 'qtip-red' },
-                show:    { ready: true }
-            });
+                // Grab element message elements to apply the tooltip to
+                $('.elementMessage').parent().prev().qtip({
+                    content: {text: $('.elementMessage').html()},
+                    style: {classes: 'qtip-red'},
+                    show: {ready: true}
+                });
 
-        </script>
+            </script>
 
-    </h:body>
+        </h:body>
+
+    </f:view>
 </html>
