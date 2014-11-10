@@ -31,7 +31,7 @@ public class PasswordValidator implements Validator, StateHolder {
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 
         if (firstPassFieldId != null) {
-            UIComponent comp = context.getViewRoot().findComponent(firstPassFieldId);
+            UIComponent comp = component.findComponent(firstPassFieldId);
             if (comp != null && comp instanceof UIInput) {
                 String compValue = (String) ((UIInput) comp).getValue();
                 if (!value.equals(compValue)) {
@@ -40,6 +40,10 @@ public class PasswordValidator implements Validator, StateHolder {
                 }
             }
         }
+    }
+
+    public void setFirstPassFieldId(String id) {
+        firstPassFieldId = id;
     }
 
     @Override
