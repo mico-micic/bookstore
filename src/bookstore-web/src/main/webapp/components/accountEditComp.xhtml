@@ -31,6 +31,18 @@ and open the template in the editor.
             <h:inputText value="#{customerBean.customer.email}" />
         </h:panelGrid>
 
+        <h:panelGroup rendered="#{isNew == true}">
+            <h4><h:outputText value="#{texts.password}:" /></h4>
+            <h:panelGrid columns="2" >
+                <h:outputText value="#{texts.password}" />
+                <h:inputText id="password" value="#{customerBean.customer.password}" />
+                <h:outputText value="#{texts.confirmPassword}" />
+                <h:inputText id="passwordConfirm" value="#{customerBean.customer.password}">
+                    <!--<b:PasswordValidator firstPassFieldId="password">-->
+                </h:inputText>
+            </h:panelGrid>
+        </h:panelGroup>
+
         <h4><h:outputText value="#{texts.creditCard}:" /></h4>
         <h:panelGrid columns="2">
             <h:outputText value="#{texts.type}" />

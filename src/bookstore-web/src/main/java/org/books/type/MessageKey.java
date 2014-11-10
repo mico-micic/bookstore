@@ -22,7 +22,8 @@ public enum MessageKey {
     SAVE_UNSUCCESSFUL("org.books.presentation.CustomerBean.SAVE_UNSUCCESSFUL"),
     REGISTRATION_SUCCESSFUL("org.books.presentation.CustomerBean.REGISTRATION_SUCCESSFUL"),
     EMAIL_ALREADY_EXISTS("org.books.presentation.CustomerBean.EMAIL_ALREADY_EXISTS"),
-    CREDIT_CARD_NOT_VALID("org.books.presentation.validator.CreditCardValidator.CREDIT_CARD_NUMER");
+    CREDIT_CARD_NOT_VALID("org.books.presentation.validator.CreditCardValidator.CREDIT_CARD_NUMER"),
+    PASSWORDS_ARE_NOT_EQUAL("org.books.presentation.validator.PasswordValidator.PASSWORDS_ARE_NOT_EQUAL");
 
     private final String key;
 
