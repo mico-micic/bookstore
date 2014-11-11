@@ -14,6 +14,7 @@ and open the template in the editor.
         <c:interface>
             <c:attribute name="customer" required="true" type="org.books.persistence.Customer" />
             <c:editableValueHolder name="creditCardNumber" targets="cardNumber" />
+            <c:editableValueHolder name="countryCode" targets="countryCode" />
         </c:interface>
 
         <c:implementation>
@@ -35,7 +36,7 @@ and open the template in the editor.
                         <h:outputText value="#{texts.city}" />
                         <h:outputText value="#{cc.attrs.customer.address.city}" />
                         <h:outputText value="#{texts.country}" />
-                        <h:outputText value="#{countriesBean.codeToString(cc.attrs.customer.address.country)}" />
+                        <h:outputText value="#{cc.attrs.customer.address.country}" id="countryCode" />
                         <h:outputText value="#{texts.email}" />
                         <h:outputText value="#{cc.attrs.customer.email}" />
                     </h:panelGrid>

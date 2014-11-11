@@ -21,6 +21,7 @@ and open the template in the editor.
 
             <cc:readableAccount customer="#{customerBean.customer}">
                 <f:converter for="creditCardNumber" converterId="org.books.presentation.converter.CreditCardNumberConverter" />
+                <f:converter for="countryCode" converterId="org.books.presentation.converter.CountryCodeConverter" />
             </cc:readableAccount>
             
             <h:form>

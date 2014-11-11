@@ -49,7 +49,7 @@ public class CountriesBean implements Serializable {
             String countriesConf = properties.getProperty(COUNTRIES_CONFIG_KEY);
             if (countriesConf != null) {
                 for (String code : countriesConf.split(",")) {
-                    this.supportedCountries.add(new Country(code, codeToString(code)));
+                    this.supportedCountries.add(new Country(code, CountriesBean.codeToString(code)));
                 }
             }
         } catch (IOException ex) {
@@ -61,7 +61,7 @@ public class CountriesBean implements Serializable {
         return this.supportedCountries;
     }
 
-    public String codeToString(String code) {
+    public static String codeToString(String code) {
         return ResourceBundleHelper.getLocalizedText(LOCALIZATION_PREFIX + code.toLowerCase());
     }
 }
