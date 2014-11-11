@@ -14,6 +14,7 @@ and open the template in the editor.
     <body>
         <c:interface>
             <c:attribute name="value" required="true"/>
+            <c:attribute name="country" type="org.books.presentation.CountriesBean" required="true"/>
             <c:attribute name="isNew" /> <!-- default := false -->
         </c:interface>
         <c:implementation>
@@ -63,7 +64,12 @@ and open the template in the editor.
                     
                     <h:outputLabel for="country" value="#{texts.country}" />
                     <h:panelGroup>
-                        <h:inputText id="country" value="#{cc.attrs.value.customer.address.country}" label="#{texts.country}" required="true" />
+                        <h:selectOneMenu id="country" label="#{texts.country}" required="true" value="#{cc.attrs.value.customer.address.country}" >
+                            <f:selectItems value="#{cc.attrs.country.supportedCountries}" 
+                                           var="country" 
+                                           itemValue="#{country.code}" 
+                                           itemLabel="#{country.name}" />
+                        </h:selectOneMenu>
                         <div class="elementMessageDiv">
                             <h:message for="country" styleClass="elementMessage" />
                         </div>

@@ -26,7 +26,7 @@ and open the template in the editor.
                 <h:outputText value="#{texts.city}" />
                 <h:outputText value="#{customerBean.customer.address.city}" />
                 <h:outputText value="#{texts.country}" />
-                <h:outputText value="#{customerBean.customer.address.country}" />
+                <h:outputText value="#{countriesBean.codeToString(customerBean.customer.address.country)}" />
                 <h:outputText value="#{texts.email}" />
                 <h:outputText value="#{customerBean.customer.email}" />
             </h:panelGrid>
