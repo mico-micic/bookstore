@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsf/composite">
+
+    <body>
+
+        <c:interface>
+            <c:attribute name="searchKey" required="true" />
+            <c:attribute name="searchIsbn" required="true" />
+            <c:attribute name="searchKeyMethod" required="true" method-signature="java.lang.String action()" />
+            <c:attribute name="searchIsbnMethod" required="true" method-signature="java.lang.String action()" />
+        </c:interface>
+
+        <c:implementation>
+
+            <h:outputStylesheet library="component" name="search/css/search.css" />
+
+            <span class="searchBoxText"><h:outputText value="#{texts.freeTextSearch}" /></span>
+            <h:form styleClass="formsearch">
+                <span>
+                    <h:inputText id="searchKey" value="#{cc.attrs.searchKey}" required="true" 
+                                 requiredMessage="#{texts.pleaseEnterSearchText}" class="editbox_search" maxlength="20" />
+                    <div class="elementMessageDiv">
+                        <h:message for="searchKey" styleClass="elementMessage" />
+                    </div>
+                </span>
+                <h:commandButton action="#{cc.attrs.searchKeyMethod}" styleClass="button_search" image="#{resource['component:search/img/search_btn.gif']}" />
+            </h:form>
+            
+            <span class="searchBoxText"><h:outputText value="#{texts.isbnSearch}" /></span>
+            <h:form styleClass="formsearch">
+                <span>
+                    <h:inputText id="isbn" value="#{cc.attrs.searchIsbn}" required="true" 
+                                 requiredMessage="#{texts.pleaseEnterIsbn}" class="editbox_search" maxlength="20" />
+                    <div class="elementMessageDiv">
+                        <h:message for="isbn" styleClass="elementMessage" />
+                    </div>
+                </span>
+                <h:commandButton action="#{cc.attrs.searchIsbnMethod}" styleClass="button_search" image="#{resource['component:search/img/search_btn.gif']}" />
+            </h:form>
+        </c:implementation>
+
+    </body>
+
+</html>

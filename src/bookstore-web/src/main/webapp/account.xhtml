@@ -10,7 +10,8 @@ and open the template in the editor.
                 xmlns="http://www.w3.org/1999/xhtml"   
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:cc="http://xmlns.jcp.org/jsf/composite/component">
 
     <ui:define name="mainbar">
 
@@ -18,8 +19,10 @@ and open the template in the editor.
             <h2>#{texts.profile}</h2>
             <div class="clr"></div>
 
-            <ui:include src="/components/accountComp.xhtml" />
-
+            <cc:readableAccount customer="#{customerBean.customer}">
+                <f:converter for="creditCardNumber" converterId="org.books.presentation.converter.CreditCardNumberConverter" />
+            </cc:readableAccount>
+            
             <h:form>
                 <h:commandLink value="#{texts.change}" action="#{customerBean.editAccount('ACCOUNT')}" />
             </h:form>

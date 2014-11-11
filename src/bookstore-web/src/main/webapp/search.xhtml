@@ -10,21 +10,23 @@ and open the template in the editor.
                 xmlns="http://www.w3.org/1999/xhtml"   
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:cc="http://xmlns.jcp.org/jsf/composite/component">
 
     <ui:define name="mainbar">
-        
+
         <div class="article">
             <h2>#{texts.search}</h2>
             <div class="clr"></div>
 
             <div class="searchpage">
-                <ui:include src="/components/searchComp.xhtml" >
-                    <ui:param name="idPrefix" value="searchPage" />
-                </ui:include>
+                <cc:search searchIsbn="#{catalogBean.isbn}"
+                           searchIsbnMethod="#{catalogBean.findBook()}"
+                           searchKey="#{catalogBean.searchKey}"
+                           searchKeyMethod="#{catalogBean.searchBooks()}"/>
             </div>
         </div>
-        
+
     </ui:define>
-    
+
 </ui:composition>

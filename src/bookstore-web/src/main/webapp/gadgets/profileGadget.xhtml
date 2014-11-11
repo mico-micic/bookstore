@@ -37,7 +37,9 @@ and open the template in the editor.
     </p>
 
     <span style="float:left ">
-        <h:link outcome="ACCOUNT" rendered="#{customerBean.loggedIn == true}"><h:outputText value="#{texts.edit}" /></h:link>
+        <h:link outcome="ACCOUNT" rendered="#{customerBean.loggedIn == true}">
+            <h:outputText value="#{texts.goToProfilePage}" />
+        </h:link>
     </span>
 
     <span style="float:next ">

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsf/composite">
+
+    <body>
+
+        <c:interface>
+            <c:attribute name="customer" required="true" type="org.books.persistence.Customer" />
+            <c:editableValueHolder name="creditCardNumber" targets="cardNumber" />
+        </c:interface>
+
+        <c:implementation>
+
+            <h:outputStylesheet library="component" name="readableAccount/css/readableAccount.css" />
+
+            <div class="profileMainDiv">
+                <div>
+                    <h4><h:outputText value="#{texts.yourDetails}:" /></h4>
+                    <h:panelGrid columns="2">
+                        <h:outputText value="#{texts.firstName}" />
+                        <h:outputText value="#{cc.attrs.customer.firstName}" />
+                        <h:outputText value="#{texts.lastName}" />
+                        <h:outputText value="#{cc.attrs.customer.lastName}" />
+                        <h:outputText value="#{texts.street}" />
+                        <h:outputText value="#{cc.attrs.customer.address.street}" />
+                        <h:outputText value="#{texts.postalCode}" />
+                        <h:outputText value="#{cc.attrs.customer.address.postalCode}" />
+                        <h:outputText value="#{texts.city}" />
+                        <h:outputText value="#{cc.attrs.customer.address.city}" />
+                        <h:outputText value="#{texts.country}" />
+                        <h:outputText value="#{countriesBean.codeToString(cc.attrs.customer.address.country)}" />
+                        <h:outputText value="#{texts.email}" />
+                        <h:outputText value="#{cc.attrs.customer.email}" />
+                    </h:panelGrid>
+                </div>
+
+                <div class="creditCardDiv">
+                    <h4><h:outputText value="#{texts.creditCard}:" /></h4>
+                    <h:panelGrid columns="2">
+                        <h:outputText value="#{texts.type}" />
+                        <h:outputText value="#{cc.attrs.customer.creditCard.type}" />
+                        <h:outputText value="#{texts.number}" />
+                        <h:outputText value="#{cc.attrs.customer.creditCard.number}" id="cardNumber" />
+                    </h:panelGrid>
+                </div>
+            </div>
+            
+        </c:implementation>
+    </body>
+
+</html>

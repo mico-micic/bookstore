@@ -20,7 +20,9 @@ and open the template in the editor.
             <h2>#{texts.yourOrder}</h2>
             <div class="clr"></div>
 
-            <ui:include src="/components/accountComp.xhtml" />
+            <cc:readableAccount customer="#{customerBean.customer}">
+                <f:converter for="creditCardNumber" converterId="org.books.presentation.converter.CreditCardNumberConverter" />
+            </cc:readableAccount>
 
             <h:form>
                 <h:commandLink value="#{texts.change} &gt;" action="#{customerBean.editAccount('ORDER')}" />

@@ -9,17 +9,15 @@ and open the template in the editor.
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <div class="searchform">
-        <ui:include src="/components/searchComp.xhtml" >
-            <ui:param name="idPrefix" value="searchGadget" />
-        </ui:include>
+        <ui:include src="/gadgets/searchGadget.xhtml" />
     </div>
 
     <div class="gadget">
-        <ui:include src="/components/cartGadgetComp.xhtml" />
+        <ui:include src="/gadgets/cartGadget.xhtml" />
     </div>
 
     <div class="gadget">
-        <ui:include src="/components/profileGadgetComp.xhtml" />
+        <ui:include src="/gadgets/profileGadget.xhtml" />
     </div>
 
 </ui:composition>

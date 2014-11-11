@@ -351,34 +351,6 @@ ol li .send {
 .searchpage {
     float:left;
 }
-.formsearch {
-    margin:0;
-    //height:36px;
-    padding:0px 28px 40px 0;
-}
-.formsearch span {
-    display:block;
-    margin:4px 0;
-    padding:0;
-    float:left;
-    background:#fff url("#{resource['default:img/search.gif']}") no-repeat top left;
-}
-.formsearch input.editbox_search {
-    margin:0;
-    padding:11px 6px 10px;
-    float:left;
-    width:181px;
-    border:none;
-    background:none;
-    font:normal 12px/1.5em Arial, Helvetica, sans-serif;
-    color:#a8acb2;
-}
-.formsearch input.button_search {
-    margin:4px 0 0 0;
-    padding:0;
-    border:none;
-    float:left;
-}
 .searchBoxText {
     float: left;
 }
@@ -440,14 +412,4 @@ td div#price {
 }
 .simpleTable {
     border-spacing: 0px;
-}
-.profileMainDiv {
-    overflow: auto; 
-    padding-bottom: 10px;
-}
-.profileMainDiv div {
-    float: left;
-}
-.profileMainDiv .creditCardDiv {
-    padding-left: 20px;
 }
