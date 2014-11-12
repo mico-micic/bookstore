@@ -11,27 +11,27 @@ and open the template in the editor.
       xmlns:c="http://java.sun.com/jsf/composite">
 
     <body>
-        
+
         <c:interface>
             <c:attribute name="value" required="true" type="org.books.persistence.Cart" />
             <c:attribute name="editable" required="true" />
             <c:attribute name="showLinks" default="true" />
             <c:attribute name="showHeader" default="true" />
             <c:attribute name="bookSelectionMethod" method-signature="java.lang.String action()" />
-         </c:interface>
-        
+        </c:interface>
+
         <c:implementation>
-            
+
             <h:outputStylesheet library="component" name="cartView/css/cartView.css" />
-            
-            <h:form>
+
+            <h:form id="form">
                 <h:dataTable id="shoppingCartTable" 
                              value="#{cc.attrs.value.lineItems}" 
                              var="lineItem" 
                              rendered="#{not empty cc.attrs.value.lineItems}" 
                              styleClass="shoppingCartTable" 
                              footerClass="shoppingCartTableTotal">
-                    
+
                     <!-- Column with delete icon -->
                     <h:column rendered="#{cc.attrs.editable == true}">
                         <f:facet name="#{cc.attrs.showHeader == true ? 'header' : ''}" />
@@ -39,7 +39,7 @@ and open the template in the editor.
                             <h:commandButton alt="#{texts.remove}" action="#{cc.attrs.value.remove(lineItem)}" image="#{resource['component:cartView/img/remove.gif']}" />
                         </div>
                     </h:column>
-                    
+
                     <!-- Column with book name and "total" footer -->
                     <h:column>
                         <f:facet name="#{cc.attrs.showHeader == true ? 'header' : ''}">
@@ -51,20 +51,24 @@ and open the template in the editor.
                         <h:commandLink value="#{lineItem.book.title}" action="#{cc.attrs.bookSelectionMethod}" rendered="#{cc.attrs.showLinks == true}" />
                         <h:outputText value="#{lineItem.book.title}" rendered="#{cc.attrs.showLinks == false}" />     
                     </h:column>
-                    
+
                     <!-- Column with pcs. and buttons to change the amount -->
                     <h:column>
                         <f:facet name="#{cc.attrs.showHeader == true ? 'header' : ''}">
                             <h:outputText value="#{texts.pcs}"></h:outputText>
                         </f:facet>
-                        <h:outputText value="#{lineItem.quantity}" />
+                        <h:outputText id="quantity" value="#{lineItem.quantity}" />
                         &#160; <!-- &nbsp; -->
-                        <h:commandButton alt="Increment" action="#{cc.attrs.value.incrementQuantity(lineItem)}" 
-                                         rendered="#{cc.attrs.editable == true}" image="#{resource['component:cartView/img/plus.gif']}" />
+                        <h:commandButton id="incrementQuantity" alt="Increment" action="#{cc.attrs.value.incrementQuantity(lineItem)}" 
+                                         rendered="#{cc.attrs.editable == true}" image="#{resource['component:cartView/img/plus.gif']}">
+                            <f:ajax render="@form" />
+                        </h:commandButton>
                         <h:commandButton alt="Decrement" action="#{cc.attrs.value.decrementQuantity(lineItem)}" 
-                                         rendered="#{cc.attrs.editable == true}" image="#{resource['component:cartView/img/minus.gif']}" />
+                                         rendered="#{cc.attrs.editable == true}" image="#{resource['component:cartView/img/minus.gif']}">
+                            <f:ajax render="@form" />
+                        </h:commandButton>
                     </h:column>
-                    
+
                     <!-- Column with price -->
                     <h:column>
                         <f:facet name="#{cc.attrs.showHeader == true ? 'header' : ''}">
@@ -72,18 +76,18 @@ and open the template in the editor.
                         </f:facet>
                         <f:facet name="footer">
                             <div id="price">
-                                <h:outputText value="#{cc.attrs.value.totalPrice}">
+                                <h:outputText id="totalPrice" value="#{cc.attrs.value.totalPrice}">
                                     <f:convertNumber minFractionDigits="2" />
                                 </h:outputText>
                             </div>
                         </f:facet>
                         <div id="price">
-                            <h:outputText value="#{lineItem.book.price}">
-                                 <f:convertNumber minFractionDigits="2" />
+                            <h:outputText value="#{lineItem.quantity * lineItem.book.price}">
+                                <f:convertNumber minFractionDigits="2" />
                             </h:outputText>
                         </div>
                     </h:column>
-                    
+
                 </h:dataTable>
             </h:form>
 

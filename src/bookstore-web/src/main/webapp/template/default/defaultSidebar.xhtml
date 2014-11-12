@@ -12,9 +12,11 @@ and open the template in the editor.
         <ui:include src="/gadgets/searchGadget.xhtml" />
     </div>
 
-    <div class="gadget">
-        <ui:include src="/gadgets/cartGadget.xhtml" />
-    </div>
+    <ui:insert name="cartGadget" >
+        <div class="gadget">
+            <ui:include src="/gadgets/cartGadget.xhtml" />
+        </div>
+    </ui:insert>
 
     <div class="gadget">
         <ui:include src="/gadgets/profileGadget.xhtml" />
