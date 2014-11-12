@@ -36,7 +36,9 @@ and open the template in the editor.
                     <h:column rendered="#{cc.attrs.editable == true}">
                         <f:facet name="#{cc.attrs.showHeader == true ? 'header' : ''}" />
                         <div id="remove">
-                            <h:commandButton alt="#{texts.remove}" action="#{cc.attrs.value.remove(lineItem)}" image="#{resource['component:cartView/img/remove.gif']}" />
+                            <h:commandButton alt="#{texts.remove}" action="#{cc.attrs.value.remove(lineItem)}" image="#{resource['component:cartView/img/remove.gif']}">
+                                <f:ajax render="@form" />
+                            </h:commandButton>
                         </div>
                     </h:column>
 
