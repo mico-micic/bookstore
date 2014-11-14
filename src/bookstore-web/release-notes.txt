@@ -1,0 +1,99 @@
+========================================================
+      BookStore By Thomas Siegrist and Mico Micic
+ 
+                   Release Notes
+
+
+ CAS Enterprise Application Development Java EE | EADJ
+========================================================
+
+Version: 0.1-jsf
+Datum:   14.11.2014
+===================
+
+Grundaufbau:
+--------------
+
+Der BookStore basiert aktuell auf dem Bookstore-Mock und beinhaltet folgende
+Grundfunktionen:
+
+    * Benutzer-Registration
+    * Benutzer-Login
+    * Benutzer-Profil anzeigen und bearbeiten
+    * Suche nach Büchern als Freitext oder mit ISBN-Nummer
+    * Anzeige von Details zu einzelnen Büchern
+    * Ablegen von Büchern im Warenkorb
+    * Anzeige des Warenkorbes mit der Möglichkeit, diesen zu verändern
+    * Bestellung absenden
+    * Getätigte Bestellungen anzeigen und (wenn möglich) abbrechen
+    * Mehrsprachigkeit Deutsch / Englisch mit Browsererkennung und manueller
+      Sprachumstellung
+
+Backing Beans:
+--------------
+
+Folgende Backing Beans sind aktuell umgesetzt:
+
+    * CartBean:      Beinhaltet alle Funktionen rund um den Einkaufskorb
+    * CatalogBean:   Suche nach Büchern und Anzeige der Buchdetails
+    * CountriesBean: Stellt die unterstützten Länder zur Verfügung
+    * CustomerBean:  Für alle Funktionen welche den Benutzer betreffen
+    * LocaleBean:    Handling der Mehrsprachigkeit
+    * LoginBean :    Login / Logout Funktionalität
+
+Besonderheiten:
+
+    * Für das Projekt wird JAVA 8 verwendet. Dies erlaubt es z.B. die Berechnung
+      des Warenkorbes mit Streams zu lösen. Siehe Cart#getTotalBooksInCart und
+      Cart#getTotalPrice.
+    * Die unterstützten Länder werden aus einer Konfig-Datei geladen und 
+      automatisch in die aktuell eingestellte Sprache übersetzt. Siehe dazu
+      CountriesBean.
+    * Das Verändern des Warenkorbes (Anzahl plus / minus, löschen) sowie das
+      Laden der getätigten Bestellungen wird per AJAX gemacht.
+
+Template:
+--------------
+
+Das Template wurde von einer freien Quelle übernommen 
+(http://www.coolwebtemplates.net/) und leicht angepasst. 
+
+Besonderheiten:
+
+    * Das Template befindet sich unter Web Pages/template/default. Mit "default" 
+      wird eine weitere Ebene resp. Library geschaffen damit das Template 
+      zukünftig leicht austauschbar resp. erweiterbar ist.
+    * Folgende Elemente werden mindestens an zwei Orten der Seite verwendet und
+      wurden daher als Composite Components ausgelagert:
+        - "cartView":  Warenkorbansicht mit drei Parametern zur Steuerung 
+                       des Layouts
+        - "editableAccount": Component zum Bearbeiten des Benutzer-Profils
+        - "readableAccount": Component zum Anzeigen des Benutzer-Profils
+        - "search": Component für die Suche (Freitext und ISBN)
+      Bei allen Components wurden auch Bilder und CSS-Dateien mit ausgelagert.
+    * Das Template hat auf der rechten Seite sogenannte Gadgets. Auch diese sind
+      im Sinne der Wiederverwenung unter Web Pages/gadgets ausgelagert.
+    * Folgende JavaScript Libraries werden eingesetzt:
+        - Cufon:     Fonts-Handling, bei Template inbegriffen
+        - radius.js: Border-Radius, bei Template inbegriffen
+        - jQuery:    Basis JavaScript Framework
+        - qtip:      jQuery Erweiterung für Anzeige von Tool-Tipps
+        - toastr:    Anzeige von globalen Messages
+        - simplemodal: Anzeige des AJAX-Ladebalken
+    * Im defaultTemplate.xhtml wurde ein JavaScript Code-Block integriert, der
+      das Absetzen von AJAX-Requests automatisch erkennt und bis zur Antwort 
+      einen animierten Ladebalken anzeigt.
+
+Messaging:
+--------------
+
+Alle Meldungen (globale wie auch für einzelne Komponenten) werden mit den JSF
+Boardmitteln umgesetzt. Die Ausgabe erfolgt dabei jedoch in ein Hidden-Div. 
+Dieses wird nach dem Laden der Seite durch JavaScript entweder als Tool-Tipp
+(im Fall einer komponentenbezogenen Meldung) oder grafisch aufbereiteter Balken
+dargestellt. Dies erfolgt mit den jQuery Libraries qtip und toaster. Siehe dazu
+defaultTemplate.xhtml.
+
+Offene Punkte:
+--------------
+* Die Links "Hilfe" und "Kontakt" funktionieren nicht (Noch nicht umgesetzt)
