@@ -39,12 +39,16 @@ and open the template in the editor.
                             execute="@this"
                             render="orderTable" />
                 </h:selectOneMenu>
-
-                <h:panelGrid id="orderTable">
-                    <h:dataTable var="order" value="#{customerBean.allOrdersOfYear}" rendered="#{not empty customerBean.allOrdersOfYear}" >
-                        <h:column>
+                <h:panelGrid id="orderTable" styleClass="searchResultTable">
+                    <h:dataTable var="order" value="#{customerBean.allOrdersOfYear}" rendered="#{not empty customerBean.allOrdersOfYear}" 
+                                 columnClasses="orderTableColumn1,orderTableColumn2,orderTableColumn3,orderTableColumn4" >
+                        <h:column >
                             <f:facet name="Header"><h:outputText value="#{texts.number}"/></f:facet>
-                            <h:outputText value="#{order.number}" />
+                            <h:commandLink id="linkToOrder" value="#{order.number}" action="#{customerBean.showOrder(order.number)}" >
+                                <div class="elementMessageDiv">
+                                    <h:message for="linkToOrder" styleClass="elementMessage" />
+                                </div>
+                            </h:commandLink>
                         </h:column>
                         <h:column>
                             <f:facet name="Header"><h:outputText value="#{texts.date}"/></f:facet>

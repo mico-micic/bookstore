@@ -56,6 +56,10 @@
             <from-outcome>EDIT_ACCOUNT</from-outcome>
             <to-view-id>/editAccount.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>ORDER_DETAILS</from-outcome>
+            <to-view-id>/order_details.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     
 </faces-config>

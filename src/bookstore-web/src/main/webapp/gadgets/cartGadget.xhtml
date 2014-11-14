@@ -22,5 +22,10 @@ and open the template in the editor.
     <p style="text-align: right; width: 100%;">
         <h:link outcome="CART" rendered="#{not empty cartBean.cart.lineItems}"><h:outputText value="#{texts.goToCart} &gt;" /></h:link>
     </p>
+    <h:form>
+        <p style="text-align: right; width: 100%;">
+            <h:commandLink value="#{texts.checkout} &gt;" action="#{loginBean.openAuthorized('ORDER')}"  rendered="#{not empty cartBean.cart.lineItems}" />
+        </p>
+    </h:form>
 
 </ui:composition>

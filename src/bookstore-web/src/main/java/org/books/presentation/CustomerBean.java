@@ -5,11 +5,8 @@
  */
 package org.books.presentation;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.io.Serializable;
 import java.time.Year;
-import java.time.temporal.TemporalAmount;
-import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -20,6 +17,7 @@ import javax.inject.Named;
 import org.books.application.Bookstore;
 import org.books.application.MessageFactory;
 import org.books.application.exception.EmailAlreadyUsedException;
+import org.books.application.exception.OrderNotFoundException;
 import org.books.persistence.Customer;
 import org.books.persistence.Order;
 import org.books.type.EnumActionResult;
@@ -47,6 +45,7 @@ public class CustomerBean implements Serializable {
     private Integer year = 2014;
 
     private List<Order> allOrdersOfYear;
+    private Order order;
 
     public boolean isLoggedIn() {
         return loggedIn;
@@ -74,6 +73,16 @@ public class CustomerBean implements Serializable {
             year = Year.now().getValue();
         }
         allOrdersOfYear = bookstore.searchOrders(customer, year);
+    }
+
+    public EnumActionResult showOrder(String orderNumber) {
+        try {
+            this.order = bookstore.findOrder(orderNumber);
+        } catch (OrderNotFoundException ex) {
+            MessageFactory.error(MessageKey.ORDER_NOT_FOUND, orderNumber);
+            return null;
+        }
+        return EnumActionResult.ORDER_DETAILS;
     }
 
     public EnumActionResult editAccount(String wayBack) {
