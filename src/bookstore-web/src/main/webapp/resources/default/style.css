@@ -368,6 +368,9 @@ table th {
 .customerDetailTable .customerDetailTableLabelCol {
     width: 60px;
 }
+.orderDetailTableLabelCol{
+    width: 100px;
+}
 .orderTableColumn1 {
     width: 20%;
 }

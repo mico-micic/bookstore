@@ -45,7 +45,8 @@ public class CustomerBean implements Serializable {
     private Integer year = 2014;
 
     private List<Order> allOrdersOfYear;
-    private Order order;
+    
+    private Order selectedOrder;
 
     public boolean isLoggedIn() {
         return loggedIn;
@@ -77,7 +78,7 @@ public class CustomerBean implements Serializable {
 
     public EnumActionResult showOrder(String orderNumber) {
         try {
-            this.order = bookstore.findOrder(orderNumber);
+            this.selectedOrder = bookstore.findOrder(orderNumber);
         } catch (OrderNotFoundException ex) {
             MessageFactory.error(MessageKey.ORDER_NOT_FOUND, orderNumber);
             return null;
@@ -98,6 +99,14 @@ public class CustomerBean implements Serializable {
         this.year = year;
     }
 
+    public Order getSelectedOrder() {
+        return selectedOrder;
+    }
+
+    public void setSelectedOrder(Order selectedOrder) {
+        this.selectedOrder = selectedOrder;
+    }
+    
     public EnumActionResult updateCustomer() {
         try {
             bookstore.updateCustomer(customer);

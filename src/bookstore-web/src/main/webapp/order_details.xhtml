@@ -13,6 +13,9 @@ and open the template in the editor.
                 xmlns:cc="http://xmlns.jcp.org/jsf/composite/component">
 
     <ui:define name="mainbar">
-        TODO
+        <h:panelGrid id="orderDetailGrid" columns="2" columnClasses="orderDetailTableLabelCol,">
+            <h:outputText value="#{texts.number}" />
+            <h:outputText value="#{customerBean.selectedOrder.number}" />
+        </h:panelGrid>
     </ui:define>
 </ui:composition>
