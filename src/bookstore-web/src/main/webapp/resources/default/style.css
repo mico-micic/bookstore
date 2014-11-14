@@ -368,17 +368,23 @@ table th {
 .customerDetailTable .customerDetailTableLabelCol {
     width: 60px;
 }
+.orderTableResults {
+    width: 100%
+}
 .orderTableColumn1 {
     width: 20%;
 }
 .orderTableColumn2 {
-    width: 50%;
+    width: 30%;
 }
 .orderTableColumn3 {
     width: 20%;
 }
 .orderTableColumn4 {
-    width: 10%;
+    width: 15%;
+}
+.orderTableColumn5 {
+    width: 15%;
 }
 tbody tr:nth-child(even) {
     background-color: #F2F1F1;

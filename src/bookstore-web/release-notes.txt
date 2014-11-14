@@ -45,12 +45,14 @@ Besonderheiten:
 
     * Für das Projekt wird JAVA 8 verwendet. Dies erlaubt es z.B. die Berechnung
       des Warenkorbes mit Streams zu lösen. Siehe Cart#getTotalBooksInCart und
-      Cart#getTotalPrice.
+      Cart#getTotalPrice. Auch das Sortieren einer Liste nach z.B. Datum ist 
+      somit einfacher. Beispiel: CustomerBean#findAllOrdersOfYear.
     * Die unterstützten Länder werden aus einer Konfig-Datei geladen und 
       automatisch in die aktuell eingestellte Sprache übersetzt. Siehe dazu
       CountriesBean.
-    * Das Verändern des Warenkorbes (Anzahl plus / minus, löschen) sowie das
-      Laden der getätigten Bestellungen wird per AJAX gemacht.
+    * Das Verändern des Warenkorbes (Anzahl plus / minus, löschen), das
+      Laden der getätigten Bestellungen sowie das Abbrechen einer Bestellung
+      wird per AJAX gemacht.
 
 Template:
 --------------

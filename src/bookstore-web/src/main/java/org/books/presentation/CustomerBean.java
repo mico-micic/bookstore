@@ -11,12 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.books.application.Bookstore;
 import org.books.application.MessageFactory;
 import org.books.application.exception.EmailAlreadyUsedException;
+import org.books.application.exception.InvalidOrderStatusException;
 import org.books.application.exception.OrderNotFoundException;
 import org.books.persistence.Customer;
 import org.books.persistence.Order;
@@ -72,7 +74,10 @@ public class CustomerBean implements Serializable {
         if (year == null) {
             year = Year.now().getValue();
         }
-        allOrdersOfYear = bookstore.searchOrders(customer, year);
+        allOrdersOfYear = bookstore.searchOrders(customer, year)
+                .stream()
+                .sorted((o1, o2) -> (o1.getDate().compareTo(o2.getDate())) * -1)
+                .collect(Collectors.toList());
     }
 
     public EnumActionResult showOrder(String orderNumber) {
@@ -83,6 +88,17 @@ public class CustomerBean implements Serializable {
             return null;
         }
         return EnumActionResult.ORDER_DETAILS;
+    }
+    
+    public void cancelOrder(Order order) {
+        
+        try {
+            this.bookstore.cancelOrder(order.getId());
+        } catch (OrderNotFoundException ex) {
+            MessageFactory.error(MessageKey.ORDER_NOT_FOUND, order.getNumber());
+        } catch (InvalidOrderStatusException ex) {
+            MessageFactory.error(MessageKey.ORDER_CANNOT_BE_CANCELLED);
+        }
     }
 
     public EnumActionResult editAccount(String wayBack) {

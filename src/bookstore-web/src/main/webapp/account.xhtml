@@ -39,11 +39,11 @@ and open the template in the editor.
                             execute="@this"
                             render="orderTable" />
                 </h:selectOneMenu>
-                <h:panelGrid id="orderTable" styleClass="searchResultTable">
-                    <h:dataTable var="order" value="#{customerBean.allOrdersOfYear}" rendered="#{not empty customerBean.allOrdersOfYear}" 
-                                 columnClasses="orderTableColumn1,orderTableColumn2,orderTableColumn3,orderTableColumn4" >
+                <h:panelGroup id="orderTable">
+                    <h:dataTable class="orderTableResults" var="order" value="#{customerBean.allOrdersOfYear}" rendered="#{not empty customerBean.allOrdersOfYear}" 
+                                 columnClasses="orderTableColumn1,orderTableColumn2,orderTableColumn3,orderTableColumn4,orderTableColumn5" >
                         <h:column >
-                            <f:facet name="Header"><h:outputText value="#{texts.number}"/></f:facet>
+                            <f:facet name="header"><h:outputText value="#{texts.number}"/></f:facet>
                             <h:commandLink id="linkToOrder" value="#{order.number}" action="#{customerBean.showOrder(order.number)}" >
                                 <div class="elementMessageDiv">
                                     <h:message for="linkToOrder" styleClass="elementMessage" />
@@ -51,20 +51,30 @@ and open the template in the editor.
                             </h:commandLink>
                         </h:column>
                         <h:column>
-                            <f:facet name="Header"><h:outputText value="#{texts.date}"/></f:facet>
-                            <h:outputText value="#{order.date}" />
+                            <f:facet name="header"><h:outputText value="#{texts.date}"/></f:facet>
+                            <h:outputText value="#{order.date}">
+                                <f:convertDateTime type="both" dateStyle="default" timeStyle="default"  />
+                            </h:outputText>
                         </h:column>
                         <h:column>
-                            <f:facet name="Header"><h:outputText value="#{texts.status}"/></f:facet>
-                            <h:outputText value="#{order.status}" />
-                        </h:column>
-                        <h:column>
-                            <f:facet name="Header"><h:outputText value="#{texts.price}"/></f:facet>
+                            <f:facet name="header"><h:outputText value="#{texts.price}"/></f:facet>
                             <h:outputText value="#{order.amount}" />
                         </h:column>
+                        <h:column>
+                            <f:facet name="header"><h:outputText value="#{texts.status}"/></f:facet>
+                            <h:outputText value="#{texts[order.status]}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header"><h:outputText value="#{texts.action}"/></f:facet>
+                            <h:commandLink value="#{texts.cancel}" action="#{customerBean.cancelOrder(order)}" rendered="#{order.status == 'processing'}">
+                                <f:ajax render="@form" />
+                            </h:commandLink>
+                            <h:outputText value="#{texts.notAvailable}" rendered="#{order.status != 'processing'}" />
+                        </h:column>
                     </h:dataTable>
+                    <p/>
                     <h:outputText value="#{texts.noOrdersFound}" rendered="#{empty customerBean.allOrdersOfYear}" />
-                </h:panelGrid>
+                </h:panelGroup>
             </h:form>
         </div>
     </ui:define>
