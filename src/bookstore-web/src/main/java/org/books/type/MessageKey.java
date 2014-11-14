@@ -23,7 +23,8 @@ public enum MessageKey {
     REGISTRATION_SUCCESSFUL("org.books.presentation.CustomerBean.REGISTRATION_SUCCESSFUL"),
     EMAIL_ALREADY_EXISTS("org.books.presentation.CustomerBean.EMAIL_ALREADY_EXISTS"),
     CREDIT_CARD_NOT_VALID("org.books.presentation.validator.CreditCardValidator.CREDIT_CARD_NUMER"),
-    PASSWORDS_ARE_NOT_EQUAL("org.books.presentation.validator.PasswordValidator.PASSWORDS_ARE_NOT_EQUAL");
+    PASSWORDS_ARE_NOT_EQUAL("org.books.presentation.validator.PasswordValidator.PASSWORDS_ARE_NOT_EQUAL"),
+    YEAR_CONVERSION("org.books.presentation.converter.YearConverter.YEAR");
 
     private final String key;
 

@@ -5,7 +5,12 @@
  */
 package org.books.presentation;
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.io.Serializable;
+import java.time.Year;
+import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +26,8 @@ import org.books.type.EnumActionResult;
 import org.books.type.MessageKey;
 
 /**
+ * Allows Value-Bindings in order do handle Customer and Account Details.
+ *
  * @author Sigi
  * @author Mico
  */
@@ -34,7 +41,12 @@ public class CustomerBean implements Serializable {
     private boolean loggedIn = false;
 
     private Customer customer;
+
     private String wayBack;
+
+    private Integer year = 2014;
+
+    private List<Order> allOrdersOfYear;
 
     public boolean isLoggedIn() {
         return loggedIn;
@@ -44,13 +56,37 @@ public class CustomerBean implements Serializable {
         this.loggedIn = loggedIn;
     }
 
-    public List<Order> getAllOrdersOfYear(Integer year) {
-        return bookstore.searchOrders(customer, year);
+    public List<Order> getAllOrdersOfYear() {
+        findAllOrdersOfYear();
+        return allOrdersOfYear;
+    }
+
+    public List<Integer> getPossibleYears() {
+        List<Integer> possibleYears = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            possibleYears.add(Year.now().getValue() - i);
+        }
+        return possibleYears;
+    }
+
+    public void findAllOrdersOfYear() {
+        if (year == null) {
+            year = Year.now().getValue();
+        }
+        allOrdersOfYear = bookstore.searchOrders(customer, year);
     }
 
     public EnumActionResult editAccount(String wayBack) {
         this.wayBack = wayBack;
         return EnumActionResult.EDIT_ACCOUNT;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
     }
 
     public EnumActionResult updateCustomer() {
@@ -65,7 +101,7 @@ public class CustomerBean implements Serializable {
     }
 
     public EnumActionResult createCustomer() {
-        
+
         try {
             bookstore.registerCustomer(this.customer);
             MessageFactory.info(MessageKey.REGISTRATION_SUCCESSFUL);
@@ -74,7 +110,7 @@ public class CustomerBean implements Serializable {
         } catch (EmailAlreadyUsedException ex) {
             Logger.getLogger(CustomerBean.class.getName()).log(Level.SEVERE, null, ex);
             MessageFactory.info(MessageKey.EMAIL_ALREADY_EXISTS);
-            
+
             return null;
         }
     }

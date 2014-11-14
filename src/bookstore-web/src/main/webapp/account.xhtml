@@ -23,32 +23,45 @@ and open the template in the editor.
                 <f:converter for="creditCardNumber" converterId="org.books.presentation.converter.CreditCardNumberConverter" />
                 <f:converter for="countryCode" converterId="org.books.presentation.converter.CountryCodeConverter" />
             </cc:readableAccount>
-            
+
             <h:form>
                 <h:commandLink value="#{texts.change}" action="#{customerBean.editAccount('ACCOUNT')}" />
             </h:form>
-            
+
             <p class="spec" />
-            
-            <h4><h:outputText value="#{texts.yourOrders}:" /></h4>
-            <h:dataTable var="order" value="#{customerBean.getAllOrdersOfYear(2014)}" >
-                <h:column>
-                    <f:facet name="Header"><h:outputText value="#{texts.number}"/></f:facet>
-                    <h:outputText value="#{order.number}" />
-                </h:column>
-                <h:column>
-                    <f:facet name="Header"><h:outputText value="#{texts.date}"/></f:facet>
-                    <h:outputText value="#{order.date}" />
-                </h:column>
-                <h:column>
-                    <f:facet name="Header"><h:outputText value="#{texts.status}"/></f:facet>
-                    <h:outputText value="#{order.status}" />
-                </h:column>
-                <h:column>
-                    <f:facet name="Header"><h:outputText value="#{texts.price}"/></f:facet>
-                    <h:outputText value="#{order.amount}" />
-                </h:column>
-            </h:dataTable>
+
+            <h4><h:outputText value="#{texts.yourOrders}" /></h4>
+            <h:form id="orderTableForm">
+                <h:outputText value="#{texts.ordersByYear}: " />
+                <h:selectOneMenu value="#{customerBean.year}">
+                    <f:selectItems value="#{customerBean.possibleYears}" var="year" />
+                    <f:ajax event="change"
+                            execute="@this"
+                            render="orderTable" />
+                </h:selectOneMenu>
+
+                <h:panelGrid id="orderTable">
+                    <h:dataTable var="order" value="#{customerBean.allOrdersOfYear}" rendered="#{not empty customerBean.allOrdersOfYear}" >
+                        <h:column>
+                            <f:facet name="Header"><h:outputText value="#{texts.number}"/></f:facet>
+                            <h:outputText value="#{order.number}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="Header"><h:outputText value="#{texts.date}"/></f:facet>
+                            <h:outputText value="#{order.date}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="Header"><h:outputText value="#{texts.status}"/></f:facet>
+                            <h:outputText value="#{order.status}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="Header"><h:outputText value="#{texts.price}"/></f:facet>
+                            <h:outputText value="#{order.amount}" />
+                        </h:column>
+                    </h:dataTable>
+                    <h:outputText value="#{texts.noOrdersFound}" rendered="#{empty customerBean.allOrdersOfYear}" />
+                </h:panelGrid>
+            </h:form>
         </div>
     </ui:define>
 
