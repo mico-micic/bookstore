@@ -20,6 +20,7 @@ import org.books.application.MessageFactory;
 import org.books.application.exception.EmailAlreadyUsedException;
 import org.books.application.exception.InvalidOrderStatusException;
 import org.books.application.exception.OrderNotFoundException;
+import org.books.persistence.Cart;
 import org.books.persistence.Customer;
 import org.books.persistence.Order;
 import org.books.type.EnumActionResult;
@@ -47,7 +48,10 @@ public class CustomerBean implements Serializable {
     private Integer year = 2014;
 
     private List<Order> allOrdersOfYear;
+    
     private Order order;
+    
+    private Cart tmpCart = new Cart();
 
     public boolean isLoggedIn() {
         return loggedIn;
@@ -56,7 +60,15 @@ public class CustomerBean implements Serializable {
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
     }
-
+    
+    public Cart getTmpCart() {
+        return this.tmpCart;
+    }
+    
+    public Order getOrder() {
+        return this.order;
+    }
+    
     public List<Order> getAllOrdersOfYear() {
         findAllOrdersOfYear();
         return allOrdersOfYear;
@@ -83,6 +95,10 @@ public class CustomerBean implements Serializable {
     public EnumActionResult showOrder(String orderNumber) {
         try {
             this.order = bookstore.findOrder(orderNumber);
+            
+            // Create and fill a temporary cart to show the order content
+            tmpCart.reset();
+            this.order.getItems().forEach(lineItem -> tmpCart.addLineItem(lineItem));
         } catch (OrderNotFoundException ex) {
             MessageFactory.error(MessageKey.ORDER_NOT_FOUND, orderNumber);
             return null;

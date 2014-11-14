@@ -27,6 +27,10 @@ public class Cart implements Serializable {
         }
     }
     
+    public void addLineItem(LineItem item) {
+        this.lineItems.add(item);
+    }
+    
     private LineItem getExistingLineItem(Book book) {
         return this.lineItems.stream().filter(item -> item.getBook().equals(book)).findFirst().orElse(null);
     }
