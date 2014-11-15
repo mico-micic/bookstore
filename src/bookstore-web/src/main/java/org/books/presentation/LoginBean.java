@@ -56,6 +56,10 @@ public class LoginBean implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    public String getNextPage() {
+        return this.nextPage;
+    }
 
     public EnumActionResult openAuthorized(String nextPage) {
 

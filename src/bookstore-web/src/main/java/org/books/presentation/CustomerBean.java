@@ -52,6 +52,9 @@ public class CustomerBean implements Serializable {
     private Order order;
     
     private Cart tmpCart = new Cart();
+    
+    @Inject
+    private LoginBean loginBean;
 
     public boolean isLoggedIn() {
         return loggedIn;
@@ -142,13 +145,19 @@ public class CustomerBean implements Serializable {
         }
     }
 
-    public EnumActionResult createCustomer() {
+    public String createCustomer() {
 
         try {
             bookstore.registerCustomer(this.customer);
             MessageFactory.info(MessageKey.REGISTRATION_SUCCESSFUL);
             this.setLoggedIn(true);
-            return EnumActionResult.ACCOUNT;
+            
+            if (loginBean.getNextPage() != null) {
+                return loginBean.getNextPage();
+            } else {
+                return EnumActionResult.ACCOUNT.toString();
+            }
+
         } catch (EmailAlreadyUsedException ex) {
             Logger.getLogger(CustomerBean.class.getName()).log(Level.SEVERE, null, ex);
             MessageFactory.info(MessageKey.EMAIL_ALREADY_EXISTS);
