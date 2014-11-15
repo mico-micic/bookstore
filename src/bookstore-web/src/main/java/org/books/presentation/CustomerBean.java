@@ -110,6 +110,7 @@ public class CustomerBean implements Serializable {
         
         try {
             this.bookstore.cancelOrder(order.getId());
+            MessageFactory.info(MessageKey.ORDER_CANCELLED);
         } catch (OrderNotFoundException ex) {
             MessageFactory.error(MessageKey.ORDER_NOT_FOUND, order.getNumber());
         } catch (InvalidOrderStatusException ex) {

@@ -49,6 +49,12 @@ and open the template in the editor.
                         <h:outputText value="#{cc.attrs.customer.creditCard.type}" />
                         <h:outputText value="#{texts.number}" />
                         <h:outputText value="#{cc.attrs.customer.creditCard.number}" id="cardNumber" />
+                        <h:outputText value="#{texts.dateOfExpiry}" />
+                        <h:panelGroup>
+                            <h:outputText value="#{cc.attrs.customer.creditCard.expirationMonth}" />
+                            <h:outputText value="/" />
+                            <h:outputText value="#{cc.attrs.customer.creditCard.expirationYear}" />
+                        </h:panelGroup>
                     </h:panelGrid>
                 </div>
             </div>

@@ -39,7 +39,10 @@ and open the template in the editor.
 
                     <h:column> </h:column>
                     <h:column>
-                        <h:commandButton action="#{loginBean.doLogin()}" value="#{texts.login}" />
+                        <h:panelGroup>
+                            <h:commandButton action="#{loginBean.doLogin()}" value="#{texts.login}" />
+                            <span style="margin-left: 5px;"><h:link outcome="REGISTER" value="#{texts.register}" /></span>
+                        </h:panelGroup>
                     </h:column>
 
                 </h:panelGrid>

@@ -9,5 +9,20 @@ and open the template in the editor.
 */
 
 .labelColumn {
-    width: 100px;
+    width: 120px;
+}
+.accountEditTable input, .accountEditTable select  {
+    width: 160px;
+    margin-bottom-top: 3px;
+    margin-bottom: 3px;
+}
+.expiryMonth {
+    width: 30px !important;
+    float: left;
+    margin-right: 5px;
+}
+.expiryYear {
+    width: 60px !important;
+    float: left;
+    margin-left: 5px;
 }
