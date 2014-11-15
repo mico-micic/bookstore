@@ -22,11 +22,15 @@ and open the template in the editor.
             </h:form>
             <h:form>
                 <ul>
-                    <li class="active"><a href="index.xhtml"><h:outputText value="#{texts.shop}"/></a></li>
-                    <li><a href="search.xhtml"><h:outputText value="#{texts.search}"/></a></li>
-                    <li><h:commandLink value="#{texts.profile}" action="#{loginBean.openAuthorized('ACCOUNT')}" /></li>
-                    <li><a href="help.xhtml"><h:outputText value="#{texts.help}"/></a></li>
-                    <li><a href="contact.xhtml"><h:outputText value="#{texts.contact}"/></a></li>
+                    <li class="#{view.viewId == '/index.xhtml' ? 'active' : ''}"><a href="index.xhtml"><h:outputText value="#{texts.shop}"/></a></li>
+                    <li class="#{view.viewId == '/search.xhtml' || view.viewId == '/searchResults.xhtml' ? 'active' : ''}">
+                        <a href="search.xhtml"><h:outputText value="#{texts.search}"/></a>
+                    </li>
+                    <li class="#{view.viewId == '/account.xhtml' || view.viewId == '/editAccount.xhtml' ? 'active' : ''}">
+                        <h:commandLink value="#{texts.profile}" action="#{loginBean.openAuthorized('ACCOUNT')}"/>
+                    </li>
+                    <li class="#{view.viewId == '/help.xhtml' ? 'active' : ''}"><a href="help.xhtml"><h:outputText value="#{texts.help}"/></a></li>
+                    <li class="#{view.viewId == '/contact.xhtml' ? 'active' : ''}"><a href="contact.xhtml"><h:outputText value="#{texts.contact}"/></a></li>
                 </ul>
             </h:form>
         </div>

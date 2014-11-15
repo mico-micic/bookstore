@@ -4,7 +4,8 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition template="template/default/defaultTemplate.xhtml" 
                 xmlns="http://www.w3.org/1999/xhtml"   
                 xmlns:h="http://java.sun.com/jsf/html"
@@ -13,9 +14,30 @@ and open the template in the editor.
                 xmlns:cc="http://xmlns.jcp.org/jsf/composite/component">
 
     <ui:define name="mainbar">
-        <h:panelGrid id="orderDetailGrid" columns="2" columnClasses="orderDetailTableLabelCol,">
-            <h:outputText value="#{texts.number}" />
-            <h:outputText value="#{customerBean.selectedOrder.number}" />
-        </h:panelGrid>
+
+        <div class="article">
+
+            <h2>#{texts.yourOrder}</h2>
+            <div class="clr"></div>
+
+            <cc:readableAccount customer="#{customerBean.order.customer}">
+                <f:converter for="creditCardNumber" converterId="org.books.presentation.converter.CreditCardNumberConverter" />
+                <f:converter for="countryCode" converterId="org.books.presentation.converter.CountryCodeConverter" />
+            </cc:readableAccount>
+
+            <p class="spec"/>
+            <cc:cartView value="#{customerBean.tmpCart}" 
+                         editable="false" 
+                         showLinks="false" 
+                         showHeader="true"
+                         bookSelectionMethod="#{catalogBean.setBookSelection(lineItem.book, 'ACCOUNT')}"/>
+            <p/>
+
+            <h:form>
+                <h:link value="#{texts.back}" outcome="ACCOUNT" />
+            </h:form>
+
+        </div>
     </ui:define>
+
 </ui:composition>
