@@ -26,7 +26,7 @@ and open the template in the editor.
                     <li class="#{view.viewId == '/search.xhtml' || view.viewId == '/searchResults.xhtml' ? 'active' : ''}">
                         <a href="search.xhtml"><h:outputText value="#{texts.search}"/></a>
                     </li>
-                    <li class="#{view.viewId == '/account.xhtml' || view.viewId == '/editAccount.xhtml' ? 'active' : ''}">
+                    <li class="#{view.viewId == '/account.xhtml' || view.viewId == '/login.xhtml' || view.viewId == '/editAccount.xhtml' ? 'active' : ''}">
                         <h:commandLink value="#{texts.profile}" action="#{loginBean.openAuthorized('ACCOUNT')}"/>
                     </li>
                     <li class="#{view.viewId == '/help.xhtml' ? 'active' : ''}"><a href="help.xhtml"><h:outputText value="#{texts.help}"/></a></li>
