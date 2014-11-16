@@ -37,7 +37,8 @@ Folgende Backing Beans sind aktuell umgesetzt:
     * CartBean:      Beinhaltet alle Funktionen rund um den Einkaufskorb
     * CatalogBean:   Suche nach Büchern und Anzeige der Buchdetails
     * CountriesBean: Stellt die unterstützten Länder zur Verfügung
-    * CustomerBean:  Für alle Funktionen welche den Benutzer betreffen
+    * CustomerBean:  Für alle Funktionen welche den Benutzer und auch dessen
+                     Bestellungen betreffen
     * LocaleBean:    Handling der Mehrsprachigkeit
     * LoginBean :    Login / Logout Funktionalität
 
@@ -51,8 +52,8 @@ Besonderheiten:
       automatisch in die aktuell eingestellte Sprache übersetzt. Siehe dazu
       CountriesBean.
     * Das Verändern des Warenkorbes (Anzahl plus / minus, löschen), das
-      Laden der getätigten Bestellungen sowie das Abbrechen einer Bestellung
-      wird per AJAX gemacht.
+      Laden der getätigten Bestellungen pro Jahr, sowie das Abbrechen einer 
+      Bestellung wird per AJAX gemacht.
 
 Template:
 --------------
@@ -74,7 +75,8 @@ Besonderheiten:
         - "search": Component für die Suche (Freitext und ISBN)
       Bei allen Components wurden auch Bilder und CSS-Dateien mit ausgelagert.
     * Das Template hat auf der rechten Seite sogenannte Gadgets. Auch diese sind
-      im Sinne der Wiederverwenung unter Web Pages/gadgets ausgelagert.
+      im Sinne der Wiederverwenung unter Web Pages/gadgets als UI-Compositions
+      (sprich: Fragments) ausgelagert.
     * Folgende JavaScript Libraries werden eingesetzt:
         - Cufon:     Fonts-Handling, bei Template inbegriffen
         - radius.js: Border-Radius, bei Template inbegriffen
@@ -85,6 +87,35 @@ Besonderheiten:
     * Im defaultTemplate.xhtml wurde ein JavaScript Code-Block integriert, der
       das Absetzen von AJAX-Requests automatisch erkennt und bis zur Antwort 
       einen animierten Ladebalken anzeigt.
+
+Navigation:
+--------------
+
+Für die Navigation hatten wir zwei Strategien abgewägt:
+    * Für jede Action ein Navigation-Case (oder mehrere bei verschiedenen 
+      Outcomes)
+    * Für jede seite ein Navigation-Case mit einem 1:1 Mapping auf einen Outcome
+Wir haben uns auf Grund des praktischen Handlings im Java Code für Variante 2
+entschieden. Pro Outcome haben wir so genau eine Steite. Für jeden Outcome git
+es einen Wert im Enum 'EnumActionResult'.
+
+State-Based-Navigation:
+
+Der Back-Button war eine grosse Herausforderung. Wir haben es so gelöst, dass
+wir für alle Navigationen, welche auf Seiten mit einem Back Button führen, der
+Weg zurück angegeben werden muss.
+
+Bsp: catalogBean.setBookSelection(lineItem.book, 'CART') mit Outcome: 'BOOK'
+ => wobei 'CART' die Zielseite festlegt, wenn man auf der Buch-Seite auf
+    zurück klickt.
+
+Wir hatten auch generischere Ansätze probiert, bei dennen wir versucht haben,
+uns jeweils die letzte Seite zu merken, doch da hatten uns die Vor- Zurück- und
+Aktualisieren-Buttons des Browsers einen Strich durch die Rechnung gemacht
+(auch wenn wir die Info aus dem Context abgefragt hatten).
+
+Die dynamische Navigation beim Login haben wir nach dem gleichen Prinzip
+umgesetzt.
 
 Messaging:
 --------------
