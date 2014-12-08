@@ -26,7 +26,8 @@ public enum MessageKey {
     PASSWORDS_ARE_NOT_EQUAL("org.books.presentation.validator.PasswordValidator.PASSWORDS_ARE_NOT_EQUAL"),
     ORDER_NOT_FOUND("org.books.presentation.CustomerBean.ORDER_NOT_FOUND"),
     ORDER_CANNOT_BE_CANCELLED("org.books.presentation.CustomerBean.ORDER_CANNOT_BE_CANCELLED"),
-    ORDER_CANCELLED("org.books.presentation.CustomerBean.ORDER_CANCELLED");
+    ORDER_CANCELLED("org.books.presentation.CustomerBean.ORDER_CANCELLED"),
+    EMAIL_INVALID("org.books.presentation.validator.EmailValidator.EMAIL_INVALID");
 
     private final String key;
 

@@ -18,5 +18,13 @@
             </validator-id>
         </validator>
     </tag>
+    <tag>
+        <tag-name>validateEmail</tag-name>
+        <validator>
+            <validator-id>
+                org.books.presentation.validator.EmailValidator
+            </validator-id>
+        </validator>
+    </tag>
     
 </facelet-taglib>

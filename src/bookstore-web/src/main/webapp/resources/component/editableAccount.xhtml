@@ -78,7 +78,9 @@ and open the template in the editor.
 
                     <h:outputLabel for="email" value="#{texts.email}" />
                     <h:panelGroup>
-                        <h:inputText id="email" value="#{cc.attrs.value.customer.email}" label="#{texts.email}" required="true" />
+                        <h:inputText id="email" value="#{cc.attrs.value.customer.email}" label="#{texts.email}" required="true">
+                            <b:validateEmail />
+                        </h:inputText>
                         <div class="elementMessageDiv">
                             <h:message for="email" styleClass="elementMessage" />
                         </div>
