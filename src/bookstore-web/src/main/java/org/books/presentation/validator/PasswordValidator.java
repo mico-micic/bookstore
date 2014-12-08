@@ -18,13 +18,15 @@ import org.books.type.MessageKey;
 
 /**
  * Password validator that is able to compare two password fields.
- * 
+ *
  * @author micic
  */
 @FacesValidator("org.books.presentation.validator.PasswordValidator")
 public class PasswordValidator implements Validator, StateHolder {
 
     private String firstPassFieldId = null;
+
+    private int minPasswordLength = 4;
 
     private boolean isTransient = false;
 
@@ -41,20 +43,31 @@ public class PasswordValidator implements Validator, StateHolder {
                 }
             }
         }
+
+        // Check length
+        if (value != null && ((String) value).length() < this.minPasswordLength) {
+            FacesMessage msg = MessageFactory.createMessage(FacesMessage.SEVERITY_ERROR, MessageKey.PASSWORD_TOO_SHORT.value());
+            throw new ValidatorException(msg);
+        }
     }
 
     public void setFirstPassFieldId(String id) {
-        firstPassFieldId = id;
+        this.firstPassFieldId = id;
+    }
+
+    public void setMinPasswordLength(int minLen) {
+        this.minPasswordLength = minLen;
     }
 
     @Override
     public Object saveState(FacesContext context) {
-        return firstPassFieldId;
+        return new Object[]{firstPassFieldId, minPasswordLength};
     }
 
     @Override
     public void restoreState(FacesContext context, Object state) {
-        this.firstPassFieldId = (String) state;
+        this.firstPassFieldId = (String) ((Object[]) state)[0];
+        this.minPasswordLength = (int) ((Object[]) state)[1];
     }
 
     @Override

@@ -24,6 +24,7 @@ public enum MessageKey {
     EMAIL_ALREADY_EXISTS("org.books.presentation.CustomerBean.EMAIL_ALREADY_EXISTS"),
     CREDIT_CARD_NOT_VALID("org.books.presentation.validator.CreditCardValidator.CREDIT_CARD_NUMER"),
     PASSWORDS_ARE_NOT_EQUAL("org.books.presentation.validator.PasswordValidator.PASSWORDS_ARE_NOT_EQUAL"),
+    PASSWORD_TOO_SHORT("org.books.presentation.validator.PasswordValidator.PASSWORD_TOO_SHORT"),
     ORDER_NOT_FOUND("org.books.presentation.CustomerBean.ORDER_NOT_FOUND"),
     ORDER_CANNOT_BE_CANCELLED("org.books.presentation.CustomerBean.ORDER_CANNOT_BE_CANCELLED"),
     ORDER_CANCELLED("org.books.presentation.CustomerBean.ORDER_CANCELLED"),

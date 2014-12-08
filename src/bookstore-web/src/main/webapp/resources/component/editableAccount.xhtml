@@ -97,7 +97,7 @@ and open the template in the editor.
                         <h:outputLabel for="passwordConfirm" value="#{texts.confirmPassword}" />
                         <h:panelGroup>
                             <h:inputSecret id="passwordConfirm" value="#{cc.attrs.value.customer.password}" label="#{texts.confirmPassword}" required="true">
-                                <b:validatePassword firstPassFieldId="password" />
+                                <b:validatePassword firstPassFieldId="password" minPasswordLength="8" />
                             </h:inputSecret>
                             <div class="elementMessageDiv">
                                 <h:message for="passwordConfirm" styleClass="elementMessage" />
