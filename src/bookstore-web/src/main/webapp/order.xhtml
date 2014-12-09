@@ -37,7 +37,7 @@ and open the template in the editor.
                          bookSelectionMethod="#{catalogBean.setBookSelection(lineItem.book, 'ORDER')}"/>
             <p/>
             <h:form>
-                <h:commandLink value="#{texts.buy} &gt;" action="#{cartBean.confirmOrder}" />
+                <h:commandLink value="#{texts.buy} &gt;" action="#{cartBean.confirmOrder}" rendered="${empty cartBean.cart.lineItems}" />
             </h:form>
 
         </div>
