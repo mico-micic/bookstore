@@ -3,7 +3,7 @@
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd ">
     
-    <named-query name="org.books.persistence.SearchBookByIsbn">
+    <named-query name="org.books.persistence.dao.BookByIsbn">
         <query>
             SELECT b 
             FROM Book b
@@ -11,17 +11,7 @@
         </query>
     </named-query>
     
-    <named-query name="org.books.persistence.SearchBookByKeyWord">
-        <query>
-            SELECT b 
-            FROM Book b
-            WHERE b.title = :isbn
-                  b.authors = :
-                  b.publisher = :
-        </query>
-    </named-query>
-    
-    <named-query name="org.books.persistence.SearchCustomerByEmail">
+    <named-query name="org.books.persistence.CustomerByEmail">
         <query>
             SELECT c
             FROM Customer c
@@ -29,27 +19,27 @@
         </query>
     </named-query>
     
-    <named-query name="org.books.persistence.SearchCustomerByNamePart">
+    <named-query name="org.books.persistence.CustomerByNamePart">
         <query>
             SELECT new org.books.persistence.dto.CustomerInfo(c.id, c.firstName, c.lastname, c.email)
             FROM Customer c
-            WHERE UPPER(c.firstName) LIKE UPPER(:firstname)
-              OR  UPPER(c.lastname) LIKE UPPER(:lastname)
+            WHERE UPPER(c.firstName) LIKE UPPER(:part)
+              OR  UPPER(c.lastname) LIKE UPPER(:part)
         </query>
     </named-query>
     
-    <named-query name="org.books.persistence.SearchOrderByNumber">
+    <named-query name="org.books.persistence.OrderByNumber">
         <query>
             SELECT o
-            FROM Order o
+            FROM BookOrder o
             WHERE UPPER(o.number) = :number
         </query>
     </named-query>
     
-    <named-query name="org.books.persistence.SearchOrderCustomerAndDate">
+    <named-query name="org.books.persistence.OrderByCustomerAndDate">
         <query>
             SELECT new org.books.persistence.dts.OrderInfo(o.id, o.number, o.date, o.amout, o.status)
-            FROM Order o
+            FROM BookOrder o
             WHERE o.date BETWEEN :begin AND :end
               AND o.customer = :customer
         </query>
