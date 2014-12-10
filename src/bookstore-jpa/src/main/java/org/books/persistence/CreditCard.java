@@ -1,7 +1,10 @@
 package org.books.persistence;
 
 import java.util.Calendar;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @Embeddable
 public class CreditCard extends ValueObject {
@@ -13,9 +16,17 @@ public class CreditCard extends ValueObject {
 
     private static final int MAX_CARD_EXPIRY_YEARS = 5;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Type type;
+
+    @Column(nullable = false)
     private String number;
+
+    @Column(nullable = false)
     private Integer expirationMonth;
+
+    @Column(nullable = false)
     private Integer expirationYear;
 
     public CreditCard() {

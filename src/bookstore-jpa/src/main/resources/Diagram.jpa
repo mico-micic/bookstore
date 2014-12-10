@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jpa:entity-mappings status="GENERATED" id="_14182367726921" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <jpa:mapped-superclass class="IdentifiableObject" compositePrimaryKeyType="NONE" visibile="true" minimized="false" id="_14182367727384">
+        <jpa:attributes>
+            <jpa:id name="id" attribute-type="java.lang.Integer" visibile="true" id="_14182367727385">
+                <jpa:generated-value strategy="TABLE"/>
+            </jpa:id>
+        </jpa:attributes>
+    </jpa:mapped-superclass>
+    <jpa:entity class="Book" compositePrimaryKeyType="NONE" superclass="IdentifiableObject" superclassId="_14182367727384" visibile="true" minimized="false" id="_14182367727386">
+        <jpa:attributes>
+            <jpa:basic name="isbn" attribute-type="java.lang.String" visibile="true" id="_14182367727387">
+                <jpa:column unique="true" nullable="false"/>
+            </jpa:basic>
+            <jpa:basic name="title" attribute-type="java.lang.String" visibile="true" id="_14182367727388">
+                <jpa:column nullable="false"/>
+            </jpa:basic>
+            <jpa:basic name="authors" attribute-type="java.lang.String" visibile="true" id="_14182367727389">
+                <jpa:column nullable="false"/>
+            </jpa:basic>
+            <jpa:basic name="publisher" attribute-type="java.lang.String" visibile="true" id="_141823677273810">
+                <jpa:column nullable="false"/>
+            </jpa:basic>
+            <jpa:basic name="publicationYear" attribute-type="java.lang.Integer" visibile="true" id="_141823677273811">
+                <jpa:column nullable="false"/>
+            </jpa:basic>
+            <jpa:basic name="binding" attribute-type="org.books.persistence.Book.Binding" visibile="true" id="_141823677273812">
+                <jpa:enumerated>STRING</jpa:enumerated>
+            </jpa:basic>
+            <jpa:basic name="numberOfPages" attribute-type="java.lang.Integer" visibile="true" id="_141823677273813">
+                <jpa:column nullable="false"/>
+            </jpa:basic>
+            <jpa:basic name="price" attribute-type="java.math.BigDecimal" visibile="true" id="_141823677273814">
+                <jpa:column nullable="false"/>
+            </jpa:basic>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="Cart" compositePrimaryKeyType="NONE" superclass="IdentifiableObject" superclassId="_14182367727384" visibile="true" minimized="false" id="_141823677278515">
+        <jpa:attributes>
+            <jpa:one-to-many name="lineItems" target-entity="LineItem" fetch="EAGER" collection-type="java.util.List" connected-entity-id="_141823677283234" visibile="true" id="_141823677278516"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="Customer" compositePrimaryKeyType="NONE" superclass="IdentifiableObject" superclassId="_14182367727384" visibile="true" minimized="false" id="_141823677280117">
+        <jpa:attributes>
+            <jpa:basic name="firstName" attribute-type="java.lang.String" visibile="true" id="_141823677280118">
+                <jpa:column nullable="false"/>
+            </jpa:basic>
+            <jpa:basic name="lastName" attribute-type="java.lang.String" visibile="true" id="_141823677280119">
+                <jpa:column nullable="false"/>
+            </jpa:basic>
+            <jpa:basic name="email" attribute-type="java.lang.String" visibile="true" id="_141823677280120">
+                <jpa:column unique="true"/>
+            </jpa:basic>
+            <jpa:basic name="password" attribute-type="java.lang.String" visibile="true" id="_141823677280121">
+                <jpa:column nullable="false"/>
+            </jpa:basic>
+            <jpa:embedded name="address" connected-class-id="_141823677280123" attribute-type="Address" visibile="true" id="_141823677280122"/>
+            <jpa:embedded name="creditCard" connected-class-id="_141823677281629" attribute-type="CreditCard" visibile="true" id="_141823677280128"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="LineItem" compositePrimaryKeyType="NONE" superclass="IdentifiableObject" superclassId="_14182367727384" visibile="true" minimized="false" id="_141823677283234">
+        <jpa:attributes>
+            <jpa:basic name="quantity" attribute-type="java.lang.Integer" visibile="true" id="_141823677283236">
+                <jpa:column nullable="false"/>
+            </jpa:basic>
+            <jpa:one-to-one name="book" target-entity="Book" connected-entity-id="_14182367727386" visibile="true" id="_141823677283235"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity name="BOOKORDER" class="Order" compositePrimaryKeyType="NONE" superclass="IdentifiableObject" superclassId="_14182367727384" visibile="true" minimized="false" id="_141823677284837">
+        <jpa:attributes>
+            <jpa:basic name="number" attribute-type="java.lang.String" visibile="true" id="_141823677284838">
+                <jpa:column unique="true" nullable="false"/>
+            </jpa:basic>
+            <jpa:basic name="date" attribute-type="java.util.Date" visibile="true" id="_141823677284839">
+                <jpa:column name="ORDERDATE" nullable="false"/>
+                <jpa:temporal>DATE</jpa:temporal>
+            </jpa:basic>
+            <jpa:basic name="amount" attribute-type="java.math.BigDecimal" visibile="true" id="_141823677284840">
+                <jpa:column nullable="false"/>
+            </jpa:basic>
+            <jpa:basic name="status" attribute-type="org.books.persistence.Order.Status" visibile="true" id="_141823677284841">
+                <jpa:column nullable="false"/>
+                <jpa:enumerated>STRING</jpa:enumerated>
+            </jpa:basic>
+            <jpa:one-to-many name="items" target-entity="LineItem" fetch="EAGER" collection-type="java.util.List" connected-entity-id="_141823677283234" visibile="true" id="_141823677284845"/>
+            <jpa:one-to-one name="customer" target-entity="Customer" optional="false" connected-entity-id="_141823677280117" visibile="true" id="_141823677284842"/>
+            <jpa:embedded name="address" connected-class-id="_141823677280123" attribute-type="Address" visibile="true" id="_141823677284843"/>
+            <jpa:embedded name="creditCard" connected-class-id="_141823677281629" attribute-type="CreditCard" visibile="true" id="_141823677284844"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:embeddable class="Address" visibile="true" minimized="false" id="_141823677280123">
+        <jpa:attributes>
+            <jpa:basic name="street" attribute-type="java.lang.String" visibile="true" id="_141823677280124">
+                <jpa:column nullable="false"/>
+            </jpa:basic>
+            <jpa:basic name="city" attribute-type="java.lang.String" visibile="true" id="_141823677280125">
+                <jpa:column nullable="false"/>
+            </jpa:basic>
+            <jpa:basic name="postalCode" attribute-type="java.lang.String" visibile="true" id="_141823677280126">
+                <jpa:column nullable="false"/>
+            </jpa:basic>
+            <jpa:basic name="country" attribute-type="java.lang.String" visibile="true" id="_141823677280127">
+                <jpa:column nullable="false"/>
+            </jpa:basic>
+        </jpa:attributes>
+    </jpa:embeddable>
+    <jpa:embeddable class="CreditCard" visibile="true" minimized="false" id="_141823677281629">
+        <jpa:attributes>
+            <jpa:basic name="type" attribute-type="org.books.persistence.CreditCard.Type" visibile="true" id="_141823677281630">
+                <jpa:column nullable="false"/>
+                <jpa:enumerated>STRING</jpa:enumerated>
+            </jpa:basic>
+            <jpa:basic name="number" attribute-type="java.lang.String" visibile="true" id="_141823677281631">
+                <jpa:column nullable="false"/>
+            </jpa:basic>
+            <jpa:basic name="expirationMonth" attribute-type="java.lang.Integer" visibile="true" id="_141823677281632">
+                <jpa:column nullable="false"/>
+            </jpa:basic>
+            <jpa:basic name="expirationYear" attribute-type="java.lang.Integer" visibile="true" id="_141823677281633">
+                <jpa:column nullable="false"/>
+            </jpa:basic>
+        </jpa:attributes>
+    </jpa:embeddable>
+    <jpa:diagram id="_14182367726922">
+        <plane elementRef="_14182367726921" id="_14182367726923_p"/>
+    </jpa:diagram>
+</jpa:entity-mappings>

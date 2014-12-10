@@ -1,6 +1,6 @@
 package org.books.persistence;
 
-import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -9,9 +9,12 @@ import javax.persistence.OneToOne;
 public class LineItem extends IdentifiableObject {
 
     @OneToOne
-    @JoinColumn(name = "bookId")
+    @JoinColumn(
+            name = "bookId",
+            nullable = false)
     private Book book;
 
+    @Column(nullable = false)
     private Integer quantity;
 
     public LineItem() {
