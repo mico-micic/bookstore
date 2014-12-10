@@ -21,6 +21,7 @@ public class Book extends IdentifiableObject {
 
     @Enumerated(EnumType.STRING)
     private Binding binding;
+
     private Integer numberOfPages;
     private BigDecimal price;
 
