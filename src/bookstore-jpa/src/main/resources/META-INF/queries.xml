@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="1.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" 
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd ">
+    
+    <named-query name="org.books.persistence.SearchBookByIsbn">
+        <query>
+            SELECT b 
+            FROM Book b
+            WHERE UPPER(b.isbn) = UPPER(:isbn)
+        </query>
+    </named-query>
+    
+    <named-query name="org.books.persistence.SearchBookByKeyWord">
+        <query>
+            SELECT b 
+            FROM Book b
+            WHERE b.title = :isbn
+                  b.authors = :
+                  b.publisher = :
+        </query>
+    </named-query>
+    
+    <named-query name="org.books.persistence.SearchCustomerByEmail">
+        <query>
+            SELECT c
+            FROM Customer c
+            WHERE UPPER(c.email) = UPPER(:email)
+        </query>
+    </named-query>
+    
+    <named-query name="org.books.persistence.SearchCustomerByNamePart">
+        <query>
+            SELECT new org.books.persistence.dto.CustomerInfo(c.id, c.firstName, c.lastname, c.email)
+            FROM Customer c
+            WHERE UPPER(c.firstName) LIKE UPPER(:firstname)
+              OR  UPPER(c.lastname) LIKE UPPER(:lastname)
+        </query>
+    </named-query>
+    
+    <named-query name="org.books.persistence.SearchOrderByNumber">
+        <query>
+            SELECT o
+            FROM Order o
+            WHERE UPPER(o.number) = :number
+        </query>
+    </named-query>
+    
+    <named-query name="org.books.persistence.SearchOrderCustomerAndDate">
+        <query>
+            SELECT new org.books.persistence.dts.OrderInfo(o.id, o.number, o.date, o.amout, o.status)
+            FROM Order o
+            WHERE o.date BETWEEN :begin AND :end
+              AND o.customer = :customer
+        </query>
+    </named-query>
+
+</entity-mappings>
