@@ -3,6 +3,9 @@
     <persistence-unit name="bookstore" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>org.books.persistence.Book</class>
+            
+        <mapping-file>META-INF/queries.xml</mapping-file>
+        
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/bookstore"/>
             <property name="javax.persistence.jdbc.user" value="app"/>
