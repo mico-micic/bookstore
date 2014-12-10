@@ -7,12 +7,16 @@ import javax.persistence.Entity;
 @Entity
 public class Customer extends IdentifiableObject {
 
+    @Column(nullable = false)
     private String firstName;
+
+    @Column(nullable = false)
     private String lastName;
 
     @Column(unique = true)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
     @Embedded

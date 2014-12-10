@@ -1,13 +1,21 @@
 package org.books.persistence;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class Address extends ValueObject {
 
+    @Column(nullable = false)
     private String street;
+
+    @Column(nullable = false)
     private String city;
+
+    @Column(nullable = false)
     private String postalCode;
+
+    @Column(nullable = false)
     private String country;
 
     public Address() {

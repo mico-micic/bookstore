@@ -1,6 +1,7 @@
 package org.books.persistence;
 
 import java.math.BigDecimal;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -13,16 +14,30 @@ public class Book extends IdentifiableObject {
         Hardcover, Paperback
     }
 
+    @Column(
+            unique = true,
+            nullable = false)
     private String isbn;
+
+    @Column(nullable = false)
     private String title;
+
+    @Column(nullable = false)
     private String authors;
+
+    @Column(nullable = false)
     private String publisher;
+
+    @Column(nullable = false)
     private Integer publicationYear;
 
     @Enumerated(EnumType.STRING)
     private Binding binding;
 
+    @Column(nullable = false)
     private Integer numberOfPages;
+
+    @Column(nullable = false)
     private BigDecimal price;
 
     public Book() {
