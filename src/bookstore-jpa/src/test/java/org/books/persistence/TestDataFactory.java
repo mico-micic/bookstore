@@ -25,6 +25,8 @@ public class TestDataFactory {
     void prepareTestData() {
         createNewBook("Java Insel", "013-123-342-1", new BigDecimal(105.50));
         // TODO complete me
+        em.getTransaction().begin();
+        em.getTransaction().commit();
     }
 
     private Book createNewBook(String title, String isbn, BigDecimal price) {

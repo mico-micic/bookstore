@@ -1,7 +1,9 @@
 package org.books.persistence;
 
 import java.util.Calendar;
+import javax.persistence.Embeddable;
 
+@Embeddable
 public class CreditCard extends ValueObject {
 
     public enum Type {
