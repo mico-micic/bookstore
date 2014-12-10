@@ -34,7 +34,7 @@ public class JpaDeliverableTests {
 
     @Test
     public void testDummy() {
-        em.createQuery("SELECT c FROM Customer c");
+        em.createQuery("SELECT b FROM Book b");
         Assert.assertTrue(true);
     }
 
