@@ -21,10 +21,10 @@
     
     <named-query name="org.books.persistence.CustomerByNamePart">
         <query>
-            SELECT new org.books.persistence.dto.CustomerInfo(c.id, c.firstName, c.lastname, c.email)
+            SELECT new org.books.persistence.dto.CustomerInfo(c.id, c.firstName, c.lastName, c.email)
             FROM Customer c
             WHERE UPPER(c.firstName) LIKE UPPER(:part)
-              OR  UPPER(c.lastname) LIKE UPPER(:part)
+              OR  UPPER(c.lastName) LIKE UPPER(:part)
         </query>
     </named-query>
     
