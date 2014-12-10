@@ -1,84 +1,87 @@
 package org.books.persistence;
 
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+
+@Entity
 public class Customer extends IdentifiableObject {
 
-	private String firstName;
-	private String lastName;
-	private String email;
-	private String password;
-	private Address address;
-	private CreditCard creditCard;
+    private String firstName;
+    private String lastName;
 
-	public Customer() {
-	}
+    @Column(unique = true)
+    private String email;
 
-	public Customer(String firstName, String lastName, String email, String password, Address address, CreditCard creditCard) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.password = password;
-		this.address = address;
-		this.creditCard = creditCard;
-	}
+    private String password;
 
-	public String getFirstName() {
-		return firstName;
-	}
+    @Embedded
+    private Address address;
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    @Embedded
+    private CreditCard creditCard;
 
-	public String getLastName() {
-		return lastName;
-	}
+    public Customer() {
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public Address getAddress() {
-		if (address == null) {
-			address = new Address();
-		}
-		return address;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setAddress(Address address) {
-		this.address = address;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public CreditCard getCreditCard() {
-		if (creditCard == null) {
-			creditCard = new CreditCard();
-		}
-		return creditCard;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setCreditCard(CreditCard creditCard) {
-		this.creditCard = creditCard;
-	}
+    public Address getAddress() {
+        if (address == null) {
+            address = new Address();
+        }
+        return address;
+    }
 
-	@Override
-	public String toString() {
-		return "Customer{" + "firstName=" + firstName + ", lastName=" + lastName
-				+ ", email=" + email + ", password=" + password
-				+ ", address=" + address + ", creditCard=" + creditCard + '}';
-	}
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public CreditCard getCreditCard() {
+        if (creditCard == null) {
+            creditCard = new CreditCard();
+        }
+        return creditCard;
+    }
+
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" + "firstName=" + firstName + ", lastName=" + lastName
+                + ", email=" + email + ", password=" + password
+                + ", address=" + address + ", creditCard=" + creditCard + '}';
+    }
 }

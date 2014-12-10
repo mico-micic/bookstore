@@ -1,38 +1,45 @@
 package org.books.persistence;
 
 import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
-public class LineItem implements Serializable {
+@Entity
+public class LineItem extends IdentifiableObject {
 
-	private Book book;
-	private Integer quantity;
+    @OneToOne
+    @JoinColumn(name = "bookId")
+    private Book book;
 
-	public LineItem() {
-	}
+    private Integer quantity;
 
-	public LineItem(Book book, Integer quantity) {
-		this.book = book;
-		this.quantity = quantity;
-	}
+    public LineItem() {
+    }
 
-	public Book getBook() {
-		return book;
-	}
+    public LineItem(Book book, Integer quantity) {
+        this.book = book;
+        this.quantity = quantity;
+    }
 
-	public void setBook(Book book) {
-		this.book = book;
-	}
+    public Book getBook() {
+        return book;
+    }
 
-	public Integer getQuantity() {
-		return quantity;
-	}
+    public void setBook(Book book) {
+        this.book = book;
+    }
 
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
+    public Integer getQuantity() {
+        return quantity;
+    }
 
-	@Override
-	public String toString() {
-		return "LineItem{" + "book=" + book + ", quantity=" + quantity + '}';
-	}
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "LineItem{" + "book=" + book + ", quantity=" + quantity + '}';
+    }
 }
