@@ -43,7 +43,7 @@ public class BookDao {
         List<BookInfo> ret = new ArrayList<>();
         
         CriteriaBuilder cb = this.mgr.getCriteriaBuilder();
-        CriteriaQuery<Book> cq = cb.createQuery(Book.class);
+        CriteriaQuery<BookInfo> cq = cb.createQuery(BookInfo.class);
         Root<Book> book = cq.from(Book.class);
    
         Expression<String> exp1 = cb.concat(book.get(Book_.title), book.get(Book_.authors));
@@ -55,10 +55,13 @@ public class BookDao {
             predicates.add(cb.or(cb.like(exp1, "%" + key + "%")));
         }
         
-        cq.select(book)
-            .where(predicates.toArray(new Predicate[]{}));
+        cq.select(cb.construct(BookInfo.class, 
+                book.get(Book_.id), 
+                book.get(Book_.title), 
+                book.get(Book_.isbn), 
+                book.get(Book_.price)))
+                .where(predicates.toArray(new Predicate[]{}));
         
-        return null;
-        //return this.mgr.createQuery(cq).getResultList();
+        return this.mgr.createQuery(cq).getResultList();
     }
 }
