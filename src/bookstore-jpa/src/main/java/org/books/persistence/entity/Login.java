@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.books.persistence;
+package org.books.persistence.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Converter;
 import javax.persistence.Entity;
+import org.books.persistence.converter.AesEncryptorConverter;
 
 /**
  *
@@ -15,18 +18,16 @@ import javax.persistence.Entity;
 @Entity
 public class Login extends IdentifiableObject {
 
-    @Column(nullable = false)
+    @Column(
+            nullable = false,
+            unique = true)
     private String userName;
 
     @Column(nullable = false)
+    @Convert(converter = AesEncryptorConverter.class)
     private String password;
 
     public Login() {
-    }
-
-    public Login(String userName, String password) {
-        this.userName = userName;
-        this.password = password;
     }
 
     public String getUserName() {

@@ -7,7 +7,7 @@ package org.books.persistence.dao;
 
 import java.util.List;
 import javax.persistence.EntityManager;
-import org.books.persistence.Customer;
+import org.books.persistence.entity.Customer;
 import org.books.persistence.dto.CustomerInfo;
 
 /**

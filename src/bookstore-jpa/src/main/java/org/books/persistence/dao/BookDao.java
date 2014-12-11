@@ -13,8 +13,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import org.books.persistence.Book;
-import org.books.persistence.Book_;
+import org.books.persistence.entity.Book;
+import org.books.persistence.entity.Book_;
 import org.books.persistence.dto.BookInfo;
 
 /**

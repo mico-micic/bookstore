@@ -1,4 +1,4 @@
-package org.books.persistence;
+package org.books.persistence.entity;
 
 import java.io.Serializable;
 import java.util.Objects;

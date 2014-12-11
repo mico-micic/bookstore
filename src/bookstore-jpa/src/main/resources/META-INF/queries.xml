@@ -38,7 +38,7 @@
     
     <named-query name="org.books.persistence.OrderByCustomerAndDate">
         <query>
-            SELECT new org.books.persistence.dts.OrderInfo(o.id, o.number, o.date, o.amout, o.status)
+            SELECT new org.books.persistence.dts.OrderInfo(o.id, o.number, o.date, o.amount, o.status)
             FROM Order o
             WHERE o.date BETWEEN :begin AND :end
               AND o.customer = :customer

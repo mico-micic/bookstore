@@ -5,9 +5,12 @@
  */
 package org.books.persistence;
 
+import org.books.persistence.entity.Book;
 import java.math.BigDecimal;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import org.books.persistence.entity.CreditCard;
+import org.books.persistence.entity.Login;
 
 /**
  * @author Sigi
@@ -24,6 +27,8 @@ public class TestDataFactory {
 
     void prepareTestData() {
         createNewBook("Java Insel", "013-123-342-1", new BigDecimal(105.50));
+        createLogin("superuser@email.com", "pass@word");
+        createMasterCard("5105105105105100");
         // TODO complete me
         em.getTransaction().begin();
         em.getTransaction().commit();
@@ -41,6 +46,24 @@ public class TestDataFactory {
         book.setPublisher("O Reilly");
         em.persist(book);
         return book;
+    }
+
+    private CreditCard createMasterCard(String number) {
+        CreditCard creditCard = new CreditCard();
+        creditCard.setExpirationMonth(12);
+        creditCard.setExpirationYear(2017);
+        creditCard.setNumber(number);
+        creditCard.setType(CreditCard.Type.MasterCard);
+        em.persist(creditCard);
+        return creditCard;
+    }
+
+    private Login createLogin(String email, String password) {
+        Login login = new Login();
+        login.setUserName(email);
+        login.setPassword(password);
+        em.persist(login);
+        return login;
     }
 
 }

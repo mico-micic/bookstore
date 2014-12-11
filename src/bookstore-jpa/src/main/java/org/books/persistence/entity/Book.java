@@ -1,4 +1,4 @@
-package org.books.persistence;
+package org.books.persistence.entity;
 
 import java.math.BigDecimal;
 import javax.persistence.Column;

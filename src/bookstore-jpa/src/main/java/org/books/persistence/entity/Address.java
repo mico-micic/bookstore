@@ -1,4 +1,4 @@
-package org.books.persistence;
+package org.books.persistence.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

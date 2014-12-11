@@ -12,8 +12,8 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;
-import org.books.persistence.Customer;
-import org.books.persistence.Order;
+import org.books.persistence.entity.Customer;
+import org.books.persistence.entity.Order;
 import org.books.persistence.dto.OrderInfo;
 
 /**

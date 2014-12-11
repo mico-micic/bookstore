@@ -1,10 +1,12 @@
-package org.books.persistence;
+package org.books.persistence.entity;
 
 import java.util.Calendar;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import org.books.persistence.converter.AesEncryptorConverter;
 
 @Embeddable
 public class CreditCard extends ValueObject {
@@ -21,6 +23,7 @@ public class CreditCard extends ValueObject {
     private Type type;
 
     @Column(nullable = false)
+    @Convert(converter = AesEncryptorConverter.class)
     private String number;
 
     @Column(nullable = false)
