@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.books.persistence.dao.BookDao;
+import org.books.persistence.entity.Book;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
@@ -35,11 +36,11 @@ public class BookDaoTests {
 
     @Test
     public void testGetByIsbn() {
-        
+
         BookDao bookDao = new BookDao(this.em);
         Book theBook = bookDao.getByIsbn("013-123-342-1");
-        
-        assertNotNull(theBook); 
+
+        assertNotNull(theBook);
     }
 
 }

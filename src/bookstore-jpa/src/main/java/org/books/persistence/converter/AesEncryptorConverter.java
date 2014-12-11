@@ -8,28 +8,27 @@ package org.books.persistence.converter;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 import org.books.persistence.util.AesEncryptor;
-import org.owasp.esapi.errors.EncryptionException;
 
 /**
  * @author Sigi
  */
 @Converter(autoApply = true)
-public class AesEncryptorConverter implements AttributeConverter<String, String> {
+public class AesEncryptorConverter implements AttributeConverter<String, byte[]> {
 
     @Override
-    public String convertToDatabaseColumn(String attribute) {
+    public byte[] convertToDatabaseColumn(String attribute) {
         try {
-            return AesEncryptor.newInstance().encryptString(attribute);
-        } catch (EncryptionException ex) {
+            return AesEncryptor.newInstance().encrypt(attribute);
+        } catch (Exception ex) {
             throw new IllegalArgumentException("The given String cannot be encrypted: " + attribute, ex);
         }
     }
 
     @Override
-    public String convertToEntityAttribute(String dbData) {
+    public String convertToEntityAttribute(byte[] dbData) {
         try {
-            return AesEncryptor.newInstance().decryptString(dbData);
-        } catch (EncryptionException ex) {
+            return AesEncryptor.newInstance().decrypt(dbData);
+        } catch (Exception ex) {
             throw new IllegalStateException("The Database-Value cannot be decrypted: " + dbData, ex);
         }
     }

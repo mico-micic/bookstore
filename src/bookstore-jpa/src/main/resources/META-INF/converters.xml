@@ -5,5 +5,4 @@
     
     <converter class="org.books.persistence.converter.AesEncryptorConverter"/>
 
-
 </entity-mappings>

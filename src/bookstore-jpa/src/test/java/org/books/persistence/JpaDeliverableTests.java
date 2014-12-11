@@ -1,8 +1,11 @@
 package org.books.persistence;
 
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import org.books.persistence.entity.Login;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -33,9 +36,14 @@ public class JpaDeliverableTests {
     }
 
     @Test
-    public void testDummy() {
-        em.createQuery("SELECT b FROM Book b");
-        Assert.assertTrue(true);
+    public void testLogin() {
+        Login login = em
+                .createQuery("SELECT l FROM Login l", Login.class)
+                .getResultList()
+                .get(0);
+
+        Assert.assertNotNull(login);
+        Assert.assertEquals("pass@word", login.getPassword());
     }
 
 }
