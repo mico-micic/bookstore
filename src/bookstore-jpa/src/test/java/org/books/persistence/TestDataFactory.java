@@ -8,7 +8,6 @@ package org.books.persistence;
 import org.books.persistence.entity.Book;
 import java.math.BigDecimal;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import org.books.persistence.entity.Address;
 import org.books.persistence.entity.CreditCard;
 import org.books.persistence.entity.Customer;
@@ -19,11 +18,9 @@ import org.books.persistence.entity.Login;
  */
 public class TestDataFactory {
 
-    private final EntityManagerFactory emf;
     private final EntityManager em;
 
-    TestDataFactory(EntityManagerFactory emf, EntityManager em) {
-        this.emf = emf;
+    TestDataFactory(EntityManager em) {
         this.em = em;
     }
 
@@ -82,10 +79,12 @@ public class TestDataFactory {
 
     private Customer createCustomer(Login login, CreditCard masterCard, Address address) {
         Customer customer = new Customer();
+
+        // Wie abgemacht entspricht der UserName immer der EMail-Adresse:
         customer.setEmail(login.getUserName());
+
         customer.setFirstName("James");
         customer.setLastName("Bond");
-        customer.setPassword(login.getPassword());
         customer.setAddress(address);
         customer.setCreditCard(masterCard);
         em.persist(customer);

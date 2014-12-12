@@ -16,9 +16,6 @@ public class Customer extends IdentifiableObject {
     @Column(unique = true)
     private String email;
 
-    @Column(nullable = false)
-    private String password;
-
     @Embedded
     private Address address;
 
@@ -52,14 +49,6 @@ public class Customer extends IdentifiableObject {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public Address getAddress() {
         if (address == null) {
             address = new Address();
@@ -85,7 +74,6 @@ public class Customer extends IdentifiableObject {
     @Override
     public String toString() {
         return "Customer{" + "firstName=" + firstName + ", lastName=" + lastName
-                + ", email=" + email + ", password=" + password
-                + ", address=" + address + ", creditCard=" + creditCard + '}';
+                + ", email=" + email + ", address=" + address + ", creditCard=" + creditCard + '}';
     }
 }

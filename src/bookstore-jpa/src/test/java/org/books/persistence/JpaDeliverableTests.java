@@ -1,10 +1,9 @@
 package org.books.persistence;
 
-import java.util.List;
+import java.io.UnsupportedEncodingException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
 import org.books.persistence.entity.Login;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -24,7 +23,7 @@ public class JpaDeliverableTests {
     public static void setUpClass() {
         emf = Persistence.createEntityManagerFactory("bookstore");
         em = emf.createEntityManager();
-        tdf = new TestDataFactory(emf, em);
+        tdf = new TestDataFactory(em);
         tdf.prepareTestData();
     }
 
@@ -36,7 +35,7 @@ public class JpaDeliverableTests {
     }
 
     @Test
-    public void testLogin() {
+    public void testLoginWithPWEncryption() throws UnsupportedEncodingException {
         Login login = em
                 .createQuery("SELECT l FROM Login l", Login.class)
                 .getResultList()
@@ -44,6 +43,15 @@ public class JpaDeliverableTests {
 
         Assert.assertNotNull(login);
         Assert.assertEquals("pass@word", login.getPassword());
+
+        // Attention: With JPQL we get the encrypted value:
+        // => thus we need to operate only over the Entity when dealing with PWs!
+        String decryptedPassword = em
+                .createQuery("SELECT l.password FROM Login l WHERE l.userName = 'superuser@email.com'", String.class)
+                .getResultList()
+                .get(0);
+        Assert.assertNotSame("pass@word", decryptedPassword);
+
     }
 
 }

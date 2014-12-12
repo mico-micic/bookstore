@@ -23,7 +23,7 @@ public class BookDaoTests {
     public static void setUpClass() {
         emf = Persistence.createEntityManagerFactory("bookstore");
         em = emf.createEntityManager();
-        tdf = new TestDataFactory(emf, em);
+        tdf = new TestDataFactory(em);
         tdf.prepareTestData();
     }
 
