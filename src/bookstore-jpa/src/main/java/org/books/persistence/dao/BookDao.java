@@ -38,7 +38,7 @@ public class BookDao {
                 .getSingleResult();
     }
     
-    public List<BookInfo> searchByKeywords(List<String> keywords) {
+    public List<BookInfo> searchByKeywords(String[] keywords) {
         
         List<BookInfo> ret = new ArrayList<>();
         
@@ -50,9 +50,8 @@ public class BookDao {
         exp1 = cb.concat(exp1, book.get(Book_.publisher));
         
         List<Predicate> predicates = new ArrayList<>();
-        
         for (String key : keywords) {
-            predicates.add(cb.or(cb.like(exp1, "%" + key + "%")));
+            predicates.add(cb.like(exp1, "%" + key + "%"));
         }
         
         cq.select(cb.construct(BookInfo.class, 
@@ -60,7 +59,7 @@ public class BookDao {
                 book.get(Book_.title), 
                 book.get(Book_.isbn), 
                 book.get(Book_.price)))
-                .where(predicates.toArray(new Predicate[]{}));
+                .where(cb.or(predicates.toArray(new Predicate[]{})));
         
         return this.mgr.createQuery(cq).getResultList();
     }

@@ -25,7 +25,10 @@ public class TestDataFactory {
     }
 
     void prepareTestData() {
-        createNewBook("Java Insel", "013-123-342-1", new BigDecimal(105.50));
+        createNewBook("Java Insel", "978-3897214484", new BigDecimal(105.50), "Fowler", "O'Reilly Verlag GmbH");
+        createNewBook("Programmieren mit Java", "978-3836217408", new BigDecimal(105.50), "Philip Ackermann", "Wiley-VCH");
+        createNewBook("Java 8 - Die Neuerungen", "978-3527710706", new BigDecimal(105.50), "Jutta Schmidt, Barry Burd", "Galileo Computing");
+        createNewBook("Java für Dummies", "978-3836217880", new BigDecimal(105.50), "Hans-Peter Habelitz", "Carl Hanser Verlag GmbH");
 
         Login login = createLogin("superuser@email.com", "pass@word");
         CreditCard masterCard = createMasterCard("5105105105105100");
@@ -37,16 +40,16 @@ public class TestDataFactory {
         em.getTransaction().commit();
     }
 
-    private Book createNewBook(String title, String isbn, BigDecimal price) {
+    private Book createNewBook(String title, String isbn, BigDecimal price, String authors, String publisher) {
         Book book = new Book();
-        book.setAuthors("Fowler");
+        book.setAuthors(authors);
         book.setBinding(Book.Binding.Hardcover);
         book.setIsbn(isbn);
         book.setTitle(title);
         book.setNumberOfPages(101);
         book.setPrice(price);
         book.setPublicationYear(2013);
-        book.setPublisher("O Reilly");
+        book.setPublisher(publisher);
         em.persist(book);
         return book;
     }
