@@ -5,11 +5,8 @@
  */
 package org.books.persistence.dao;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.TemporalAdjusters;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.books.persistence.entity.Customer;
@@ -45,11 +42,11 @@ public class OrderDao {
     public List<OrderInfo> searchByCustomerAndYear(Customer customer, int year) {
 
         Calendar beginCal = Calendar.getInstance();
-        beginCal.set(year, Calendar.JANUARY, 1);
+        beginCal.set(year, 0, 1, 0, 0, 0);
         Date beginDate = new Date(beginCal.getTimeInMillis());
 
         Calendar endCal = Calendar.getInstance();
-        beginCal.set(year, Calendar.DECEMBER, 31);
+        endCal.set(year, 11, 31, 0, 0, 0);
         Date endDate = new Date(endCal.getTimeInMillis());
 
         return this.mgr.createNamedQuery(ORDER_SEARCH_BY_CUSTOMER_AND_DATE_SQL, OrderInfo.class)

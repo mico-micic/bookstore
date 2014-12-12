@@ -6,7 +6,7 @@
 package org.books.persistence.dto;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 import org.books.persistence.entity.Order;
 
 /**

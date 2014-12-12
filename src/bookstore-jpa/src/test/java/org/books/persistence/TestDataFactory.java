@@ -7,11 +7,14 @@ package org.books.persistence;
 
 import org.books.persistence.entity.Book;
 import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.Date;
 import javax.persistence.EntityManager;
 import org.books.persistence.entity.Address;
 import org.books.persistence.entity.CreditCard;
 import org.books.persistence.entity.Customer;
 import org.books.persistence.entity.Login;
+import org.books.persistence.entity.Order;
 
 /**
  * @author Sigi
@@ -42,10 +45,26 @@ public class TestDataFactory {
         CreditCard masterCard3 = createMasterCard("5105105105105100");
         Address address3 = createAddress();
 
-        createCustomer("James", "Bond", login1, masterCard1, address1);
-        createCustomer("Hans", "Wurst", login2, masterCard2, address2);
-        createCustomer("Bonds_Mother", "Some_Name", login3, masterCard3, address3);
+        Customer customer1 = createCustomer("James", "Bond", login1, masterCard1, address1);
+        Customer customer2 = createCustomer("Hans", "Wurst", login2, masterCard2, address2);
+        Customer customer3 = createCustomer("Bonds_Mother", "Some_Name", login3, masterCard3, address3);
 
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        Calendar cal3 = Calendar.getInstance();
+        cal1.set(2010, 1, 25);
+        cal2.set(2011, 6, 15);
+        cal3.set(2014, 9, 23);
+        
+        createOrder(customer1, BigDecimal.valueOf(158.60), new Date(cal1.getTimeInMillis()), "1111-001", createAddress(), masterCard1);
+        createOrder(customer1, BigDecimal.valueOf(33.55), new Date(cal1.getTimeInMillis()), "1111-002", createAddress(), masterCard1);
+        createOrder(customer1, BigDecimal.valueOf(16.99), new Date(cal1.getTimeInMillis()), "1111-003", createAddress(), masterCard1);
+        createOrder(customer1, BigDecimal.valueOf(77.20), new Date(cal2.getTimeInMillis()), "1111-004", createAddress(), masterCard1);
+        
+        createOrder(customer2, BigDecimal.valueOf(28.15), new Date(cal3.getTimeInMillis()), "2222-001", createAddress(), masterCard1);
+        
+        createOrder(customer3, BigDecimal.valueOf(77.10), new Date(cal3.getTimeInMillis()), "3333-001", createAddress(), masterCard1);
+        
         // TODO complete me
         em.getTransaction().begin();
         em.getTransaction().commit();
@@ -103,6 +122,22 @@ public class TestDataFactory {
         customer.setCreditCard(masterCard);
         em.persist(customer);
         return customer;
+    }
+    
+    private Order createOrder(Customer customer, BigDecimal amount, Date date, String number, Address address, CreditCard card) {
+        
+        Order order = new Order();
+        
+        order.setCustomer(customer);
+        order.setAmount(amount);
+        order.setDate(date);
+        order.setNumber(number);
+        order.setStatus(Order.Status.accepted);
+        order.setAddress(address);
+        order.setCreditCard(card);
+        
+        em.persist(order);
+        return order;
     }
 
 }

@@ -27,6 +27,7 @@ public class Order extends IdentifiableObject {
     }
 
     @Column(
+            name = "ORDER_NUMBER",
             unique = true,
             nullable = false)
     private String number;
