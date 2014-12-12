@@ -23,8 +23,8 @@
         <query>
             SELECT new org.books.persistence.dto.CustomerInfo(c.id, c.firstName, c.lastName, c.email)
             FROM Customer c
-            WHERE UPPER(c.firstName) LIKE UPPER(:part)
-              OR  UPPER(c.lastName) LIKE UPPER(:part)
+            WHERE UPPER(c.firstName) LIKE CONCAT("%", UPPER(:part), "%")
+              OR  UPPER(c.lastName) LIKE CONCAT("%", UPPER(:part), "%")
         </query>
     </named-query>
     
@@ -32,7 +32,7 @@
         <query>
             SELECT o
             FROM Order o
-            WHERE UPPER(o.number) = :number
+            WHERE UPPER(o.number) = UPPER(:number)
         </query>
     </named-query>
     

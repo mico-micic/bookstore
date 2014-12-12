@@ -16,7 +16,7 @@ import org.books.persistence.dto.CustomerInfo;
  */
 public class CustomerDao {
 
-    private static final String CUSTOMER_SEARCH_BY_MAIL_SQL = "books.persistence.CustomerByEmail";
+    private static final String CUSTOMER_SEARCH_BY_MAIL_SQL = "org.books.persistence.CustomerByEmail";
     private static final String CUSTOMER_SEARCH_BY_MAIL_SQL_MAIL_PARAM = "email";
 
     private static final String CUSTOMER_SEARCH_BY_NAME_PART_SQL = "org.books.persistence.CustomerByNamePart";
