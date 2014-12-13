@@ -45,7 +45,7 @@ public class JpaDeliverableTests {
         Assert.assertEquals("pass@word", login.getPassword());
 
         // Attention: With JPQL we get the encrypted value:
-        // => thus we need to operate only over the Entity when dealing with PWs!
+        // => thus we need to operate only over the Entity when decrypting DB-Fields!
         String decryptedPassword = em
                 .createQuery("SELECT l.password FROM Login l WHERE l.userName = 'superuser@email.com'", String.class)
                 .getResultList()
