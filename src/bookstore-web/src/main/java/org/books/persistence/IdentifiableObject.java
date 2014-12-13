@@ -2,31 +2,48 @@ package org.books.persistence;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.TableGenerator;
 
+@MappedSuperclass
 public class IdentifiableObject implements Serializable {
 
-	private Integer id;
+    @TableGenerator(
+            name = "general_sequence",
+            table = "GENERAL_SEQUENCE",
+            initialValue = 10_000,
+            allocationSize = 10
+    )
 
-	public Integer getId() {
-		return id;
-	}
+    @Id
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "general_sequence")
+    private Integer id;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hashCode(id);
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	@Override
-	public boolean equals(Object other) {
-		return other != null && other instanceof IdentifiableObject && Objects.equals(id, ((IdentifiableObject) other).id);
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + "{" + "id=" + id + '}';
-	}
+    @Override
+    public boolean equals(Object other) {
+        return other != null && other instanceof IdentifiableObject && Objects.equals(id, ((IdentifiableObject) other).id);
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "{" + "id=" + id + '}';
+    }
 }
