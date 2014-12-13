@@ -14,7 +14,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -61,7 +60,7 @@ public class Order extends IdentifiableObject {
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    @JoinColumn(name = "lineItemId")
+    @JoinColumn(name = "orderId")
     private List<LineItem> items;
 
     public Order() {
