@@ -37,7 +37,7 @@ public class JpaDeliverableTests {
     @Test
     public void testLoginWithPWEncryption() throws UnsupportedEncodingException {
         Login login = em
-                .createQuery("SELECT l FROM Login l", Login.class)
+                .createQuery("SELECT l FROM Login l ORDER BY l.id", Login.class)
                 .getResultList()
                 .get(0);
 

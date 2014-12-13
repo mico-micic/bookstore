@@ -7,7 +7,6 @@ package org.books.persistence.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
-import javax.persistence.Converter;
 import javax.persistence.Entity;
 import org.books.persistence.converter.AesEncryptorConverter;
 

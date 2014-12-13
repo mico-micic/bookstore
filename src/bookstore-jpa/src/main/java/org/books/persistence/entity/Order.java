@@ -11,6 +11,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -45,7 +46,7 @@ public class Order extends IdentifiableObject {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "customerId")
     private Customer customer;
 
@@ -56,7 +57,7 @@ public class Order extends IdentifiableObject {
     private CreditCard creditCard;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "lineItemId")
+    @JoinColumn(name = "orderId")
     private List<LineItem> items;
 
     public Order() {

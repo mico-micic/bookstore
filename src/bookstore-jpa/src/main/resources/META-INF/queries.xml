@@ -44,5 +44,13 @@
               AND o.customer = :customer
         </query>
     </named-query>
-
+    
+    <named-query name="org.books.persistence.LoginByUserName">
+        <query>
+            SELECT l
+            FROM Login l
+            WHERE UPPER(l.userName) = UPPER(:userName)
+        </query>
+    </named-query>
+    
 </entity-mappings>

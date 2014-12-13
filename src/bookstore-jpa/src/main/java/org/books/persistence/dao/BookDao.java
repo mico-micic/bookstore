@@ -39,9 +39,7 @@ public class BookDao {
     }
     
     public List<BookInfo> searchByKeywords(String[] keywords) {
-        
-        List<BookInfo> ret = new ArrayList<>();
-        
+
         CriteriaBuilder cb = this.mgr.getCriteriaBuilder();
         CriteriaQuery<BookInfo> cq = cb.createQuery(BookInfo.class);
         Root<Book> book = cq.from(Book.class);
@@ -51,7 +49,7 @@ public class BookDao {
         
         List<Predicate> predicates = new ArrayList<>();
         for (String key : keywords) {
-            predicates.add(cb.like(exp1, "%" + key + "%"));
+            predicates.add(cb.like(cb.upper(exp1), "%" + key.toUpperCase() + "%"));
         }
         
         cq.select(cb.construct(BookInfo.class, 

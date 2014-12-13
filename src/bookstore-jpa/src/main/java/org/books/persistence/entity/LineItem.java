@@ -3,12 +3,12 @@ package org.books.persistence.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class LineItem extends IdentifiableObject {
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(
             name = "bookId",
             nullable = false)
