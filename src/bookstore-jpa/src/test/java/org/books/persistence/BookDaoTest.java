@@ -15,7 +15,7 @@ public class BookDaoTest extends AbstractTestBase {
     @Test
     public void testGetByIsbn() {
 
-        BookDao bookDao = new BookDao(super.getEm());
+        BookDao bookDao = new BookDao(getEm());
         Book theBook = bookDao.getByIsbn("978-3836217880");
 
         assertNotNull(theBook);
@@ -24,7 +24,7 @@ public class BookDaoTest extends AbstractTestBase {
     @Test
     public void testSearchByKeywords() {
 
-        BookDao bookDao = new BookDao(super.getEm());
+        BookDao bookDao = new BookDao(getEm());
         List<BookInfo> result1 = bookDao.searchByKeywords(new String[]{"Programmieren", "Philip"});
         List<BookInfo> result2 = bookDao.searchByKeywords(new String[]{"Habelitz"});
         List<BookInfo> result3 = bookDao.searchByKeywords(new String[]{"Insel", "Reilly"});

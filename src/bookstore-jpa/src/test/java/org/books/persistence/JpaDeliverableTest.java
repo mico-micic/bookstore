@@ -12,7 +12,7 @@ public class JpaDeliverableTest extends AbstractTestBase {
 
     @Test
     public void testLoginWithPWEncryption() throws UnsupportedEncodingException {
-        Login login = super.getEm()
+        Login login = getEm()
                 .createQuery("SELECT l FROM Login l ORDER BY l.id", Login.class)
                 .getResultList()
                 .get(0);
@@ -22,11 +22,10 @@ public class JpaDeliverableTest extends AbstractTestBase {
 
         // Attention: With JPQL we get the encrypted value:
         // => thus we need to operate only over the Entity when decrypting DB-Fields!
-        String decryptedPassword = super.getEm()
+        String decryptedPassword = getEm()
                 .createQuery("SELECT l.password FROM Login l WHERE l.userName = 'superuser@email.com'", String.class)
                 .getResultList()
                 .get(0);
         Assert.assertNotSame("pass@word", decryptedPassword);
     }
-
 }

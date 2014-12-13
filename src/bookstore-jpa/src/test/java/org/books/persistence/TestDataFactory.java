@@ -28,6 +28,7 @@ public class TestDataFactory {
     }
     
     void prepareTestData() {
+        
         createNewBook("Java Insel", "978-3897214484", new BigDecimal(105.50), "Fowler", "O'Reilly Verlag GmbH");
         createNewBook("Programmieren mit Java", "978-3836217408", new BigDecimal(105.50), "Philip Ackermann", "Wiley-VCH");
         createNewBook("Java 8 - Die Neuerungen", "978-3527710706", new BigDecimal(105.50), "Jutta Schmidt, Barry Burd", "Galileo Computing");
@@ -152,5 +153,4 @@ public class TestDataFactory {
         em.persist(order);
         return order;
     }
-
 }

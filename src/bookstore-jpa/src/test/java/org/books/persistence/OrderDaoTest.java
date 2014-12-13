@@ -17,7 +17,7 @@ public class OrderDaoTest extends AbstractTestBase {
     @Test
     public void testGetByNumber() {
 
-        Order result = new OrderDao(super.getEm()).getByNumber("3333-001");
+        Order result = new OrderDao(getEm()).getByNumber("3333-001");
        
         assertNotNull(result);
         
@@ -28,8 +28,8 @@ public class OrderDaoTest extends AbstractTestBase {
     @Test
     public void testSearchByCustomerAndYear() {
 
-        OrderDao orderDao = new OrderDao(super.getEm());
-        CustomerDao customerDao = new CustomerDao(super.getEm());
+        OrderDao orderDao = new OrderDao(getEm());
+        CustomerDao customerDao = new CustomerDao(getEm());
         
         Customer customer1 = customerDao.getByEmail("bonds_mother@007.ch");
         Customer customer2 = customerDao.getByEmail("superuser@email.com");
@@ -65,5 +65,4 @@ public class OrderDaoTest extends AbstractTestBase {
 
         return ret;
     }
-   
 }

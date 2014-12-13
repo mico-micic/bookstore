@@ -34,7 +34,7 @@ public abstract class AbstractTestBase {
         }
     }
     
-    protected EntityManager getEm() {
-        return this.em;
+    protected static EntityManager getEm() {
+        return em;
     }
 }

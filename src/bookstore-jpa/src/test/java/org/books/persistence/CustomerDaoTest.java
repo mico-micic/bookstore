@@ -15,7 +15,7 @@ public class CustomerDaoTest extends AbstractTestBase {
     @Test
     public void testGetByEmail() {
 
-        Customer result = new CustomerDao(super.getEm()).getByEmail("hans@wurst.ch");
+        Customer result = new CustomerDao(getEm()).getByEmail("hans@wurst.ch");
        
         assertNotNull(result);
         assertEquals("Hans", result.getFirstName());
@@ -24,7 +24,7 @@ public class CustomerDaoTest extends AbstractTestBase {
     @Test
     public void testSearchByNamePart() {
         
-        CustomerDao customerDao = new CustomerDao(super.getEm());
+        CustomerDao customerDao = new CustomerDao(getEm());
 
         List<CustomerInfo> result1 = customerDao.searchByNamePart("wurst");
         List<CustomerInfo> result2 = customerDao.searchByNamePart("hans");
@@ -60,5 +60,4 @@ public class CustomerDaoTest extends AbstractTestBase {
 
         return ret;
     }
-   
 }
