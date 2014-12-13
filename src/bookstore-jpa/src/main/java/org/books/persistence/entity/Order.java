@@ -34,7 +34,7 @@ public class Order extends IdentifiableObject {
     private String number;
 
     @Column(
-            name = "ORDERDATE",
+            name = "ORDER_DATE",
             nullable = false)
     @Temporal(TemporalType.DATE)
     private Date date;
@@ -152,5 +152,9 @@ public class Order extends IdentifiableObject {
 
     public void setItems(List<LineItem> items) {
         this.items = items;
+    }
+    
+    public void addItem(LineItem item) {
+        this.getItems().add(item);
     }
 }

@@ -44,9 +44,11 @@ public class BookDao {
         CriteriaQuery<BookInfo> cq = cb.createQuery(BookInfo.class);
         Root<Book> book = cq.from(Book.class);
    
+        // Concatinate title, authors and publisher to one string
         Expression<String> exp1 = cb.concat(book.get(Book_.title), book.get(Book_.authors));
         exp1 = cb.concat(exp1, book.get(Book_.publisher));
         
+        // Add LIKE statement for each keyword
         List<Predicate> predicates = new ArrayList<>();
         for (String key : keywords) {
             predicates.add(cb.like(cb.upper(exp1), "%" + key.toUpperCase() + "%"));

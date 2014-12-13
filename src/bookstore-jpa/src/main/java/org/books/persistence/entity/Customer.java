@@ -13,7 +13,8 @@ public class Customer extends IdentifiableObject {
     @Column(nullable = false)
     private String lastName;
 
-    @Column(unique = true)
+    @Column(nullable = false,
+            unique = true)
     private String email;
 
     @Embedded

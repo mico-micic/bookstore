@@ -6,7 +6,6 @@
     <mapping-file>META-INF/converters.xml</mapping-file>
     <class>org.books.persistence.entity.Login</class>
     <class>org.books.persistence.entity.Customer</class>
-    <class>org.books.persistence.entity.Cart</class>
     <class>org.books.persistence.entity.Book</class>
     <class>org.books.persistence.entity.LineItem</class>
     <class>org.books.persistence.entity.Order</class>
