@@ -26,7 +26,7 @@ public class TestDataFactory {
     TestDataFactory(EntityManager em) {
         this.em = em;
     }
-
+    
     void prepareTestData() {
         createNewBook("Java Insel", "978-3897214484", new BigDecimal(105.50), "Fowler", "O'Reilly Verlag GmbH");
         createNewBook("Programmieren mit Java", "978-3836217408", new BigDecimal(105.50), "Philip Ackermann", "Wiley-VCH");
@@ -67,6 +67,19 @@ public class TestDataFactory {
         
         // TODO complete me
         em.getTransaction().begin();
+        em.getTransaction().commit();
+    }
+    
+    public void deleteTestData() {
+        
+        em.getTransaction().begin();
+        
+        em.createQuery("DELETE FROM LineItem").executeUpdate();
+        em.createQuery("DELETE FROM Book").executeUpdate();
+        em.createQuery("DELETE FROM Order").executeUpdate();
+        em.createQuery("DELETE FROM Customer").executeUpdate();
+        em.createQuery("DELETE FROM Login").executeUpdate();
+        
         em.getTransaction().commit();
     }
 

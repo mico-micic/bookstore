@@ -1,45 +1,21 @@
 package org.books.persistence;
 
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import org.books.persistence.dao.CustomerDao;
 import org.books.persistence.dto.CustomerInfo;
 import org.books.persistence.entity.Customer;
-import org.junit.AfterClass;
 import static org.junit.Assert.*;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  * @author micic
  */
-public class CustomerDaoTests {
-
-    private static EntityManagerFactory emf;
-    private static EntityManager em;
-    private static TestDataFactory tdf;
-
-    @BeforeClass
-    public static void setUpClass() {
-        emf = Persistence.createEntityManagerFactory("bookstore");
-        em = emf.createEntityManager();
-        tdf = new TestDataFactory(em);
-        tdf.prepareTestData();
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-        if (em != null && em.isOpen()) {
-            em.close();
-        }
-    }
+public class CustomerDaoTest extends AbstractTestBase {
 
     @Test
     public void testGetByEmail() {
 
-        Customer result = new CustomerDao(this.em).getByEmail("hans@wurst.ch");
+        Customer result = new CustomerDao(super.getEm()).getByEmail("hans@wurst.ch");
        
         assertNotNull(result);
         assertEquals("Hans", result.getFirstName());
@@ -48,7 +24,7 @@ public class CustomerDaoTests {
     @Test
     public void testSearchByNamePart() {
         
-        CustomerDao customerDao = new CustomerDao(this.em);
+        CustomerDao customerDao = new CustomerDao(super.getEm());
 
         List<CustomerInfo> result1 = customerDao.searchByNamePart("wurst");
         List<CustomerInfo> result2 = customerDao.searchByNamePart("hans");

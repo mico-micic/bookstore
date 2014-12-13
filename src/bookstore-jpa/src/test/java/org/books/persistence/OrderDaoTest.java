@@ -1,47 +1,23 @@
 package org.books.persistence;
 
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import org.books.persistence.dao.CustomerDao;
 import org.books.persistence.dao.OrderDao;
 import org.books.persistence.dto.OrderInfo;
 import org.books.persistence.entity.Customer;
 import org.books.persistence.entity.Order;
-import org.junit.AfterClass;
 import static org.junit.Assert.*;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  * @author micic
  */
-public class OrderDaoTests {
-
-    private static EntityManagerFactory emf;
-    private static EntityManager em;
-    private static TestDataFactory tdf;
-
-    @BeforeClass
-    public static void setUpClass() {
-        emf = Persistence.createEntityManagerFactory("bookstore");
-        em = emf.createEntityManager();
-        tdf = new TestDataFactory(em);
-        tdf.prepareTestData();
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-        if (em != null && em.isOpen()) {
-            em.close();
-        }
-    }
+public class OrderDaoTest extends AbstractTestBase {
 
     @Test
     public void testGetByNumber() {
 
-        Order result = new OrderDao(this.em).getByNumber("3333-001");
+        Order result = new OrderDao(super.getEm()).getByNumber("3333-001");
        
         assertNotNull(result);
         
@@ -52,8 +28,8 @@ public class OrderDaoTests {
     @Test
     public void testSearchByCustomerAndYear() {
 
-        OrderDao orderDao = new OrderDao(this.em);
-        CustomerDao customerDao = new CustomerDao(this.em);
+        OrderDao orderDao = new OrderDao(super.getEm());
+        CustomerDao customerDao = new CustomerDao(super.getEm());
         
         Customer customer1 = customerDao.getByEmail("bonds_mother@007.ch");
         Customer customer2 = customerDao.getByEmail("superuser@email.com");

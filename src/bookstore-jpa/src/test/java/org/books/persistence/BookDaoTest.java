@@ -1,45 +1,21 @@
 package org.books.persistence;
 
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import org.books.persistence.dao.BookDao;
 import org.books.persistence.dto.BookInfo;
 import org.books.persistence.entity.Book;
-import org.junit.AfterClass;
 import static org.junit.Assert.*;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  * @author micic
  */
-public class BookDaoTests {
-
-    private static EntityManagerFactory emf;
-    private static EntityManager em;
-    private static TestDataFactory tdf;
-
-    @BeforeClass
-    public static void setUpClass() {
-        emf = Persistence.createEntityManagerFactory("bookstore");
-        em = emf.createEntityManager();
-        tdf = new TestDataFactory(em);
-        tdf.prepareTestData();
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-        if (em != null && em.isOpen()) {
-            em.close();
-        }
-    }
+public class BookDaoTest extends AbstractTestBase {
 
     @Test
     public void testGetByIsbn() {
 
-        BookDao bookDao = new BookDao(this.em);
+        BookDao bookDao = new BookDao(super.getEm());
         Book theBook = bookDao.getByIsbn("978-3836217880");
 
         assertNotNull(theBook);
@@ -48,7 +24,7 @@ public class BookDaoTests {
     @Test
     public void testSearchByKeywords() {
 
-        BookDao bookDao = new BookDao(this.em);
+        BookDao bookDao = new BookDao(super.getEm());
         List<BookInfo> result1 = bookDao.searchByKeywords(new String[]{"Programmieren", "Philip"});
         List<BookInfo> result2 = bookDao.searchByKeywords(new String[]{"Habelitz"});
         List<BookInfo> result3 = bookDao.searchByKeywords(new String[]{"Insel", "Reilly"});
