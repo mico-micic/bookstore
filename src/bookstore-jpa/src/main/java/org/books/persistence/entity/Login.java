@@ -24,6 +24,8 @@ public class Login extends IdentifiableObject {
 
     @Column(nullable = false)
     @Convert(converter = AesEncryptorConverter.class)
+    // This Encryption ist just a dummy-security.
+    //It will be replaced by JEE-Security later in the project.
     private String password;
 
     public Login() {

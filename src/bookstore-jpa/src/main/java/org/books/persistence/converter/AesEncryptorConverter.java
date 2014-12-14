@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.books.persistence.converter;
 
+import java.util.Arrays;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 import org.books.persistence.util.AesEncryptor;
@@ -29,7 +25,7 @@ public class AesEncryptorConverter implements AttributeConverter<String, byte[]>
         try {
             return AesEncryptor.newInstance().decrypt(dbData);
         } catch (Exception ex) {
-            throw new IllegalStateException("The Database-Value cannot be decrypted: " + dbData, ex);
+            throw new IllegalStateException("The Database-Value cannot be decrypted: " + Arrays.toString(dbData), ex);
         }
     }
 

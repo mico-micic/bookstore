@@ -8,7 +8,7 @@ import org.junit.Test;
 /**
  * @author Sigi
  */
-public class JpaDeliverableTest extends AbstractTestBase {
+public class AesEncryptorConverterTest extends AbstractTestBase {
 
     @Test
     public void testLoginWithPWEncryption() throws UnsupportedEncodingException {
