@@ -37,7 +37,9 @@ public class Book extends IdentifiableObject {
     @Column(nullable = false)
     private Integer numberOfPages;
 
-    @Column(nullable = false)
+    @Column(nullable = false,
+            precision = 7,
+            scale = 2)
     private BigDecimal price;
 
     public Book() {

@@ -39,15 +39,19 @@ public class Order extends IdentifiableObject {
     @Temporal(TemporalType.DATE)
     private Date date;
 
-    @Column(nullable = false)
+    @Column(nullable = false,
+            precision = 7,
+            scale = 2)
     private BigDecimal amount;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "customerId")
+    @ManyToOne(
+            optional = false,
+            cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "CUSTOMER_ID")
     private Customer customer;
 
     @Embedded
@@ -60,7 +64,7 @@ public class Order extends IdentifiableObject {
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    @JoinColumn(name = "orderId")
+    @JoinColumn(name = "ORDER_ID")
     private List<LineItem> items;
 
     public Order() {
@@ -153,7 +157,7 @@ public class Order extends IdentifiableObject {
     public void setItems(List<LineItem> items) {
         this.items = items;
     }
-    
+
     public void addItem(LineItem item) {
         this.getItems().add(item);
     }
