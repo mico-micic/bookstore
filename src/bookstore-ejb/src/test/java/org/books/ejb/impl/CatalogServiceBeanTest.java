@@ -32,13 +32,13 @@ public class CatalogServiceBeanTest extends AbstractTestBase {
         Assert.assertEquals(IsbnNumber.ISBN_978_3836217880.number(), book.getIsbn());
     }
 
-    @Test
-    public void testFindBookByInvalidIsbn() {
+    @Test(expected = BookNotFoundException.class)
+    public void testFindBookByInvalidIsbn() throws Throwable {
         try {
             catalogService.findBook("123");
             Assert.fail("Hier erwarten wir eine EJBException!");
-        } catch (BookNotFoundException | EJBException ex) {
-            Assert.assertTrue(ex.getCause() instanceof BookNotFoundException);
+        } catch (EJBException ex) {
+            throw ex.getCause(); // Gewrappt müsste die BookNotFoundException zu finden sein
         }
     }
 
