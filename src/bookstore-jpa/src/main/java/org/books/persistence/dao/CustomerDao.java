@@ -34,6 +34,10 @@ public class CustomerDao {
                 .getSingleResult();
     }
     
+    public Customer getById(Long id) {
+        return this.mgr.find(Customer.class, id);
+    }
+    
     public List<CustomerInfo> searchByNamePart(String part) {
         return this.mgr.createNamedQuery(CUSTOMER_SEARCH_BY_NAME_PART_SQL, CustomerInfo.class)
                 .setParameter(CUSTOMER_SEARCH_BY_NAME_PART_SQL_PART_PARAM, part)

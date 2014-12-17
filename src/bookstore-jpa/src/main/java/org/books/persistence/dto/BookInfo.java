@@ -13,19 +13,19 @@ import java.math.BigDecimal;
  */
 public class BookInfo {
     
-    private final Integer id;
+    private final Long id;
     private final String title;
     private final String isbn;
     private final BigDecimal price;
 
-    public BookInfo(Integer id, String title, String isbn, BigDecimal price) {
+    public BookInfo(Long id, String title, String isbn, BigDecimal price) {
         this.id = id;
         this.title = title;
         this.isbn = isbn;
         this.price = price;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 

@@ -15,13 +15,13 @@ import org.books.persistence.entity.Order;
  */
 public class OrderInfo {
     
-    private final Integer id;
+    private final Long id;
     private final String number;
     private final Date date;
     private final BigDecimal amount;
     private final Order.Status status;
 
-    public OrderInfo(Integer id, String number, Date date, BigDecimal amount, Order.Status status) {
+    public OrderInfo(Long id, String number, Date date, BigDecimal amount, Order.Status status) {
         this.id = id;
         this.number = number;
         this.date = date;
@@ -29,7 +29,7 @@ public class OrderInfo {
         this.status = status;
     }
     
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 

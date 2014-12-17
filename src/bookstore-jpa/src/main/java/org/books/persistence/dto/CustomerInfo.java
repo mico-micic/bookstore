@@ -11,19 +11,19 @@ package org.books.persistence.dto;
  */
 public class CustomerInfo {
     
-    private final Integer id;
+    private final Long id;
     private final String firstName;
     private final String lastName;
     private final String email;
 
-    public CustomerInfo(Integer id, String firstName, String lastName, String email) {
+    public CustomerInfo(Long id, String firstName, String lastName, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
     }
     
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
