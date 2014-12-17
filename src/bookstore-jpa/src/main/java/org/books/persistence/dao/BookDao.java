@@ -16,6 +16,7 @@ import javax.persistence.criteria.Root;
 import org.books.persistence.entity.Book;
 import org.books.persistence.entity.Book_;
 import org.books.persistence.dto.BookInfo;
+import org.books.persistence.entity.IdentifiableObject_;
 
 /**
  * @author micic
@@ -55,7 +56,7 @@ public class BookDao {
         }
 
         cq.select(cb.construct(BookInfo.class,
-                book.get(Book_.id),
+                book.get(IdentifiableObject_.id),
                 book.get(Book_.title),
                 book.get(Book_.isbn),
                 book.get(Book_.price)))
