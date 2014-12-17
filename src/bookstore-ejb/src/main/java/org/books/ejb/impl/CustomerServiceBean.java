@@ -24,10 +24,10 @@ import org.books.persistence.entity.Login;
  *
  * @author micic
  */
-@Stateless
+@Stateless(name = "CustomerService")
 public class CustomerServiceBean implements CustomerService {
 
-    @PersistenceContext
+    @PersistenceContext(name = "bookstore")
     private EntityManager mgr;
 
     private Customer getCustomerByEMail(String email) throws CustomerNotFoundException {
