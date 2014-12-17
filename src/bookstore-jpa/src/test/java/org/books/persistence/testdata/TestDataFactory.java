@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.books.persistence;
+package org.books.persistence.testdata;
 
 import org.books.persistence.entity.Book;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Random;
 import javax.persistence.EntityManager;
 import org.books.persistence.entity.Address;
 import org.books.persistence.entity.CreditCard;
@@ -32,10 +31,10 @@ public class TestDataFactory {
 
     void prepareTestData() {
 
-        Book book1 = createNewBook("Java Insel", "978-3897214484", new BigDecimal(105.50), "Fowler", "O'Reilly Verlag GmbH", 1919);
-        Book book2 = createNewBook("Programmieren mit Java", "978-3836217408", new BigDecimal(105.50), "Philip Ackermann", "Wiley-VCH", 2001);
-        Book book3 = createNewBook("Java 8 - Die Neuerungen", "978-3527710706", new BigDecimal(105.50), "Jutta Schmidt, Barry Burd", "Galileo Computing", 2013);
-        Book book4 = createNewBook("Java für Dummies", "978-3836217880", new BigDecimal(105.50), "Hans-Peter Habelitz", "Carl Hanser Verlag GmbH", 2013);
+        Book book1 = createNewBook("Java Insel", IsbnNumber.ISBN_978_3897214484.number(), new BigDecimal(105.50), "Fowler", "O'Reilly Verlag GmbH", 1919);
+        Book book2 = createNewBook("Programmieren mit Java", IsbnNumber.ISBN_978_3836217408.number(), new BigDecimal(105.50), "Philip Ackermann", "Wiley-VCH", 2001);
+        Book book3 = createNewBook("Java 8 - Die Neuerungen", IsbnNumber.ISBN_978_3527710706.number(), new BigDecimal(105.50), "Jutta Schmidt, Barry Burd", "Galileo Computing", 2013);
+        Book book4 = createNewBook("Java für Dummies", IsbnNumber.ISBN_978_3836217880.number(), new BigDecimal(105.50), "Hans-Peter Habelitz", "Carl Hanser Verlag GmbH", 2013);
 
         Login login1 = createLogin("superuser@email.com", "pass@word");
         CreditCard masterCard1 = createMasterCard("5105105105105100");

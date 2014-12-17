@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.books.persistence;
+package org.books.persistence.testdata;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -11,7 +11,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
 /**
- *
  * @author micic
  */
 public abstract class AbstractTestBase {
