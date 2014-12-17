@@ -18,7 +18,7 @@ import org.books.persistence.entity.Book;
 /**
  * @author Sigi
  */
-@Stateless(name = "CatalogService")
+@Stateless(mappedName = "java:global/bookstore-ejb/CatalogService")
 public class CatalogServiceBean implements CatalogService {
 
     private BookDao bookDao;

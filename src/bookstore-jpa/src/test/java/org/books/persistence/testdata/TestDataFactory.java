@@ -36,15 +36,15 @@ public class TestDataFactory {
         Book book3 = createNewBook("Java 8 - Die Neuerungen", IsbnNumber.ISBN_978_3527710706.number(), new BigDecimal(105.50), "Jutta Schmidt, Barry Burd", "Galileo Computing", 2013);
         Book book4 = createNewBook("Java für Dummies", IsbnNumber.ISBN_978_3836217880.number(), new BigDecimal(105.50), "Hans-Peter Habelitz", "Carl Hanser Verlag GmbH", 2013);
 
-        Login login1 = createLogin("superuser@email.com", "pass@word");
+        Login login1 = createLogin(LoginData.SUPER_USER.email(), LoginData.SUPER_USER.password());
         CreditCard masterCard1 = createMasterCard("5105105105105100");
         Address address1 = createAddress();
 
-        Login login2 = createLogin("hans@wurst.ch", "secret_word");
+        Login login2 = createLogin(LoginData.HANS_WURST.email(), LoginData.HANS_WURST.password());
         CreditCard masterCard2 = createMasterCard("5105105105105100");
         Address address2 = createAddress();
 
-        Login login3 = createLogin("bonds_mother@007.ch", "secret_word");
+        Login login3 = createLogin(LoginData.BONDS_MOTHER.email(), LoginData.BONDS_MOTHER.password());
         CreditCard masterCard3 = createMasterCard("5105105105105100");
         Address address3 = createAddress();
 

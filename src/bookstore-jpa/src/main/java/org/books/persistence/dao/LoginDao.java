@@ -6,6 +6,7 @@
 package org.books.persistence.dao;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 import org.books.persistence.entity.Login;
 
 /**
@@ -24,8 +25,13 @@ public class LoginDao {
     }
 
     public Login getByUserName(String userName) {
-        return this.mgr.createNamedQuery(LOGIN_SEARCH_BY_USER_NAME, Login.class)
-                .setParameter(LOGIN_SEARCH_BY_USER_NAME_USERNAME_PARAM, userName)
-                .getSingleResult();
+
+        try {
+            return this.mgr.createNamedQuery(LOGIN_SEARCH_BY_USER_NAME, Login.class)
+                    .setParameter(LOGIN_SEARCH_BY_USER_NAME_USERNAME_PARAM, userName)
+                    .getSingleResult();
+        } catch (PersistenceException e) {
+            return null;
+        }
     }
 }

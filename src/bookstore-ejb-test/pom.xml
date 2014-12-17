@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.bookstore</groupId>
-    <artifactId>bookstore-ejb</artifactId>
+    <artifactId>bookstore-ejb-test</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>ejb</packaging>
+    <packaging>jar</packaging>
 
-    <name>bookstore-ejb</name>
+    <name>bookstore-ejb-test</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
@@ -39,6 +39,12 @@
             <version>1.0-SNAPSHOT</version>
             <type>test-jar</type>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.bookstore</groupId>
+            <artifactId>bookstore-ejb</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

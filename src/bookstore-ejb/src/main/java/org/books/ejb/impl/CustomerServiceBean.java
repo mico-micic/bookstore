@@ -24,7 +24,7 @@ import org.books.persistence.entity.Login;
  *
  * @author micic
  */
-@Stateless(name = "CustomerService")
+@Stateless(mappedName = "java:global/bookstore-ejb/CustomerService")
 public class CustomerServiceBean implements CustomerService {
 
     @PersistenceContext(name = "bookstore")
@@ -58,7 +58,7 @@ public class CustomerServiceBean implements CustomerService {
         if (ret == null) {
             throw new CustomerNotFoundException();
         }
-
+System.out.println("LOGIN: " + ret);
         return ret;
     }
 
@@ -67,7 +67,7 @@ public class CustomerServiceBean implements CustomerService {
 
         try {
             Login login = getLoginByEMail(email);
-            if (password == null || !password.equals(login.getPassword())) {
+            if (email == null || password == null || !password.equals(login.getPassword())) {
                 throw new InvalidCredentialsException();
             }
         } catch (CustomerNotFoundException ex) {
