@@ -1,5 +1,6 @@
 package org.books.persistence;
 
+import org.books.persistence.testdata.AbstractTestBase;
 import java.io.UnsupportedEncodingException;
 import org.books.persistence.entity.Login;
 import org.junit.Assert;

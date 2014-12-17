@@ -1,9 +1,11 @@
 package org.books.persistence;
 
+import org.books.persistence.testdata.AbstractTestBase;
 import java.util.List;
 import org.books.persistence.dao.BookDao;
 import org.books.persistence.dto.BookInfo;
 import org.books.persistence.entity.Book;
+import org.books.persistence.testdata.IsbnNumber;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -16,7 +18,7 @@ public class BookDaoTest extends AbstractTestBase {
     public void testGetByIsbn() {
 
         BookDao bookDao = new BookDao(getEm());
-        Book theBook = bookDao.getByIsbn("978-3836217880");
+        Book theBook = bookDao.getByIsbn(IsbnNumber.ISBN_978_3836217880.number());
 
         assertNotNull(theBook);
     }

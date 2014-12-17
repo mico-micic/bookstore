@@ -1,5 +1,6 @@
 package org.books.persistence;
 
+import org.books.persistence.testdata.AbstractTestBase;
 import java.util.List;
 import org.books.persistence.dao.CustomerDao;
 import org.books.persistence.dto.CustomerInfo;

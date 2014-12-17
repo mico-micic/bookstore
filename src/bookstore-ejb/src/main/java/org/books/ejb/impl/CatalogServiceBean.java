@@ -18,7 +18,7 @@ import org.books.persistence.entity.Book;
 /**
  * @author Sigi
  */
-@Stateless
+@Stateless(name = "CatalogService")
 public class CatalogServiceBean implements CatalogService {
 
     private BookDao bookDao;
