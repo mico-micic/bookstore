@@ -5,7 +5,13 @@
  */
 package org.books.ejb;
 
+import java.util.List;
 import javax.ejb.Remote;
+import org.books.ejb.exception.CustomerNotFoundException;
+import org.books.ejb.exception.EmailAlreadyUsedException;
+import org.books.ejb.exception.InvalidCredentialsException;
+import org.books.persistence.dto.CustomerInfo;
+import org.books.persistence.entity.Customer;
 
 /**
  *
@@ -13,6 +19,18 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface CustomerService {
-    
-    
+
+    public void authenticateCustomer(String email, String password) throws InvalidCredentialsException;
+
+    public void changePassword(String email, String password) throws CustomerNotFoundException;
+
+    public Customer findCustomer(Long customerId) throws CustomerNotFoundException;
+
+    public Customer findCustomer(String email) throws CustomerNotFoundException;
+
+    public Long registerCustomer(Customer customer, String password) throws EmailAlreadyUsedException;
+
+    public List<CustomerInfo> searchCustomers(String name);
+
+    public void updateCustomer(Customer customer) throws CustomerNotFoundException, EmailAlreadyUsedException;
 }
