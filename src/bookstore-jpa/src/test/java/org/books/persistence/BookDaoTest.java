@@ -54,6 +54,22 @@ public class BookDaoTest extends AbstractTestBase {
         assertTrue(checkContainsBook("Java 8 - Die Neuerungen", result6));
     }
 
+    @Test
+    public void testLatest3Books() {
+        BookDao bookDao = new BookDao(getEm());
+        List<BookInfo> latestBooks = bookDao.findLatestBooks(3);
+
+        assertNotNull(latestBooks);
+        assertEquals(3, latestBooks.size());
+
+        Integer prevPubYear = 9999;
+        for (BookInfo latestBook : latestBooks) {
+            final Integer pubYear = getEm().find(Book.class, latestBook.getId()).getPublicationYear();
+            assertTrue(getEm().find(Book.class, latestBook.getId()).getPublicationYear() <= prevPubYear);
+            prevPubYear = pubYear;
+        }
+    }
+
     private boolean checkContainsBook(String title, List<BookInfo> bookList) {
 
         boolean ret = false;

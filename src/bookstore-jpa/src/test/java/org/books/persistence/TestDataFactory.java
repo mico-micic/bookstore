@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 import javax.persistence.EntityManager;
 import org.books.persistence.entity.Address;
 import org.books.persistence.entity.CreditCard;
@@ -31,10 +32,10 @@ public class TestDataFactory {
 
     void prepareTestData() {
 
-        Book book1 = createNewBook("Java Insel", "978-3897214484", new BigDecimal(105.50), "Fowler", "O'Reilly Verlag GmbH");
-        Book book2 = createNewBook("Programmieren mit Java", "978-3836217408", new BigDecimal(105.50), "Philip Ackermann", "Wiley-VCH");
-        Book book3 = createNewBook("Java 8 - Die Neuerungen", "978-3527710706", new BigDecimal(105.50), "Jutta Schmidt, Barry Burd", "Galileo Computing");
-        Book book4 = createNewBook("Java für Dummies", "978-3836217880", new BigDecimal(105.50), "Hans-Peter Habelitz", "Carl Hanser Verlag GmbH");
+        Book book1 = createNewBook("Java Insel", "978-3897214484", new BigDecimal(105.50), "Fowler", "O'Reilly Verlag GmbH", 1919);
+        Book book2 = createNewBook("Programmieren mit Java", "978-3836217408", new BigDecimal(105.50), "Philip Ackermann", "Wiley-VCH", 2001);
+        Book book3 = createNewBook("Java 8 - Die Neuerungen", "978-3527710706", new BigDecimal(105.50), "Jutta Schmidt, Barry Burd", "Galileo Computing", 2013);
+        Book book4 = createNewBook("Java für Dummies", "978-3836217880", new BigDecimal(105.50), "Hans-Peter Habelitz", "Carl Hanser Verlag GmbH", 2013);
 
         Login login1 = createLogin("superuser@email.com", "pass@word");
         CreditCard masterCard1 = createMasterCard("5105105105105100");
@@ -85,7 +86,7 @@ public class TestDataFactory {
         em.getTransaction().commit();
     }
 
-    private Book createNewBook(String title, String isbn, BigDecimal price, String authors, String publisher) {
+    private Book createNewBook(String title, String isbn, BigDecimal price, String authors, String publisher, Integer pubYear) {
         Book book = new Book();
         book.setAuthors(authors);
         book.setBinding(Book.Binding.Hardcover);
@@ -93,7 +94,7 @@ public class TestDataFactory {
         book.setTitle(title);
         book.setNumberOfPages(101);
         book.setPrice(price);
-        book.setPublicationYear(2013);
+        book.setPublicationYear(pubYear);
         book.setPublisher(publisher);
         em.persist(book);
         return book;

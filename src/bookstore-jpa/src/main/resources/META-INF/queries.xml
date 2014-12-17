@@ -11,6 +11,14 @@
         </query>
     </named-query>
     
+    <named-query name="org.books.persistence.dao.BooksOrderedByPublicationYear">
+        <query>
+            SELECT new org.books.persistence.dto.BookInfo(b.id, b.title, b.isbn, b.price)
+            FROM Book b
+            ORDER BY b.publicationYear DESC
+        </query>
+    </named-query>
+    
     <named-query name="org.books.persistence.CustomerByEmail">
         <query>
             SELECT c
@@ -24,7 +32,7 @@
             SELECT new org.books.persistence.dto.CustomerInfo(c.id, c.firstName, c.lastName, c.email)
             FROM Customer c
             WHERE UPPER(c.firstName) LIKE CONCAT("%", UPPER(:part), "%")
-              OR  UPPER(c.lastName) LIKE CONCAT("%", UPPER(:part), "%")
+            OR  UPPER(c.lastName) LIKE CONCAT("%", UPPER(:part), "%")
         </query>
     </named-query>
     
@@ -41,7 +49,7 @@
             SELECT NEW org.books.persistence.dto.OrderInfo(o.id, o.number, o.date, o.amount, o.status)
             FROM Order o
             WHERE o.date BETWEEN :begin AND :end
-              AND o.customer = :customer
+            AND o.customer = :customer
         </query>
     </named-query>
     
