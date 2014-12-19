@@ -1,7 +1,5 @@
 package org.books.ejb.impl;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJBException;
 import javax.naming.InitialContext;
 import org.books.ejb.CatalogService;
@@ -32,6 +30,16 @@ public class CatalogServiceBeanTest extends AbstractTestBase {
         Assert.assertEquals(IsbnNumber.ISBN_978_3836217880.number(), book.getIsbn());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testFindBookByEmptyIsbn() throws Throwable {
+        try {
+            catalogService.findBook("");
+            Assert.fail("Hier erwarten wir eine EJBException!");
+        } catch (EJBException ex) {
+            throw ex.getCause(); // Gewrappt müsste die IllegalArgumentException zu finden sein
+        }
+    }
+
     @Test(expected = BookNotFoundException.class)
     public void testFindBookByInvalidIsbn() throws Throwable {
         try {
@@ -39,6 +47,54 @@ public class CatalogServiceBeanTest extends AbstractTestBase {
             Assert.fail("Hier erwarten wir eine EJBException!");
         } catch (EJBException ex) {
             throw ex.getCause(); // Gewrappt müsste die BookNotFoundException zu finden sein
+        }
+    }
+
+    @Test
+    public void testFindBookById() throws BookNotFoundException {
+        Book book = catalogService.findBook(10_001L);
+
+        Assert.assertNotNull(book);
+        Assert.assertEquals(Long.valueOf(10_001L), book.getId());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFindBookByEmptyId() throws Throwable {
+        try {
+            catalogService.findBook((Long) null);
+            Assert.fail("Hier erwarten wir eine EJBException!");
+        } catch (EJBException ex) {
+            throw ex.getCause(); // Gewrappt müsste die IllegalArgumentException zu finden sein
+        }
+    }
+
+    @Test(expected = BookNotFoundException.class)
+    public void testFindBookByInvalidId() throws Throwable {
+        try {
+            catalogService.findBook(0L);
+            Assert.fail("Hier erwarten wir eine EJBException!");
+        } catch (EJBException ex) {
+            throw ex.getCause(); // Gewrappt müsste die BookNotFoundException zu finden sein
+        }
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSearchBooksWithNullKeywords() throws Throwable {
+        try {
+            catalogService.searchBooks(null);
+            Assert.fail("Hier erwarten wir eine EJBException!");
+        } catch (EJBException ex) {
+            throw ex.getCause(); // Gewrappt müsste die IllegalArgumentException zu finden sein
+        }
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSearchBooksWithEmptyKeywords() throws Throwable {
+        try {
+            catalogService.searchBooks("");
+            Assert.fail("Hier erwarten wir eine EJBException!");
+        } catch (EJBException ex) {
+            throw ex.getCause(); // Gewrappt müsste die IllegalArgumentException zu finden sein
         }
     }
 

@@ -24,7 +24,7 @@ import org.books.persistence.entity.Login;
  *
  * @author micic
  */
-@Stateless(mappedName = "java:global/bookstore-ejb/CustomerService")
+@Stateless(name = "CustomerService")
 public class CustomerServiceBean implements CustomerService {
 
     @PersistenceContext(name = "bookstore")
