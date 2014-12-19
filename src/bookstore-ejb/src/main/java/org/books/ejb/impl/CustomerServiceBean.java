@@ -24,7 +24,7 @@ import org.books.persistence.entity.Login;
  *
  * @author micic
  */
-@Stateless(name = "CustomerService")
+@Stateless(name = "CustomerService", mappedName = "java:global/bookstore-ejb/CustomerService")
 public class CustomerServiceBean implements CustomerService {
 
     @PersistenceContext(name = "bookstore")
@@ -58,7 +58,7 @@ public class CustomerServiceBean implements CustomerService {
         if (ret == null) {
             throw new CustomerNotFoundException();
         }
-System.out.println("LOGIN: " + ret);
+        System.out.println("LOGIN: " + ret);
         return ret;
     }
 
@@ -97,7 +97,7 @@ System.out.println("LOGIN: " + ret);
 
         // Check if there is already a customer with the same email address
         if (!existsCustomerWithEMail(customer.getEmail())) {
-            
+
             try {
                 mgr.persist(customer);
                 mgr.persist(new Login(customer.getEmail(), password));
@@ -127,14 +127,14 @@ System.out.println("LOGIN: " + ret);
         boolean emailChanged = !currentCustomer.getEmail().equals(customer.getEmail());
 
         try {
-            
+
             // Change username if required
             if (emailChanged) {
-                
+
                 // Check if there is already a customer with the same email address
                 if (!existsCustomerWithEMail(customer.getEmail())) {
                     Login currentLogin = getLoginByEMail(currentCustomer.getEmail());
-                    currentLogin.setUserName(customer.getEmail());  
+                    currentLogin.setUserName(customer.getEmail());
                 } else {
                     throw new EmailAlreadyUsedException();
                 }
