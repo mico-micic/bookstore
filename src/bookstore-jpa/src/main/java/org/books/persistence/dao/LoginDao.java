@@ -25,11 +25,11 @@ public class LoginDao {
     }
 
     public Login getByUserName(String userName) {
-
+        
         try {
-            return this.mgr.createNamedQuery(LOGIN_SEARCH_BY_USER_NAME, Login.class)
-                    .setParameter(LOGIN_SEARCH_BY_USER_NAME_USERNAME_PARAM, userName)
-                    .getSingleResult();
+        return this.mgr.createNamedQuery(LOGIN_SEARCH_BY_USER_NAME, Login.class)
+                .setParameter(LOGIN_SEARCH_BY_USER_NAME_USERNAME_PARAM, userName)
+                .getSingleResult();
         } catch (PersistenceException e) {
             return null;
         }

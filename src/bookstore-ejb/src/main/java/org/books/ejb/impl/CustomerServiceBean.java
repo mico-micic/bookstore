@@ -23,7 +23,7 @@ import org.books.persistence.entity.Login;
 /**
  * @author micic
  */
-@Stateless(name = "CustomerService", mappedName = "java:global/bookstore-ejb/CustomerService")
+@Stateless(name = "CustomerService")
 public class CustomerServiceBean implements CustomerService {
 
     @PersistenceContext(name = "bookstore")
@@ -57,7 +57,6 @@ public class CustomerServiceBean implements CustomerService {
         if (ret == null) {
             throw new CustomerNotFoundException();
         }
-        System.out.println("LOGIN: " + ret);
         return ret;
     }
 
@@ -85,23 +84,30 @@ public class CustomerServiceBean implements CustomerService {
     @Override
     public void changePassword(String email, String password) throws CustomerNotFoundException {
 
+        BeanHelper.validateInput(email);
         Login login = getLoginByEMail(email);
         login.setPassword(password);
     }
 
     @Override
     public Customer findCustomer(Long customerId) throws CustomerNotFoundException {
+       
+        BeanHelper.validateInput(customerId);
         return getCustomerById(customerId);
     }
 
     @Override
     public Customer findCustomer(String email) throws CustomerNotFoundException {
+        BeanHelper.validateInput(email);
         return getCustomerByEMail(email);
     }
 
     @Override
     public Long registerCustomer(Customer customer, String password) throws EmailAlreadyUsedException {
 
+        BeanHelper.validateInput(customer);
+        BeanHelper.validateInput(password);
+        
         // Check if there is already a customer with the same email address
         if (!existsCustomerWithEMail(customer.getEmail())) {
 
@@ -124,12 +130,15 @@ public class CustomerServiceBean implements CustomerService {
 
     @Override
     public List<CustomerInfo> searchCustomers(String name) {
+        BeanHelper.validateInput(name);
         return new CustomerDao(mgr).searchByNamePart(name);
     }
 
     @Override
     public void updateCustomer(Customer customer) throws CustomerNotFoundException, EmailAlreadyUsedException {
 
+        BeanHelper.validateInput(customer);
+        
         Customer currentCustomer = getCustomerById(customer.getId());
         boolean emailChanged = !currentCustomer.getEmail().equals(customer.getEmail());
 

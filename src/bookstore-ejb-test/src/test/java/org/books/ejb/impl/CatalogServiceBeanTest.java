@@ -13,7 +13,7 @@ import org.junit.Test;
 
 public class CatalogServiceBeanTest extends AbstractTestBase {
 
-    private static final String CATALOG_SERVICE_NAME = "java:global/bookstore-ejb/CatalogService";
+    private static final String CATALOG_SERVICE_NAME = "java:global/bookstore-ear/bookstore-ejb/CatalogService";
 
     private static CatalogService catalogService;
 

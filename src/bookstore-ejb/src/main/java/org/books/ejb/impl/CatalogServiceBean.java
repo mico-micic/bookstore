@@ -20,10 +20,9 @@ import org.books.persistence.entity.Book;
 /**
  * @author Sigi
  */
-@Stateless(name = "CatalogService", mappedName = "java:global/bookstore-ejb/CatalogService")
+@Stateless(name = "CatalogService")
 public class CatalogServiceBean implements CatalogService {
 
-    private static final String ERROR_EMPTY_STRING_ARG = "Die Service-Methode verlangt einen Parameter-String, der nicht leer ist.";
     private static final String PATTERN_FOR_WHITESPACE = "\\s+";
 
     private BookDao bookDao;
@@ -38,7 +37,7 @@ public class CatalogServiceBean implements CatalogService {
 
     @Override
     public Book findBook(Long bookId) throws BookNotFoundException {
-        validateInput(bookId);
+        BeanHelper.validateInput(bookId);
         Book book = em.find(Book.class, bookId);
         if (book == null) {
             throw new BookNotFoundException();
@@ -48,7 +47,7 @@ public class CatalogServiceBean implements CatalogService {
 
     @Override
     public Book findBook(String isbn) throws BookNotFoundException {
-        validateInput(isbn);
+        BeanHelper.validateInput(isbn);
         try {
             return bookDao.getByIsbn(isbn);
         } catch (NoResultException ex) {
@@ -58,18 +57,7 @@ public class CatalogServiceBean implements CatalogService {
 
     @Override
     public List<BookInfo> searchBooks(String keywords) {
-        validateInput(keywords);
+        BeanHelper.validateInput(keywords);
         return bookDao.searchByKeywords(keywords.split(PATTERN_FOR_WHITESPACE));
     }
-
-    private void validateInput(Object objectValue) throws IllegalArgumentException {
-        if (isBlank(objectValue)) {
-            throw new IllegalArgumentException(ERROR_EMPTY_STRING_ARG);
-        }
-    }
-
-    private static boolean isBlank(Object object) {
-        return object == null || String.valueOf(object).length() == 0;
-    }
-
 }

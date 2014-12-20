@@ -12,7 +12,7 @@ import org.junit.Test;
 
 public class CustomerServiceBeanTest extends AbstractTestBase {
 
-    private static final String CUSTOMER_SERVICE_NAME = "java:global/bookstore-ejb/CustomerService";
+    private static final String CUSTOMER_SERVICE_NAME = "java:global/bookstore-ear/bookstore-ejb/CustomerService";
 
     private static CustomerService customerService;
 
@@ -39,9 +39,33 @@ public class CustomerServiceBeanTest extends AbstractTestBase {
     }
     
     @Test(expected = InvalidCredentialsException.class)
+    public void testAuthenticateCustomerEmptyEMail() throws InvalidCredentialsException {
+        try {
+            customerService.authenticateCustomer("", LoginData.SUPER_USER.password());
+            Assert.fail("Hier erwarten wir eine InvalidCredentialsException!");
+        } catch (EJBException e) {
+            if (e.getCause() instanceof InvalidCredentialsException) {
+                throw ((InvalidCredentialsException)e.getCause());
+            }
+        }
+    }
+    
+    @Test(expected = InvalidCredentialsException.class)
     public void testAuthenticateCustomerNoPassword() throws InvalidCredentialsException {
         try {
             customerService.authenticateCustomer(LoginData.SUPER_USER.email(), null);
+            Assert.fail("Hier erwarten wir eine InvalidCredentialsException!");
+        } catch (EJBException e) {
+            if (e.getCause() instanceof InvalidCredentialsException) {
+                throw ((InvalidCredentialsException)e.getCause());
+            }
+        }
+    }
+    
+    @Test(expected = InvalidCredentialsException.class)
+    public void testAuthenticateCustomerEmptyPassword() throws InvalidCredentialsException {
+        try {
+            customerService.authenticateCustomer(LoginData.SUPER_USER.email(), "");
             Assert.fail("Hier erwarten wir eine InvalidCredentialsException!");
         } catch (EJBException e) {
             if (e.getCause() instanceof InvalidCredentialsException) {
