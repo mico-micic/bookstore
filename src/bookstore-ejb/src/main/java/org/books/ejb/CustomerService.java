@@ -20,7 +20,13 @@ import org.books.persistence.entity.Customer;
 @Remote
 public interface CustomerService {
 
-    public void authenticateCustomer(String email, String password) throws InvalidCredentialsException;
+    /**
+     * @param email not null, nor empty.
+     * @param password not null, nor empty.
+     * @throws InvalidCredentialsException when the given Credentials are not
+     * correct or not complete.
+     */
+    public void authenticateCustomer(String email, String password) throws InvalidCredentialsException, IllegalStateException;
 
     public void changePassword(String email, String password) throws CustomerNotFoundException;
 

@@ -5,9 +5,17 @@
  */
 package org.books.persistence.entity;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Transient;
 import org.books.persistence.converter.AesEncryptorConverter;
 
 /**
@@ -21,20 +29,37 @@ public class Login extends IdentifiableObject {
             unique = true)
     private String userName;
 
+    @Transient
+    private String plainTextPassword;
+
     @Column(nullable = false)
-    @Convert(converter = AesEncryptorConverter.class)
-    // This Encryption ist just a dummy-security.
-    // It will be replaced by JEE-Security later in the project.
-    private String password;
+    private byte[] password;
+
+    @Column(nullable = false)
+    // @Convert(converter = AesEncryptorConverter.class)
+    private String salt;
 
     public Login() {
     }
 
     public Login(String userName, String password) {
         this.userName = userName;
-        this.password = password;
+        this.plainTextPassword = password;
     }
-    
+
+    @PrePersist
+    public void createSaltAndHashPassword() {
+        salt = UUID.randomUUID().toString();
+        password = hash(plainTextPassword, salt);
+    }
+
+    @PreUpdate
+    public void handlePasswordChanged() {
+        if (plainTextPassword != null && !isPasswordValid(plainTextPassword)) {
+            password = hash(plainTextPassword, salt);
+        }
+    }
+
     public String getUserName() {
         return userName;
     }
@@ -43,12 +68,26 @@ public class Login extends IdentifiableObject {
         this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
+    public void setPassword(String password) {
+        this.plainTextPassword = password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public boolean isPasswordValid(String password) {
+        return Arrays.equals(this.password, hash(password, salt));
+    }
+
+    private byte[] hash(String password, String salt) {
+        String saltedPwd = new StringBuilder()
+                .append(salt)
+                .append(password)
+                .toString();
+        try {
+            return MessageDigest
+                    .getInstance("SHA-256")
+                    .digest(saltedPwd.getBytes("UTF-8"));
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
+            throw new IllegalStateException("Error in the static setup of the Hashing-Algorithm");
+        }
     }
 
 }

@@ -23,7 +23,7 @@ public class CreditCard extends ValueObject {
     private Type type;
 
     @Column(nullable = false)
-    @Convert(converter = AesEncryptorConverter.class)
+    // @Convert(converter = AesEncryptorConverter.class)
     private String number;
 
     @Column(nullable = false)

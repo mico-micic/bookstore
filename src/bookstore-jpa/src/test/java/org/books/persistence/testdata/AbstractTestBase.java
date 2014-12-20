@@ -22,12 +22,13 @@ public abstract class AbstractTestBase {
     public static void setUpClass() {
         em = Persistence.createEntityManagerFactory("bookstore").createEntityManager();
         tdf = new TestDataFactory(em);
+        tdf.deleteTestData();
         tdf.prepareTestData();
     }
 
     @AfterClass
     public static void tearDownClass() {
-        tdf.deleteTestData();
+        //tdf.deleteTestData();
         if (em != null && em.isOpen()) {
             em.close();
         }

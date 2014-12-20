@@ -21,7 +21,6 @@ import org.books.persistence.entity.Customer;
 import org.books.persistence.entity.Login;
 
 /**
- *
  * @author micic
  */
 @Stateless(name = "CustomerService", mappedName = "java:global/bookstore-ejb/CustomerService")
@@ -65,13 +64,21 @@ public class CustomerServiceBean implements CustomerService {
     @Override
     public void authenticateCustomer(String email, String password) throws InvalidCredentialsException {
 
+        if (email == null) {
+            throw new InvalidCredentialsException("EMail is empty.");
+        }
+
+        if (password == null) {
+            throw new InvalidCredentialsException("Password is empty.");
+        }
+
         try {
             Login login = getLoginByEMail(email);
-            if (email == null || password == null || !password.equals(login.getPassword())) {
-                throw new InvalidCredentialsException();
+            if (!login.isPasswordValid(password)) {
+                throw new InvalidCredentialsException("The password is invalid.");
             }
         } catch (CustomerNotFoundException ex) {
-            throw new InvalidCredentialsException();
+            throw new InvalidCredentialsException("EMail invalid.");
         }
     }
 
