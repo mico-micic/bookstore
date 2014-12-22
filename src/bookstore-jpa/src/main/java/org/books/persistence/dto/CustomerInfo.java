@@ -5,11 +5,13 @@
  */
 package org.books.persistence.dto;
 
+import java.io.Serializable;
+
 /**
  *
  * @author micic
  */
-public class CustomerInfo {
+public class CustomerInfo implements Serializable {
     
     private final Long id;
     private final String firstName;

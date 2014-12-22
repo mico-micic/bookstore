@@ -7,6 +7,8 @@ package org.books.ejb.impl;
 
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -72,7 +74,7 @@ public class CustomerServiceBean implements CustomerService {
         }
 
         try {
-            Login login = getLoginByEMail(email);
+            Login login = getLoginByEMail(email);            
             if (!login.isPasswordValid(password)) {
                 throw new InvalidCredentialsException("The password is invalid.");
             }
@@ -85,8 +87,12 @@ public class CustomerServiceBean implements CustomerService {
     public void changePassword(String email, String password) throws CustomerNotFoundException {
 
         BeanHelper.validateInput(email);
+        BeanHelper.validateInput(password);
+        
         Login login = getLoginByEMail(email);
         login.setPassword(password);
+        
+        this.mgr.merge(login);  
     }
 
     @Override
@@ -138,6 +144,11 @@ public class CustomerServiceBean implements CustomerService {
     public void updateCustomer(Customer customer) throws CustomerNotFoundException, EmailAlreadyUsedException {
 
         BeanHelper.validateInput(customer);
+        
+        // Customer Id must be set
+        if (customer.getId() == null) {
+            throw new CustomerNotFoundException();
+        }
         
         Customer currentCustomer = getCustomerById(customer.getId());
         boolean emailChanged = !currentCustomer.getEmail().equals(customer.getEmail());

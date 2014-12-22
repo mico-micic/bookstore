@@ -7,6 +7,7 @@ package org.books.persistence.dao;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import org.books.persistence.entity.Customer;
 import org.books.persistence.dto.CustomerInfo;
 
@@ -29,9 +30,13 @@ public class CustomerDao {
     }
     
     public Customer getByEmail(String email) {
-        return this.mgr.createNamedQuery(CUSTOMER_SEARCH_BY_MAIL_SQL, Customer.class)
-                .setParameter(CUSTOMER_SEARCH_BY_MAIL_SQL_MAIL_PARAM, email)
-                .getSingleResult();
+        try {
+            return this.mgr.createNamedQuery(CUSTOMER_SEARCH_BY_MAIL_SQL, Customer.class)
+                    .setParameter(CUSTOMER_SEARCH_BY_MAIL_SQL_MAIL_PARAM, email)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
     
     public Customer getById(Long id) {

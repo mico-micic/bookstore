@@ -47,10 +47,15 @@ public class TestDataFactory {
         Login login3 = createLogin(LoginData.BONDS_MOTHER.email(), LoginData.BONDS_MOTHER.password());
         CreditCard masterCard3 = createMasterCard("5105105105105100");
         Address address3 = createAddress();
+        
+        Login login4 = createLogin(LoginData.PW_CHANGE_TEST.email(), LoginData.PW_CHANGE_TEST.password());
+        CreditCard masterCard4 = createMasterCard("5105105105105100");
+        Address address4 = createAddress();
 
-        Customer customer1 = createCustomer("James", "Bond", login1, masterCard1, address1);
-        Customer customer2 = createCustomer("Hans", "Wurst", login2, masterCard2, address2);
-        Customer customer3 = createCustomer("Bonds_Mother", "Some_Name", login3, masterCard3, address3);
+        Customer customer1 = createCustomer(CustomerData.SUPER_USER.firstName(), CustomerData.SUPER_USER.lastName(), login1, masterCard1, address1);
+        Customer customer2 = createCustomer(CustomerData.HANS_WURST.firstName(), CustomerData.HANS_WURST.lastName(), login2, masterCard2, address2);
+        Customer customer3 = createCustomer(CustomerData.BONDS_MOTHER.firstName(), CustomerData.BONDS_MOTHER.lastName(), login3, masterCard3, address3);
+        Customer customer4 = createCustomer(CustomerData.PW_CHANGE_TEST.firstName(), CustomerData.PW_CHANGE_TEST.lastName(), login4, masterCard4, address4);
 
         Calendar cal1 = Calendar.getInstance();
         Calendar cal2 = Calendar.getInstance();

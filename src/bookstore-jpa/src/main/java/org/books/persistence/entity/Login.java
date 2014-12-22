@@ -67,6 +67,8 @@ public class Login extends IdentifiableObject {
     }
 
     public void setPassword(String password) {
+        // Reset password, otherwise the handePasswordChanged method will not be called
+        this.password = new byte[]{0}; 
         this.plainTextPassword = password;
     }
 
