@@ -24,7 +24,7 @@ public class Order extends IdentifiableObject {
 
     public enum Status {
 
-        accepted, processing, delivered, canceled
+        accepted, processing, shipped, canceled
     }
 
     @Column(
