@@ -14,7 +14,6 @@ import javax.persistence.PersistenceContext;
 import org.books.ejb.CatalogService;
 import org.books.ejb.exception.BookNotFoundException;
 import org.books.persistence.dao.BookDao;
-import org.books.persistence.dto.BookInfo;
 import org.books.persistence.entity.Book;
 
 /**

@@ -26,13 +26,13 @@ import org.books.persistence.entity.Login;
 @Stateless(name = "CustomerService")
 public class CustomerServiceBean implements CustomerService {
 
-    @PersistenceContext(name = "bookstore")
+    @PersistenceContext
     private EntityManager mgr;
 
     private Customer getCustomerByEMail(String email) throws CustomerNotFoundException {
         Customer ret = new CustomerDao(mgr).getByEmail(email);
         if (ret == null) {
-            throw new CustomerNotFoundException();
+            throw new CustomerNotFoundException("There is no customer with the given EMail: " + email);
         }
 
         return ret;
@@ -46,16 +46,15 @@ public class CustomerServiceBean implements CustomerService {
     private Customer getCustomerById(Long id) throws CustomerNotFoundException {
         Customer ret = new CustomerDao(mgr).getById(id);
         if (ret == null) {
-            throw new CustomerNotFoundException();
+            throw new CustomerNotFoundException("There is no customer with the given id: " + id);
         }
-
         return ret;
     }
 
     private Login getLoginByEMail(String email) throws CustomerNotFoundException {
         Login ret = new LoginDao(mgr).getByUserName(email);
         if (ret == null) {
-            throw new CustomerNotFoundException();
+            throw new CustomerNotFoundException("There is no customer with the given EMail: " + email);
         }
         return ret;
     }
@@ -72,7 +71,7 @@ public class CustomerServiceBean implements CustomerService {
         }
 
         try {
-            Login login = getLoginByEMail(email);            
+            Login login = getLoginByEMail(email);
             if (!login.isPasswordValid(password)) {
                 throw new InvalidCredentialsException("The password is invalid.");
             }
@@ -86,16 +85,16 @@ public class CustomerServiceBean implements CustomerService {
 
         BeanHelper.validateInput(email);
         BeanHelper.validateInput(password);
-        
+
         Login login = getLoginByEMail(email);
         login.setPassword(password);
-        
-        this.mgr.merge(login);  
+
+        this.mgr.merge(login);
     }
 
     @Override
     public Customer findCustomer(Long customerId) throws CustomerNotFoundException {
-       
+
         BeanHelper.validateInput(customerId);
         return getCustomerById(customerId);
     }
@@ -111,7 +110,7 @@ public class CustomerServiceBean implements CustomerService {
 
         BeanHelper.validateInput(customer);
         BeanHelper.validateInput(password);
-        
+
         // Check if there is already a customer with the same email address
         if (!existsCustomerWithEMail(customer.getEmail())) {
 
@@ -142,12 +141,12 @@ public class CustomerServiceBean implements CustomerService {
     public void updateCustomer(Customer customer) throws CustomerNotFoundException, EmailAlreadyUsedException {
 
         BeanHelper.validateInput(customer);
-        
+
         // Customer Id must be set
         if (customer.getId() == null) {
-            throw new CustomerNotFoundException();
+            throw new CustomerNotFoundException("There is no customer with the given id: <null>");
         }
-        
+
         Customer currentCustomer = getCustomerById(customer.getId());
         boolean emailChanged = !currentCustomer.getEmail().equals(customer.getEmail());
 

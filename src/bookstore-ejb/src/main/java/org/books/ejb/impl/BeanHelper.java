@@ -6,7 +6,6 @@
 package org.books.ejb.impl;
 
 /**
- *
  * @author micic
  */
 public class BeanHelper {

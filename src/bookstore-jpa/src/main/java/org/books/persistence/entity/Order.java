@@ -82,6 +82,10 @@ public class Order extends IdentifiableObject {
         this.items = items;
     }
 
+    public boolean isCanceable() {
+        return status == Status.accepted || status == Status.processing;
+    }
+
     public String getNumber() {
         return number;
     }
