@@ -27,12 +27,12 @@ public class BookDaoTest extends AbstractTestBase {
     public void testSearchByKeywords() {
 
         BookDao bookDao = new BookDao(getEm());
-        List<BookInfo> result1 = bookDao.searchByKeywords(new String[]{"Programmieren", "Philip"});
-        List<BookInfo> result2 = bookDao.searchByKeywords(new String[]{"Habelitz"});
-        List<BookInfo> result3 = bookDao.searchByKeywords(new String[]{"Insel", "Reilly"});
-        List<BookInfo> result4 = bookDao.searchByKeywords(new String[]{"Galileo", "Reilly"});
-        List<BookInfo> result5 = bookDao.searchByKeywords(new String[]{"ckerma"});
-        List<BookInfo> result6 = bookDao.searchByKeywords(new String[]{"rungen", "anse"});
+        List<Book> result1 = bookDao.searchByKeywords(new String[]{"Programmieren", "Philip"});
+        List<Book> result2 = bookDao.searchByKeywords(new String[]{"Habelitz"});
+        List<Book> result3 = bookDao.searchByKeywords(new String[]{"Insel", "Reilly"});
+        List<Book> result4 = bookDao.searchByKeywords(new String[]{"Galileo", "Reilly"});
+        List<Book> result5 = bookDao.searchByKeywords(new String[]{"ckerma"});
+        List<Book> result6 = bookDao.searchByKeywords(new String[]{"rungen", "anse"});
 
         assertTrue(result1.size() > 0);
         assertTrue(result2.size() > 0);
@@ -72,12 +72,12 @@ public class BookDaoTest extends AbstractTestBase {
         }
     }
 
-    private boolean checkContainsBook(String title, List<BookInfo> bookList) {
+    private boolean checkContainsBook(String title, List<Book> bookList) {
 
         boolean ret = false;
 
-        for (BookInfo bookInfo : bookList) {
-            if (title.equals(bookInfo.getTitle())) {
+        for (Book book : bookList) {
+            if (title.equals(book.getTitle())) {
                 ret = true;
                 break;
             }

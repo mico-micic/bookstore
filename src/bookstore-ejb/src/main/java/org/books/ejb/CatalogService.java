@@ -3,7 +3,6 @@ package org.books.ejb;
 import java.util.List;
 import javax.ejb.Remote;
 import org.books.ejb.exception.BookNotFoundException;
-import org.books.persistence.dto.BookInfo;
 import org.books.persistence.entity.Book;
 
 /**
@@ -41,6 +40,6 @@ public interface CatalogService {
      * @param keywords The keywords (white-space-separated).
      * @return All Books that match all keywords.
      */
-    List<BookInfo> searchBooks(String keywords) throws IllegalArgumentException;
+    List<Book> searchBooks(String keywords) throws IllegalArgumentException;
 
 }

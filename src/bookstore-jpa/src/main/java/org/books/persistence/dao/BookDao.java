@@ -39,10 +39,10 @@ public class BookDao {
                 .getSingleResult();
     }
 
-    public List<BookInfo> searchByKeywords(String[] keywords) {
+    public List<Book> searchByKeywords(String[] keywords) {
 
         CriteriaBuilder cb = this.mgr.getCriteriaBuilder();
-        CriteriaQuery<BookInfo> cq = cb.createQuery(BookInfo.class);
+        CriteriaQuery<Book> cq = cb.createQuery(Book.class);
         Root<Book> book = cq.from(Book.class);
 
         // Concatinate title, authors and publisher to one string
@@ -55,12 +55,13 @@ public class BookDao {
             predicates.add(cb.like(cb.upper(exp1), "%" + key.toUpperCase() + "%"));
         }
 
-        cq.select(cb.construct(BookInfo.class,
-                book.get(IdentifiableObject_.id),
-                book.get(Book_.title),
-                book.get(Book_.isbn),
-                book.get(Book_.price)))
-                .where(cb.or(predicates.toArray(new Predicate[]{})));
+        // cq.select(cb.construct(Book.class,
+        //        book.get(IdentifiableObject_.id),
+        //        book.get(Book_.title),
+        //        book.get(Book_.isbn),
+        //        book.get(Book_.price)))
+        //        .where(cb.or(predicates.toArray(new Predicate[]{})));
+        cq.select(book).where(cb.or(predicates.toArray(new Predicate[]{})));
 
         return this.mgr.createQuery(cq).getResultList();
     }

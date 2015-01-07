@@ -56,7 +56,7 @@ public class CatalogServiceBean implements CatalogService {
     }
 
     @Override
-    public List<BookInfo> searchBooks(String keywords) {
+    public List<Book> searchBooks(String keywords) {
         BeanHelper.validateInput(keywords);
         return bookDao.searchByKeywords(keywords.split(PATTERN_FOR_WHITESPACE));
     }
