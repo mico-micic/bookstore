@@ -15,7 +15,7 @@ import org.books.persistence.entity.Order;
  * @author micic
  */
 public class OrderInfo implements Serializable {
-    
+
     private final Long id;
     private final String number;
     private final Date date;
@@ -29,7 +29,7 @@ public class OrderInfo implements Serializable {
         this.amount = amount;
         this.status = status;
     }
-    
+
     public Long getId() {
         return id;
     }
