@@ -5,9 +5,16 @@
  */
 package org.books.ejb.impl;
 
+import java.util.logging.Level;
+import javax.annotation.Resource;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
+import javax.ejb.Schedule;
+import javax.ejb.Timeout;
+import javax.ejb.Timer;
+import javax.ejb.TimerConfig;
+import javax.ejb.TimerService;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
@@ -29,10 +36,15 @@ import org.books.persistence.entity.Order;
 })
 public class OrderProcessorBean implements MessageListener {
     
-    private Logger LOGGER = Logger.getLogger(OrderProcessorBean.class);
+    public static final int STATUS_AUTO_CHANGE_TIMEOUT = 60000; //60s
     
+    private Logger LOGGER = Logger.getLogger(OrderProcessorBean.class);
+     
     @EJB
     private OrderService orderService;
+    
+    @Resource
+    private TimerService timerService;
     
     public OrderProcessorBean() {
     }
@@ -68,10 +80,42 @@ public class OrderProcessorBean implements MessageListener {
             LOGGER.info("Changeng status for order with id \"" + orderId + "\" to \"" + newStatus + "\"");
             
             this.orderService.setOrderStatus(orderId, newStatus);
+            
+            // Create timer to change the status to "shipped" after a delay of 60s
+            Timer timer = timerService.createSingleActionTimer(STATUS_AUTO_CHANGE_TIMEOUT, new TimerConfig(orderId, true));
+            
+            LOGGER.info("Single action timer \"" + timer + "\" with " + STATUS_AUTO_CHANGE_TIMEOUT + "ms delay created.");
+            
         } catch (OrderNotFoundException ex) {
             LOGGER.error("Oder with ID " + orderId + " not found!", ex);
         } catch (InvalidOrderStatusException ex) {
             LOGGER.error("Order status cannot be changed!", ex);
+        }
+    }
+    
+    @Timeout
+    public void changeOrderStatusToShipped(Timer timer) {
+        
+        LOGGER.info("Timer \"" + timer + "\" expired. Timer info (order id): " + timer.getInfo());
+        
+        try {
+            Order order = orderService.findOrder((Long)timer.getInfo());
+            Order.Status currentStatus = order.getStatus();
+            Order.Status newStatus = Order.Status.shipped;
+            
+            if (currentStatus.equals(Order.Status.processing)) {
+                this.orderService.setOrderStatus(order, newStatus);
+                
+                LOGGER.info("Status for order with id \"" + order.getId() + "\" changed to \"" + newStatus + "\".");
+                
+            } else {
+                LOGGER.info("Status for order with id \"" + order.getId() 
+                        + "\" not changed because of the current status \"" + currentStatus + "\".");
+            }
+        } catch (OrderNotFoundException ex) {
+            LOGGER.error("Status update failed!", ex);
+        } catch (InvalidOrderStatusException ex) {
+            LOGGER.error("Status update failed because of current order status!", ex);
         }
     }
 }

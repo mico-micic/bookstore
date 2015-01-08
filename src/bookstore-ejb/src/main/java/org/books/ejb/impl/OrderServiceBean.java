@@ -109,7 +109,7 @@ public class OrderServiceBean implements OrderService {
         // Create Order:
         Order order = new Order();
         order.setCustomer(customer);
-        order.setNumber(calendar.get(Calendar.YEAR) + "-" + String.format("%05d", order.getId()));
+        order.setNumber(calendar.get(Calendar.YEAR) + "-" + customerId + "-" + System.currentTimeMillis());
         order.setDate(calendar.getTime());
         order.setStatus(Order.Status.accepted);
         order.setAmount(amount);
@@ -137,10 +137,8 @@ public class OrderServiceBean implements OrderService {
     }
 
     @Override
-    public void setOrderStatus(Long orderId, Order.Status newStatus) throws OrderNotFoundException,
-            InvalidOrderStatusException {
-
-        Order order = findOrder(orderId);
+    public void setOrderStatus(Order order, Order.Status newStatus) throws InvalidOrderStatusException {
+        
         Order.Status currentStatus = order.getStatus();
         boolean statusValid = false;
         switch (newStatus) {
@@ -169,11 +167,19 @@ public class OrderServiceBean implements OrderService {
 
         if (statusValid) {
             order.setStatus(newStatus);
+            em.merge(order);
         } else {
             throw new InvalidOrderStatusException(
-                    "Current order status " + order.getStatus()
-                    + " does not allow the change to " + newStatus);
+                    "Current order status \"" + order.getStatus()
+                    + "\" does not allow the change to \"" + newStatus + "\"");
         }
+    }
+    
+    @Override
+    public void setOrderStatus(Long orderId, Order.Status newStatus) throws OrderNotFoundException,
+            InvalidOrderStatusException {
+
+        setOrderStatus(findOrder(orderId), newStatus);
     }
 
     //

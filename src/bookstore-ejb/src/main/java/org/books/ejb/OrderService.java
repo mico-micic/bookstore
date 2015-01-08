@@ -107,4 +107,15 @@ public interface OrderService {
             throws
             OrderNotFoundException,
             InvalidOrderStatusException;
+    
+    /**
+     * Set a new order status.
+     * 
+     * @param orderId the order identifier
+     * @param newStatus the new status
+     * @throws InvalidOrderStatusException  thrown if the new status is not valid for the given order
+     */
+    void setOrderStatus(Order order, Order.Status newStatus)
+            throws
+            InvalidOrderStatusException;
 }

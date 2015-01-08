@@ -7,6 +7,7 @@ import org.books.ejb.CustomerService;
 import org.books.ejb.OrderService;
 import org.books.ejb.exception.BookNotFoundException;
 import org.books.ejb.exception.CustomerNotFoundException;
+import org.books.ejb.exception.InvalidOrderStatusException;
 import org.books.ejb.exception.OrderNotFoundException;
 import org.books.ejb.exception.PaymentFailedException;
 import org.books.persistence.dto.OrderInfo;
@@ -25,7 +26,7 @@ public class OrderProcessorBeanTest extends AbstractTestBase {
     private static final String ORDER_SERVICE_NAME = "java:global/bookstore-ear/bookstore-ejb/OrderService";
     private static final String CUSTOMER_SERVICE_NAME = "java:global/bookstore-ear/bookstore-ejb/CustomerService";
     
-    private static final int QUEUE_WAIT_TIME = 2000;
+    private static final int QUEUE_WAIT_TIME = 5000;
     
     private static OrderService orderService;
     
@@ -59,31 +60,36 @@ public class OrderProcessorBeanTest extends AbstractTestBase {
         
         // Check the order status
         Assert.assertEquals(Order.Status.processing, orderService.findOrder(info.getId()).getStatus());
+    }    
+    
+    @Test
+    public void autoChangeToShipped() throws CustomerNotFoundException, BookNotFoundException, 
+            PaymentFailedException, InterruptedException, OrderNotFoundException {
+        
+        Customer customer = customerService.findCustomer(CustomerData.SUPER_USER.email());    
+        OrderInfo info = orderService.placeOrder(customer.getId(), getOrderItems());
+        
+        // Wait some time to give the queue a chance to process the order and update the status
+        Thread.sleep(QUEUE_WAIT_TIME + OrderProcessorBean.STATUS_AUTO_CHANGE_TIMEOUT);
+        
+        // Check the order status
+        Assert.assertEquals(Order.Status.shipped, orderService.findOrder(info.getId()).getStatus());
     }
     
     @Test
-    public void processInvalidOrderNumber() {
+    public void cancelOrderBeforeShipped() throws CustomerNotFoundException, BookNotFoundException, 
+            PaymentFailedException, InterruptedException, OrderNotFoundException, InvalidOrderStatusException {
         
+        Customer customer = customerService.findCustomer(CustomerData.SUPER_USER.email());    
+        OrderInfo info = orderService.placeOrder(customer.getId(), getOrderItems());
         
+        // Cancel the order
+        orderService.cancelOrder(info.getId());
+        
+        // Wait some time to give the queue a chance to process the order and update the status
+        Thread.sleep(QUEUE_WAIT_TIME + OrderProcessorBean.STATUS_AUTO_CHANGE_TIMEOUT);
+        
+        // Check the order status
+        Assert.assertEquals(Order.Status.canceled, orderService.findOrder(info.getId()).getStatus());
     }
-    
-    @Test
-    public void processInvalidOrderStatus() {
-        
-        
-    }
-     
-    
-    @Test
-    public void autoChangeToShipped() {
-        
-        
-    }
-    
-    @Test
-    public void cancelOrderBeforeShipped() {
-        
-        
-    }
-
 }
