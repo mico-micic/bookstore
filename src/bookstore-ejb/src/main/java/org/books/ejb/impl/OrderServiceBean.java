@@ -65,6 +65,7 @@ public class OrderServiceBean implements OrderService {
             throw new InvalidOrderStatusException("The Order is in Status " + order.getStatus().name() + " and thus cannot be canceled any more!");
         }
         order.setStatus(Order.Status.canceled);
+        em.merge(order);
     }
 
     @Override

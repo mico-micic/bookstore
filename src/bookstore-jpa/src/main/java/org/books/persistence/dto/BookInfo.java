@@ -5,14 +5,14 @@
  */
 package org.books.persistence.dto;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- *
  * @author micic
  */
-public class BookInfo {
-    
+public class BookInfo implements Serializable {
+
     private final Long id;
     private final String title;
     private final String isbn;

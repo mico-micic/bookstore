@@ -5,10 +5,12 @@
  */
 package org.books.persistence.dto;
 
+import java.io.Serializable;
+
 /**
  * @author Sigi
  */
-public class OrderItem {
+public class OrderItem implements Serializable {
 
     private String isbn;
     private Integer quantity;

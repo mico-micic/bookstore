@@ -64,12 +64,12 @@ public class TestDataFactory {
         cal2.set(2011, 6, 15);
         cal3.set(2014, 9, 23);
 
-        createOrder(customer1, BigDecimal.valueOf(158.60), new Date(cal1.getTimeInMillis()), "1111-001", createAddress(), masterCard1, lineItemFor(book1), lineItemFor(book2));
+        createOrder(customer1, BigDecimal.valueOf(158.60), new Date(cal1.getTimeInMillis()), OrderData.ORDER_WITH_LINE_ITEMS.number(), createAddress(), masterCard1, lineItemFor(book1), lineItemFor(book2));
         createOrder(customer1, BigDecimal.valueOf(33.55), new Date(cal1.getTimeInMillis()), "1111-002", createAddress(), masterCard1, lineItemFor(book3), lineItemFor(book4));
         createOrder(customer1, BigDecimal.valueOf(16.99), new Date(cal1.getTimeInMillis()), "1111-003", createAddress(), masterCard1);
         createOrder(customer1, BigDecimal.valueOf(77.20), new Date(cal2.getTimeInMillis()), "1111-004", createAddress(), masterCard1);
 
-        createOrder(customer2, BigDecimal.valueOf(28.15), new Date(cal3.getTimeInMillis()), "2222-001", createAddress(), masterCard1);
+        createOrder(customer2, BigDecimal.valueOf(28.15), new Date(cal3.getTimeInMillis()), OrderData.ORDER_WITHOUT_LINE_ITEMS.number(), createAddress(), masterCard1);
 
         createOrder(customer3, BigDecimal.valueOf(77.10), new Date(cal3.getTimeInMillis()), "3333-001", createAddress(), masterCard1);
 

@@ -5,6 +5,7 @@
  */
 package org.books.persistence.dto;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import org.books.persistence.entity.Order;
@@ -13,8 +14,8 @@ import org.books.persistence.entity.Order;
  *
  * @author micic
  */
-public class OrderInfo {
-    
+public class OrderInfo implements Serializable {
+
     private final Long id;
     private final String number;
     private final Date date;
@@ -28,7 +29,7 @@ public class OrderInfo {
         this.amount = amount;
         this.status = status;
     }
-    
+
     public Long getId() {
         return id;
     }
