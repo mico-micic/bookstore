@@ -18,6 +18,7 @@ import java.util.Date;
 public enum OrderData {
         
     O_1111_001("1111-001", BigDecimal.valueOf(158.60), Date.from(LocalDateTime.of(2010, Month.JANUARY, 25, 0, 0).toInstant(ZoneOffset.UTC))),
+    ORDER_WITH_LINE_ITEMS("1111-001", BigDecimal.valueOf(158.60), Date.from(LocalDateTime.of(2010, Month.JANUARY, 25, 0, 0).toInstant(ZoneOffset.UTC))),
     O_1111_002("1111-002", BigDecimal.valueOf(33.55), Date.from(LocalDateTime.of(2010, Month.JANUARY, 25, 0, 0).toInstant(ZoneOffset.UTC))),
     O_1111_003("1111-003", BigDecimal.valueOf(16.99), Date.from(LocalDateTime.of(2010, Month.JANUARY, 25, 0, 0).toInstant(ZoneOffset.UTC))),
     O_1111_004("1111-004", BigDecimal.valueOf(77.20), Date.from(LocalDateTime.of(2011, Month.JUNE, 15, 0, 0).toInstant(ZoneOffset.UTC))), 
