@@ -57,21 +57,14 @@ public class TestDataFactory {
         Customer customer3 = createCustomer(CustomerData.BONDS_MOTHER.firstName(), CustomerData.BONDS_MOTHER.lastName(), login3, masterCard3, address3);
         Customer customer4 = createCustomer(CustomerData.PW_CHANGE_TEST.firstName(), CustomerData.PW_CHANGE_TEST.lastName(), login4, masterCard4, address4);
 
-        Calendar cal1 = Calendar.getInstance();
-        Calendar cal2 = Calendar.getInstance();
-        Calendar cal3 = Calendar.getInstance();
-        cal1.set(2010, 1, 25);
-        cal2.set(2011, 6, 15);
-        cal3.set(2014, 9, 23);
-
-        createOrder(customer1, BigDecimal.valueOf(158.60), new Date(cal1.getTimeInMillis()), "1111-001", createAddress(), masterCard1, lineItemFor(book1), lineItemFor(book2));
-        createOrder(customer1, BigDecimal.valueOf(33.55), new Date(cal1.getTimeInMillis()), "1111-002", createAddress(), masterCard1, lineItemFor(book3), lineItemFor(book4));
-        createOrder(customer1, BigDecimal.valueOf(16.99), new Date(cal1.getTimeInMillis()), "1111-003", createAddress(), masterCard1);
-        createOrder(customer1, BigDecimal.valueOf(77.20), new Date(cal2.getTimeInMillis()), "1111-004", createAddress(), masterCard1);
-
-        createOrder(customer2, BigDecimal.valueOf(28.15), new Date(cal3.getTimeInMillis()), "2222-001", createAddress(), masterCard1);
-
-        createOrder(customer3, BigDecimal.valueOf(77.10), new Date(cal3.getTimeInMillis()), "3333-001", createAddress(), masterCard1);
+        createOrder(customer1, OrderData.O_1111_001.amount(), OrderData.O_1111_001.date(), OrderData.O_1111_001.number(), createAddress(), masterCard1, 
+                lineItemFor(book1), lineItemFor(book2));
+        createOrder(customer1, OrderData.O_1111_002.amount(), OrderData.O_1111_002.date(), OrderData.O_1111_002.number(), createAddress(), masterCard1, 
+                lineItemFor(book3), lineItemFor(book4));
+        createOrder(customer1, OrderData.O_1111_003.amount(), OrderData.O_1111_003.date(), OrderData.O_1111_003.number(), createAddress(), masterCard1);
+        createOrder(customer1, OrderData.O_1111_004.amount(), OrderData.O_1111_004.date(), OrderData.O_1111_004.number(), createAddress(), masterCard1);
+        createOrder(customer2, OrderData.O_2222_001.amount(), OrderData.O_2222_001.date(), OrderData.O_2222_001.number(), createAddress(), masterCard1);
+        createOrder(customer3, OrderData.O_3333_001.amount(), OrderData.O_3333_001.date(), OrderData.O_3333_001.number(), createAddress(), masterCard1);
 
         em.getTransaction().begin();
         em.getTransaction().commit();

@@ -7,6 +7,8 @@ import org.books.persistence.dao.OrderDao;
 import org.books.persistence.dto.OrderInfo;
 import org.books.persistence.entity.Customer;
 import org.books.persistence.entity.Order;
+import org.books.persistence.testdata.CustomerData;
+import org.books.persistence.testdata.OrderData;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -18,12 +20,12 @@ public class OrderDaoTest extends AbstractTestBase {
     @Test
     public void testGetByNumber() {
 
-        Order result = new OrderDao(getEm()).getByNumber("3333-001");
+        Order result = new OrderDao(getEm()).getByNumber(OrderData.O_3333_001.number());
        
         assertNotNull(result);
         
-        assertEquals("3333-001", result.getNumber());
-        assertEquals("Bonds_Mother", result.getCustomer().getFirstName());
+        assertEquals(OrderData.O_3333_001.number(), result.getNumber());
+        assertEquals(CustomerData.BONDS_MOTHER.firstName(), result.getCustomer().getFirstName());
     }
     
     @Test
@@ -32,8 +34,8 @@ public class OrderDaoTest extends AbstractTestBase {
         OrderDao orderDao = new OrderDao(getEm());
         CustomerDao customerDao = new CustomerDao(getEm());
         
-        Customer customer1 = customerDao.getByEmail("bonds_mother@007.ch");
-        Customer customer2 = customerDao.getByEmail("superuser@email.com");
+        Customer customer1 = customerDao.getByEmail(CustomerData.BONDS_MOTHER.email());
+        Customer customer2 = customerDao.getByEmail(CustomerData.SUPER_USER.email());
         
         List<OrderInfo> result1 = orderDao.searchByCustomerAndYear(customer1, 2014);
         List<OrderInfo> result2 = orderDao.searchByCustomerAndYear(customer1, 1999);
@@ -45,12 +47,12 @@ public class OrderDaoTest extends AbstractTestBase {
         assertTrue(result3.size() > 0);
         assertTrue(result4.size() > 1);
         
-        assertEquals("3333-001", result1.get(0).getNumber()); 
-        assertEquals("1111-004", result3.get(0).getNumber()); 
+        assertEquals(OrderData.O_3333_001.number(), result1.get(0).getNumber()); 
+        assertEquals(OrderData.O_1111_004.number(), result3.get(0).getNumber()); 
         
-        assertTrue(checkContainsOrder("1111-001", result4));
-        assertTrue(checkContainsOrder("1111-002", result4));
-        assertTrue(checkContainsOrder("1111-003", result4));
+        assertTrue(checkContainsOrder(OrderData.O_1111_001.number(), result4));
+        assertTrue(checkContainsOrder(OrderData.O_1111_002.number(), result4));
+        assertTrue(checkContainsOrder(OrderData.O_1111_003.number(), result4));
     }
     
     private boolean checkContainsOrder(String number, List<OrderInfo> orderList) {

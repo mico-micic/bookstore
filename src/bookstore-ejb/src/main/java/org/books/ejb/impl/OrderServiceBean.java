@@ -12,8 +12,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.jms.ConnectionFactory;
+import javax.jms.Queue;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -52,6 +55,12 @@ public class OrderServiceBean implements OrderService {
 
     @EJB
     private CatalogService catalogService;
+
+    @Resource(mappedName = "jms/OrderProcessing")
+    private ConnectionFactory connectionFactory;
+
+    @Resource(mappedName = "jms/orderQueue")
+    private Queue queue;
 
     @PostConstruct
     public void init() {
@@ -109,14 +118,61 @@ public class OrderServiceBean implements OrderService {
         order.setItems(lineItems);
         em.persist(order);
 
-        return toOrderInfo(order);
+        // Write order to order process queue
+        OrderTransport orderTransport = new OrderTransport(order.getId());
+        this.connectionFactory
+                .createContext()
+                .createProducer()
+                .setJMSType(OrderTransport.JMS_TYPE_STRING)
+                .send(this.queue, orderTransport);
 
+        return toOrderInfo(order);
     }
 
     @Override
     public List<OrderInfo> searchOrders(Long customerId, Integer year) throws CustomerNotFoundException {
         Customer customer = findCustomer(customerId);
         return orderDao.searchByCustomerAndYear(customer, year);
+    }
+
+    @Override
+    public void setOrderStatus(Long orderId, Order.Status newStatus) throws OrderNotFoundException,
+            InvalidOrderStatusException {
+
+        Order order = findOrder(orderId);
+        Order.Status currentStatus = order.getStatus();
+        boolean statusValid = false;
+        switch (newStatus) {
+            case accepted:
+                statusValid
+                        = (currentStatus == null
+                        || currentStatus == Order.Status.accepted);
+                break;
+            case canceled:
+                statusValid
+                        = (currentStatus == Order.Status.accepted
+                        || currentStatus == Order.Status.processing
+                        || currentStatus == Order.Status.canceled);
+                break;
+            case processing:
+                statusValid
+                        = (currentStatus == Order.Status.accepted
+                        || currentStatus == Order.Status.processing);
+                break;
+            case shipped:
+                statusValid
+                        = (currentStatus == Order.Status.processing
+                        || currentStatus == Order.Status.shipped);
+                break;
+        }
+
+        if (statusValid) {
+            order.setStatus(newStatus);
+        } else {
+            throw new InvalidOrderStatusException(
+                    "Current order status " + order.getStatus()
+                    + " does not allow the change to " + newStatus);
+        }
     }
 
     //
