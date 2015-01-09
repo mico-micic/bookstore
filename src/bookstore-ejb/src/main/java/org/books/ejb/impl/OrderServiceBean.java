@@ -56,7 +56,7 @@ public class OrderServiceBean implements OrderService {
     @EJB
     private CatalogService catalogService;
 
-    @Resource(mappedName = "jms/OrderProcessing")
+    @Resource(mappedName = "jms/ConnectionFactory")
     private ConnectionFactory connectionFactory;
 
     @Resource(mappedName = "jms/orderQueue")
