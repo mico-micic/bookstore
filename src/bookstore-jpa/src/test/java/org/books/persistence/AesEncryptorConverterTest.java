@@ -4,6 +4,7 @@ import org.books.persistence.testdata.AbstractTestBase;
 import java.io.UnsupportedEncodingException;
 import org.books.persistence.entity.Customer;
 import org.books.persistence.entity.Login;
+import org.books.persistence.testdata.CustomerData;
 import org.books.persistence.testdata.LoginData;
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -41,7 +42,7 @@ public class AesEncryptorConverterTest extends AbstractTestBase {
         // Attention: With JPQL we get the encrypted value:
         // => thus we need to operate only over the Entity when decrypting DB-Fields!
         String decryptedValue = getEm()
-                .createQuery("SELECT c.creditCard.number FROM Customer c WHERE c.email = 'superuser@email.com'", String.class)
+                .createQuery("SELECT c.creditCard.number FROM Customer c WHERE c.email = '" + CustomerData.SUPER_USER.email() + "'", String.class)
                 .getResultList()
                 .get(0);
         Assert.assertNotSame("5105105105105100", decryptedValue);

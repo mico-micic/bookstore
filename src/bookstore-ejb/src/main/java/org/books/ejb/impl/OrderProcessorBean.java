@@ -5,12 +5,10 @@
  */
 package org.books.ejb.impl;
 
-import java.util.logging.Level;
 import javax.annotation.Resource;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
-import javax.ejb.Schedule;
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
 import javax.ejb.TimerConfig;
@@ -19,9 +17,11 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import org.apache.log4j.Logger;
+import org.books.ejb.MailService;
 import org.books.ejb.OrderService;
 import org.books.ejb.exception.InvalidOrderStatusException;
 import org.books.ejb.exception.OrderNotFoundException;
+import org.books.persistence.entity.Customer;
 import org.books.persistence.entity.Order;
 
 /**
@@ -38,13 +38,16 @@ public class OrderProcessorBean implements MessageListener {
     
     public static final int STATUS_AUTO_CHANGE_TIMEOUT = 60000; //60s
     
-    private Logger LOGGER = Logger.getLogger(OrderProcessorBean.class);
+    private final Logger LOGGER = Logger.getLogger(OrderProcessorBean.class);
      
     @EJB
     private OrderService orderService;
     
     @Resource
     private TimerService timerService;
+    
+    @EJB
+    private MailService mailService;
     
     public OrderProcessorBean() {
     }
@@ -85,6 +88,9 @@ public class OrderProcessorBean implements MessageListener {
             Timer timer = timerService.createSingleActionTimer(STATUS_AUTO_CHANGE_TIMEOUT, new TimerConfig(orderId, true));
             
             LOGGER.info("Single action timer \"" + timer + "\" with " + STATUS_AUTO_CHANGE_TIMEOUT + "ms delay created.");
+                    
+            // Send processing e-mail
+            sendOrderProcessingEMail(this.orderService.findOrder(orderId));
             
         } catch (OrderNotFoundException ex) {
             LOGGER.error("Oder with ID " + orderId + " not found!", ex);
@@ -108,6 +114,9 @@ public class OrderProcessorBean implements MessageListener {
                 
                 LOGGER.info("Status for order with id \"" + order.getId() + "\" changed to \"" + newStatus + "\".");
                 
+                // Send shipped e-mail
+                sendOrderShippedEMail(order);
+                
             } else {
                 LOGGER.info("Status for order with id \"" + order.getId() 
                         + "\" not changed because of the current status \"" + currentStatus + "\".");
@@ -117,5 +126,42 @@ public class OrderProcessorBean implements MessageListener {
         } catch (InvalidOrderStatusException ex) {
             LOGGER.error("Status update failed because of current order status!", ex);
         }
+    }
+    
+    private void sendOrderProcessingEMail(Order order) {
+        
+        String email = order.getCustomer().getEmail();
+        String subject = "Order processing started!";
+        
+        String text = getEMailIntroduction(order.getCustomer());
+        text += "Your order with number \""+ order.getNumber() + "\" has now the status \"processing\"!" + "\n\n";
+        text += getEMailEnding();
+        
+        LOGGER.info("Sending order processing e-mail to: " + email);
+        
+        mailService.sendMailAsync(email, subject, text);
+    }
+    
+    private void sendOrderShippedEMail(Order order) {
+        
+        String email = order.getCustomer().getEmail();
+        String subject = "Order shipped!";
+        
+        String text = getEMailIntroduction(order.getCustomer());
+        text += "Your order with number \""+ order.getNumber() + "\" has been shipped!" + "\n";
+        text += "We hope you enjoy the book(s)!"+ "\n\n";
+        text += getEMailEnding();
+        
+        LOGGER.info("Sending order shipped e-mail to: " + email);
+        
+        mailService.sendMailAsync(email, subject, text);
+    }
+    
+    private String getEMailIntroduction(Customer customer) {
+        return "Hi " + customer.getFirstName() + "!\n\n";
+    }
+    
+    private String getEMailEnding() {
+        return "Best regards," + "\n" + "Your bookstore";
     }
 }

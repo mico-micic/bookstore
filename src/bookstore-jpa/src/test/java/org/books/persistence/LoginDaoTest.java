@@ -3,6 +3,7 @@ package org.books.persistence;
 import org.books.persistence.testdata.AbstractTestBase;
 import org.books.persistence.dao.LoginDao;
 import org.books.persistence.entity.Login;
+import org.books.persistence.testdata.CustomerData;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -14,9 +15,9 @@ public class LoginDaoTest extends AbstractTestBase {
     @Test
     public void testGetByUserName() {
 
-        Login result = new LoginDao(getEm()).getByUserName("superuser@email.com");
+        Login result = new LoginDao(getEm()).getByUserName(CustomerData.SUPER_USER.email());
        
         assertNotNull(result);
-        assertEquals("superuser@email.com", result.getUserName());
+        assertEquals(CustomerData.SUPER_USER.email(), result.getUserName());
     }
 }
