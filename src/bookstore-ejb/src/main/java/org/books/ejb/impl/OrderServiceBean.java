@@ -70,10 +70,7 @@ public class OrderServiceBean implements OrderService {
     @Override
     public void cancelOrder(Long orderId) throws OrderNotFoundException, InvalidOrderStatusException {
         Order order = findOrder(orderId);
-        if (!order.isCanceable()) {
-            throw new InvalidOrderStatusException("The Order is in Status " + order.getStatus().name() + " and thus cannot be canceled any more!");
-        }
-        order.setStatus(Order.Status.canceled);
+        setOrderStatus(order, Order.Status.canceled);
     }
 
     @Override
@@ -137,7 +134,7 @@ public class OrderServiceBean implements OrderService {
 
     @Override
     public void setOrderStatus(Order order, Order.Status newStatus) throws InvalidOrderStatusException {
-        
+
         Order.Status currentStatus = order.getStatus();
         boolean statusValid = false;
         switch (newStatus) {
@@ -173,7 +170,7 @@ public class OrderServiceBean implements OrderService {
                     + "\" does not allow the change to \"" + newStatus + "\"");
         }
     }
-    
+
     @Override
     public void setOrderStatus(Long orderId, Order.Status newStatus) throws OrderNotFoundException,
             InvalidOrderStatusException {
