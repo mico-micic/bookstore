@@ -21,6 +21,7 @@ import org.books.persistence.testdata.CustomerData;
 import org.books.persistence.testdata.OrderData;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class OrderServiceBeanTest extends AbstractTestBase {
@@ -28,11 +29,11 @@ public class OrderServiceBeanTest extends AbstractTestBase {
     private static final String ORDER_SERVICE_NAME = "java:global/bookstore-ear/bookstore-ejb/OrderService";
     private static final String CUSTOMER_SERVICE_NAME = "java:global/bookstore-ear/bookstore-ejb/CustomerService";
 
-    private OrderService orderService;
-    private CustomerService customerService;
+    private static OrderService orderService;
+    private static CustomerService customerService;
 
-    @Before
-    public void before() throws Exception {
+    @BeforeClass
+    public static void before() throws Exception {
         orderService = (OrderService) new InitialContext().lookup(ORDER_SERVICE_NAME);
         customerService = (CustomerService) new InitialContext().lookup(CUSTOMER_SERVICE_NAME);
     }
@@ -127,7 +128,7 @@ public class OrderServiceBeanTest extends AbstractTestBase {
 
         Order order = orderService.findOrder(orderInfo.getId());
         Assert.assertNotNull(order);
-        orderService.cancelOrder(order.getId());
+        orderService.setOrderStatus(order, Order.Status.shipped);
 
         order = orderService.findOrder(order.getId());
         Assert.assertEquals("Order-Status must be canceled after canceling the order.",
