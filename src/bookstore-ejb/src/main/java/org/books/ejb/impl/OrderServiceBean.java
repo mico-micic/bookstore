@@ -15,7 +15,9 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.jms.ConnectionFactory;
+import javax.inject.Inject;
+import javax.jms.JMSConnectionFactory;
+import javax.jms.JMSContext;
 import javax.jms.Queue;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -56,8 +58,9 @@ public class OrderServiceBean implements OrderService {
     @EJB
     private CatalogService catalogService;
 
-    @Resource(mappedName = "jms/ConnectionFactory")
-    private ConnectionFactory connectionFactory;
+    @Inject
+    @JMSConnectionFactory("jms/ConnectionFactory")
+    private JMSContext jmsContext;
 
     @Resource(mappedName = "jms/orderQueue")
     private Queue queue;
@@ -117,8 +120,7 @@ public class OrderServiceBean implements OrderService {
 
         // Write order to order process queue
         OrderTransport orderTransport = new OrderTransport(order.getId());
-        this.connectionFactory
-                .createContext()
+        this.jmsContext
                 .createProducer()
                 .setJMSType(OrderTransport.JMS_TYPE_STRING)
                 .send(this.queue, orderTransport);
