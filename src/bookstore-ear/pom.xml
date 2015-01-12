@@ -38,12 +38,12 @@
                     <version>6</version>
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
                 <modules>
-<!--                    <webModule>
+                    <webModule>
                         <groupId>org.bookstore</groupId>
                         <artifactId>bookstore-web</artifactId>
                         <bundleFileName>bookstore-web.war</bundleFileName>
                         <contextRoot>/bookstore</contextRoot>
-                    </webModule>-->
+                    </webModule>
                     <ejbModule>
                         <groupId>org.bookstore</groupId>
                         <artifactId>bookstore-ejb</artifactId>
@@ -56,12 +56,12 @@
     </build>
     
 <dependencies>
-<!--    <dependency>
+    <dependency>
         <groupId>org.bookstore</groupId>
         <artifactId>bookstore-web</artifactId>
         <version>1.0-SNAPSHOT</version>
         <type>war</type>
-    </dependency>-->
+    </dependency>
     <dependency>
         <groupId>org.bookstore</groupId>
         <artifactId>bookstore-ejb</artifactId>
