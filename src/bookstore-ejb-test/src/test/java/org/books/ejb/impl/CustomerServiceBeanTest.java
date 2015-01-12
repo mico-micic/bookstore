@@ -36,74 +36,38 @@ public class CustomerServiceBeanTest extends AbstractTestBase {
 
     @Test(expected = InvalidCredentialsException.class)
     public void testAuthenticateCustomerNoEMail() throws InvalidCredentialsException {
-        try {
-            customerService.authenticateCustomer(null, LoginData.SUPER_USER.password());
-            Assert.fail("Hier erwarten wir eine InvalidCredentialsException!");
-        } catch (EJBException e) {
-            if (e.getCause() instanceof InvalidCredentialsException) {
-                throw ((InvalidCredentialsException) e.getCause());
-            }
-        }
+        customerService.authenticateCustomer(null, LoginData.SUPER_USER.password());
+        Assert.fail("Hier erwarten wir eine InvalidCredentialsException!");
     }
 
     @Test(expected = InvalidCredentialsException.class)
     public void testAuthenticateCustomerEmptyEMail() throws InvalidCredentialsException {
-        try {
-            customerService.authenticateCustomer("", LoginData.SUPER_USER.password());
-            Assert.fail("Hier erwarten wir eine InvalidCredentialsException!");
-        } catch (EJBException e) {
-            if (e.getCause() instanceof InvalidCredentialsException) {
-                throw ((InvalidCredentialsException) e.getCause());
-            }
-        }
+        customerService.authenticateCustomer("", LoginData.SUPER_USER.password());
+        Assert.fail("Hier erwarten wir eine InvalidCredentialsException!");
     }
 
     @Test(expected = InvalidCredentialsException.class)
     public void testAuthenticateCustomerNoPassword() throws InvalidCredentialsException {
-        try {
-            customerService.authenticateCustomer(LoginData.SUPER_USER.email(), null);
-            Assert.fail("Hier erwarten wir eine InvalidCredentialsException!");
-        } catch (EJBException e) {
-            if (e.getCause() instanceof InvalidCredentialsException) {
-                throw ((InvalidCredentialsException) e.getCause());
-            }
-        }
+        customerService.authenticateCustomer(LoginData.SUPER_USER.email(), null);
+        Assert.fail("Hier erwarten wir eine InvalidCredentialsException!");
     }
 
     @Test(expected = InvalidCredentialsException.class)
     public void testAuthenticateCustomerEmptyPassword() throws InvalidCredentialsException {
-        try {
-            customerService.authenticateCustomer(LoginData.SUPER_USER.email(), "");
-            Assert.fail("Hier erwarten wir eine InvalidCredentialsException!");
-        } catch (EJBException e) {
-            if (e.getCause() instanceof InvalidCredentialsException) {
-                throw ((InvalidCredentialsException) e.getCause());
-            }
-        }
+        customerService.authenticateCustomer(LoginData.SUPER_USER.email(), "");
+        Assert.fail("Hier erwarten wir eine InvalidCredentialsException!");
     }
 
     @Test(expected = InvalidCredentialsException.class)
     public void testAuthenticateCustomerInvalidEMail() throws InvalidCredentialsException {
-        try {
-            customerService.authenticateCustomer("some_invalid_email@email.ch", LoginData.SUPER_USER.password());
-            Assert.fail("Hier erwarten wir eine InvalidCredentialsException!");
-        } catch (EJBException e) {
-            if (e.getCause() instanceof InvalidCredentialsException) {
-                throw ((InvalidCredentialsException) e.getCause());
-            }
-        }
+        customerService.authenticateCustomer("some_invalid_email@email.ch", LoginData.SUPER_USER.password());
+        Assert.fail("Hier erwarten wir eine InvalidCredentialsException!");
     }
 
     @Test(expected = InvalidCredentialsException.class)
     public void testAuthenticateCustomerInvalidPassword() throws InvalidCredentialsException {
-        try {
-            customerService.authenticateCustomer(LoginData.SUPER_USER.email(), "some_invalid_password");
-            Assert.fail("Hier erwarten wir eine InvalidCredentialsException!");
-        } catch (EJBException e) {
-            if (e.getCause() instanceof InvalidCredentialsException) {
-                throw ((InvalidCredentialsException) e.getCause());
-            }
-        }
+        customerService.authenticateCustomer(LoginData.SUPER_USER.email(), "some_invalid_password");
+        Assert.fail("Hier erwarten wir eine InvalidCredentialsException!");
     }
 
     @Test
@@ -125,7 +89,6 @@ public class CustomerServiceBeanTest extends AbstractTestBase {
 
         // Check old password
         customerService.authenticateCustomer(LoginData.PW_CHANGE_TEST.email(), LoginData.PW_CHANGE_TEST.password());
-
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -161,14 +124,8 @@ public class CustomerServiceBeanTest extends AbstractTestBase {
 
         String newPw = "theNewPw";
 
-        try {
-            customerService.changePassword("invalid@e-mail.ch", newPw);
-            Assert.fail("Hier erwarten wir eine CustomerNotFoundException!");
-        } catch (EJBException e) {
-            if (e.getCause() instanceof CustomerNotFoundException) {
-                throw ((InvalidCredentialsException) e.getCause());
-            }
-        }
+        customerService.changePassword("invalid@e-mail.ch", newPw);
+        Assert.fail("Hier erwarten wir eine CustomerNotFoundException!");
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -222,15 +179,8 @@ public class CustomerServiceBeanTest extends AbstractTestBase {
 
     @Test(expected = CustomerNotFoundException.class)
     public void testFindCustomerByEMailWrongEmail() throws CustomerNotFoundException {
-
-        try {
-            customerService.findCustomer("wrong_customer@e-mail.ch");
-            Assert.fail("Hier erwarten wir eine CustomerNotFoundException!");
-        } catch (EJBException e) {
-            if (e.getCause() instanceof CustomerNotFoundException) {
-                throw ((CustomerNotFoundException) e.getCause());
-            }
-        }
+        customerService.findCustomer("wrong_customer@e-mail.ch");
+        Assert.fail("Hier erwarten wir eine CustomerNotFoundException!");
     }
 
     @Test
@@ -258,15 +208,8 @@ public class CustomerServiceBeanTest extends AbstractTestBase {
 
     @Test(expected = CustomerNotFoundException.class)
     public void testFindCustomerByIdWrongId() throws CustomerNotFoundException {
-
-        try {
-            customerService.findCustomer(Long.MAX_VALUE);
-            Assert.fail("Hier erwarten wir eine CustomerNotFoundException!");
-        } catch (EJBException e) {
-            if (e.getCause() instanceof CustomerNotFoundException) {
-                throw ((CustomerNotFoundException) e.getCause());
-            }
-        }
+        customerService.findCustomer(Long.MAX_VALUE);
+        Assert.fail("Hier erwarten wir eine CustomerNotFoundException!");
     }
 
     private Customer getNewCustomer() {
@@ -371,15 +314,8 @@ public class CustomerServiceBeanTest extends AbstractTestBase {
         String password = "newPassword";
 
         customerService.registerCustomer(newCustomer, password);
-
-        try {
-            customerService.registerCustomer(newCustomer, password);
-            Assert.fail("Hier erwarten wir eine EmailAlreadyUsedException!");
-        } catch (EJBException e) {
-            if (e.getCause() instanceof EmailAlreadyUsedException) {
-                throw ((EmailAlreadyUsedException) e.getCause());
-            }
-        }
+        customerService.registerCustomer(newCustomer, password);
+        Assert.fail("Hier erwarten wir eine EmailAlreadyUsedException!");
     }
 
     @Test
@@ -516,15 +452,9 @@ public class CustomerServiceBeanTest extends AbstractTestBase {
         // Change email address to an already existing entry
         customerToChange.setEmail(CustomerData.HANS_WURST.email());
 
-        try {
-            // Try to update
-            customerService.updateCustomer(customerToChange);
-            Assert.fail("Hier erwarten wir eine EmailAlreadyUsedException!");
-        } catch (EJBException e) {
-            if (e.getCause() instanceof EmailAlreadyUsedException) {
-                throw ((EmailAlreadyUsedException) e.getCause());
-            }
-        }
+        // Try to update
+        customerService.updateCustomer(customerToChange);
+        Assert.fail("Hier erwarten wir eine EmailAlreadyUsedException!");
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -546,14 +476,8 @@ public class CustomerServiceBeanTest extends AbstractTestBase {
         Customer newCustomer = getNewCustomer();
         newCustomer.setEmail("unknown-customer-to-update@email.ch");
 
-        try {
-            customerService.updateCustomer(newCustomer);
-            Assert.fail("Hier erwarten wir eine CustomerNotFoundException!");
-        } catch (EJBException e) {
-            if (e.getCause() instanceof CustomerNotFoundException) {
-                throw ((CustomerNotFoundException) e.getCause());
-            }
-        }
+        customerService.updateCustomer(newCustomer);
+        Assert.fail("Hier erwarten wir eine CustomerNotFoundException!");
     }
 
     @Test(expected = CustomerNotFoundException.class)
@@ -563,13 +487,7 @@ public class CustomerServiceBeanTest extends AbstractTestBase {
         newCustomer.setEmail("customer-with-wrong-id@email.ch");
         newCustomer.setId(Long.MAX_VALUE);
 
-        try {
-            customerService.updateCustomer(newCustomer);
-            Assert.fail("Hier erwarten wir eine CustomerNotFoundException!");
-        } catch (EJBException e) {
-            if (e.getCause() instanceof CustomerNotFoundException) {
-                throw ((CustomerNotFoundException) e.getCause());
-            }
-        }
+        customerService.updateCustomer(newCustomer);
+        Assert.fail("Hier erwarten wir eine CustomerNotFoundException!");
     }
 }
