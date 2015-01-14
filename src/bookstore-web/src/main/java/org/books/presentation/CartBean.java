@@ -6,14 +6,16 @@
 package org.books.presentation;
 
 import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.books.application.Bookstore;
 import org.books.application.MessageFactory;
-import org.books.application.exception.PaymentFailedException;
-import org.books.persistence.Book;
-import org.books.persistence.Cart;
+import org.books.ejb.OrderServiceRemote;
+import org.books.ejb.exception.BookNotFoundException;
+import org.books.ejb.exception.CustomerNotFoundException;
+import org.books.ejb.exception.PaymentFailedException;
+import org.books.persistence.entity.Book;
 import org.books.type.EnumActionResult;
 import org.books.type.MessageKey;
 
@@ -33,8 +35,8 @@ import org.books.type.MessageKey;
 @SessionScoped
 public class CartBean implements Serializable {
 
-    @Inject
-    private Bookstore bookstore;
+    @EJB
+    private OrderServiceRemote orderService;
 
     @Inject
     private CustomerBean customerBean;
@@ -56,12 +58,18 @@ public class CartBean implements Serializable {
 
     public EnumActionResult confirmOrder() {
         try {
-            bookstore.placeOrder(customerBean.getCustomer(), cart.getLineItems());
+            orderService.placeOrder(customerBean.getCustomer().getId(), cart.getOrderItems());
             MessageFactory.info(MessageKey.ORDER_CONFIRMED);
             cart.reset();
             return EnumActionResult.HOME;
         } catch (PaymentFailedException ex) {
             MessageFactory.error(MessageKey.ORDER_DECLINED);
+            return null;
+        } catch (CustomerNotFoundException ex) {
+            MessageFactory.error(MessageKey.CUSTOMER_NOT_FOUND);
+            return null;
+        } catch (BookNotFoundException ex) {
+            MessageFactory.error(MessageKey.BOOK_NOT_FOUND_BY_ISDN);
             return null;
         }
     }

@@ -2,17 +2,14 @@ package org.books.persistence.entity;
 
 import java.util.Calendar;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import org.books.persistence.converter.AesEncryptorConverter;
 
 @Embeddable
 public class CreditCard extends ValueObject {
 
     public enum Type {
-
         MasterCard, Visa
     }
 

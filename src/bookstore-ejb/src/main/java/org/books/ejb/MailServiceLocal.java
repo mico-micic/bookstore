@@ -6,13 +6,16 @@
 package org.books.ejb;
 
 import javax.ejb.Local;
+import org.books.persistence.entity.Order;
 
 /**
  *
  * @author micic
  */
 @Local
-public interface MailService {
+public interface MailServiceLocal {
     
-    public void sendMailAsync(String email, String subject, String text);
+    public void sendOrderProcessingEMailAsync(Order order);
+    
+    public void sendOrderShippedEMailAsync(Order order);
 }

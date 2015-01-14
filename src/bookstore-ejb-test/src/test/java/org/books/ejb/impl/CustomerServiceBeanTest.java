@@ -3,7 +3,7 @@ package org.books.ejb.impl;
 import java.util.List;
 import javax.ejb.EJBException;
 import javax.naming.InitialContext;
-import org.books.ejb.CustomerService;
+import org.books.ejb.CustomerServiceRemote;
 import org.books.ejb.exception.CustomerNotFoundException;
 import org.books.ejb.exception.EmailAlreadyUsedException;
 import org.books.ejb.exception.InvalidCredentialsException;
@@ -20,13 +20,13 @@ import org.junit.Test;
 
 public class CustomerServiceBeanTest extends AbstractTestBase {
 
-    private static final String CUSTOMER_SERVICE_NAME = "java:global/bookstore-ear/bookstore-ejb/CustomerService";
+    private static final String CUSTOMER_SERVICE_NAME = "java:global/bookstore-ear/bookstore-ejb/CustomerService!org.books.ejb.CustomerServiceRemote";
 
-    private static CustomerService customerService;
+    private static CustomerServiceRemote customerService;
 
     @BeforeClass
     public static void setup() throws Exception {
-        customerService = (CustomerService) new InitialContext().lookup(CUSTOMER_SERVICE_NAME);
+        customerService = (CustomerServiceRemote) new InitialContext().lookup(CUSTOMER_SERVICE_NAME);
     }
 
     @Test

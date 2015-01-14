@@ -6,7 +6,6 @@
 package org.books.ejb;
 
 import java.util.List;
-import javax.ejb.Remote;
 import org.books.ejb.exception.BookNotFoundException;
 import org.books.ejb.exception.CustomerNotFoundException;
 import org.books.ejb.exception.InvalidOrderStatusException;
@@ -17,13 +16,12 @@ import org.books.persistence.dto.OrderItem;
 import org.books.persistence.entity.Order;
 
 /**
- * The remote interface OrderService defines the operations of a bookstore's
- * order service.
+ *
+ * @author micic
  */
-@Remote
 public interface OrderService {
-
-    /**
+    
+   /**
      * Cancels an order.
      *
      * @param orderId the order idenifier
@@ -111,7 +109,7 @@ public interface OrderService {
     /**
      * Set a new order status.
      * 
-     * @param orderId the order identifier
+     * @param order the order
      * @param newStatus the new status
      * @throws InvalidOrderStatusException  thrown if the new status is not valid for the given order
      */

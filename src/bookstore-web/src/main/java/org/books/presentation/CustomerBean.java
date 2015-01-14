@@ -12,17 +12,20 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.books.application.Bookstore;
 import org.books.application.MessageFactory;
-import org.books.application.exception.EmailAlreadyUsedException;
-import org.books.application.exception.InvalidOrderStatusException;
-import org.books.application.exception.OrderNotFoundException;
-import org.books.persistence.Cart;
-import org.books.persistence.Customer;
-import org.books.persistence.Order;
+import org.books.ejb.CustomerServiceLocal;
+import org.books.ejb.OrderServiceRemote;
+import org.books.ejb.exception.CustomerNotFoundException;
+import org.books.ejb.exception.EmailAlreadyUsedException;
+import org.books.ejb.exception.InvalidOrderStatusException;
+import org.books.ejb.exception.OrderNotFoundException;
+import org.books.persistence.dto.OrderInfo;
+import org.books.persistence.entity.Customer;
+import org.books.persistence.entity.Order;
 import org.books.type.EnumActionResult;
 import org.books.type.MessageKey;
 
@@ -36,22 +39,27 @@ import org.books.type.MessageKey;
 @SessionScoped
 public class CustomerBean implements Serializable {
 
-    @Inject
-    private Bookstore bookstore;
+    @EJB
+    private CustomerServiceLocal customerService;
+    
+    @EJB
+    private OrderServiceRemote orderService;
 
     private boolean loggedIn = false;
 
     private Customer customer;
+    
+    private String newPassword;
 
     private String wayBack;
 
     private Integer year = 2014;
 
-    private List<Order> allOrdersOfYear;
+    private List<OrderInfo> allOrdersOfYear;
     
     private Order order;
     
-    private Cart tmpCart = new Cart();
+    private final Cart tmpCart = new Cart();
     
     @Inject
     private LoginBean loginBean;
@@ -72,7 +80,15 @@ public class CustomerBean implements Serializable {
         return this.order;
     }
     
-    public List<Order> getAllOrdersOfYear() {
+    public void setNewPassword(String password) {
+        this.newPassword = password;
+    }
+    
+    public String getNewPassword() {
+        return this.newPassword;
+    }
+    
+    public List<OrderInfo> getAllOrdersOfYear() {
         findAllOrdersOfYear();
         return allOrdersOfYear;
     }
@@ -89,15 +105,20 @@ public class CustomerBean implements Serializable {
         if (year == null) {
             year = Year.now().getValue();
         }
-        allOrdersOfYear = bookstore.searchOrders(customer, year)
+        
+        try {
+            allOrdersOfYear = orderService.searchOrders(customer.getId(), year)
                 .stream()
                 .sorted((o1, o2) -> (o1.getDate().compareTo(o2.getDate())) * -1)
                 .collect(Collectors.toList());
+        } catch (CustomerNotFoundException e) {
+            MessageFactory.error(MessageKey.CUSTOMER_NOT_FOUND, customer.getId());
+        }
     }
 
     public EnumActionResult showOrder(String orderNumber) {
         try {
-            this.order = bookstore.findOrder(orderNumber);
+            this.order = orderService.findOrder(orderNumber);
             
             // Create and fill a temporary cart to show the order content
             tmpCart.reset();
@@ -112,7 +133,7 @@ public class CustomerBean implements Serializable {
     public void cancelOrder(Order order) {
         
         try {
-            this.bookstore.cancelOrder(order.getId());
+            this.orderService.cancelOrder(order.getId());
             MessageFactory.info(MessageKey.ORDER_CANCELLED);
         } catch (OrderNotFoundException ex) {
             MessageFactory.error(MessageKey.ORDER_NOT_FOUND, order.getNumber());
@@ -136,11 +157,14 @@ public class CustomerBean implements Serializable {
     
     public EnumActionResult updateCustomer() {
         try {
-            bookstore.updateCustomer(customer);
+            this.customerService.updateCustomer(customer);
             MessageFactory.info(MessageKey.SAVE_SUCCESSFUL);
             return navigateBack();
         } catch (EmailAlreadyUsedException ex) {
             MessageFactory.error(MessageKey.SAVE_UNSUCCESSFUL);
+            return null;
+        } catch (CustomerNotFoundException ex) {
+            MessageFactory.error(MessageKey.CUSTOMER_NOT_FOUND, customer.getId());
             return null;
         }
     }
@@ -148,7 +172,7 @@ public class CustomerBean implements Serializable {
     public String createCustomer() {
 
         try {
-            bookstore.registerCustomer(this.customer);
+            this.customerService.registerCustomer(this.customer, this.newPassword);
             MessageFactory.info(MessageKey.REGISTRATION_SUCCESSFUL);
             this.setLoggedIn(true);
             
@@ -157,7 +181,6 @@ public class CustomerBean implements Serializable {
             } else {
                 return EnumActionResult.ACCOUNT.toString();
             }
-
         } catch (EmailAlreadyUsedException ex) {
             Logger.getLogger(CustomerBean.class.getName()).log(Level.SEVERE, null, ex);
             MessageFactory.info(MessageKey.EMAIL_ALREADY_EXISTS);

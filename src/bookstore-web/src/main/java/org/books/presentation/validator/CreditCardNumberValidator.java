@@ -14,7 +14,7 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 import org.books.application.MessageFactory;
-import org.books.persistence.CreditCard;
+import org.books.persistence.entity.CreditCard;
 import org.books.type.MessageKey;
 
 /**

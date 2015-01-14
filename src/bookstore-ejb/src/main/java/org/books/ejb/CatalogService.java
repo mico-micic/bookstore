@@ -1,16 +1,20 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package org.books.ejb;
 
 import java.util.List;
-import javax.ejb.Remote;
 import org.books.ejb.exception.BookNotFoundException;
 import org.books.persistence.entity.Book;
 
 /**
+ *
  * @author micic
  */
-@Remote
 public interface CatalogService {
-
+    
     /**
      * Finds a book with a particular identifier.
      *
@@ -41,5 +45,4 @@ public interface CatalogService {
      * @return All Books that match all keywords.
      */
     List<Book> searchBooks(String keywords) throws IllegalArgumentException;
-
 }

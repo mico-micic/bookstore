@@ -8,13 +8,13 @@ package org.books.presentation;
 import org.books.type.EnumActionResult;
 import java.io.Serializable;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
-import org.books.application.Bookstore;
 import org.books.application.MessageFactory;
-import org.books.application.exception.BookNotFoundException;
-import org.books.persistence.Book;
+import org.books.ejb.CatalogServiceRemote;
+import org.books.ejb.exception.BookNotFoundException;
+import org.books.persistence.entity.Book;
 import org.books.type.MessageKey;
 
 /**
@@ -27,8 +27,8 @@ import org.books.type.MessageKey;
 @SessionScoped
 public class CatalogBean implements Serializable {
 
-    @Inject
-    private Bookstore bookstore;
+    @EJB
+    private CatalogServiceRemote catalogService;
 
     private String isbn;
     private String searchKey;
@@ -52,14 +52,6 @@ public class CatalogBean implements Serializable {
         this.books = books;
     }
 
-    public Bookstore getBookstore() {
-        return bookstore;
-    }
-
-    public void setBookstore(Bookstore bookstore) {
-        this.bookstore = bookstore;
-    }
-
     public String getIsbn() {
         return isbn;
     }
@@ -74,7 +66,7 @@ public class CatalogBean implements Serializable {
 
     public EnumActionResult findBook() {
         try {
-            book = bookstore.findBook(isbn);
+            book = this.catalogService.findBook(isbn);
         } catch (BookNotFoundException ex) {
             MessageFactory.warning(MessageKey.BOOK_NOT_FOUND_BY_ISDN, isbn);
         }
@@ -86,7 +78,7 @@ public class CatalogBean implements Serializable {
 
         EnumActionResult ret;
 
-        books = this.bookstore.searchBooks(this.searchKey);
+        books = this.catalogService.searchBooks(this.searchKey);
 
         if (books != null && books.size() > 0) {
             ret = EnumActionResult.RESULTS;

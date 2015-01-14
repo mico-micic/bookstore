@@ -11,7 +11,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import org.books.ejb.CatalogService;
+import org.books.ejb.CatalogServiceLocal;
+import org.books.ejb.CatalogServiceRemote;
 import org.books.ejb.exception.BookNotFoundException;
 import org.books.persistence.dao.BookDao;
 import org.books.persistence.entity.Book;
@@ -20,7 +21,7 @@ import org.books.persistence.entity.Book;
  * @author Sigi
  */
 @Stateless(name = "CatalogService")
-public class CatalogServiceBean implements CatalogService {
+public class CatalogServiceBean implements CatalogServiceRemote, CatalogServiceLocal {
 
     private static final String PATTERN_FOR_WHITESPACE = "\\s+";
 

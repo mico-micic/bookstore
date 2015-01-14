@@ -3,8 +3,8 @@ package org.books.ejb.impl;
 import java.util.ArrayList;
 import java.util.List;
 import javax.naming.InitialContext;
-import org.books.ejb.CustomerService;
-import org.books.ejb.OrderService;
+import org.books.ejb.CustomerServiceRemote;
+import org.books.ejb.OrderServiceRemote;
 import org.books.ejb.exception.BookNotFoundException;
 import org.books.ejb.exception.CustomerNotFoundException;
 import org.books.ejb.exception.InvalidOrderStatusException;
@@ -23,19 +23,19 @@ import org.junit.Test;
 
 public class OrderProcessorBeanTest extends AbstractTestBase {
 
-    private static final String ORDER_SERVICE_NAME = "java:global/bookstore-ear/bookstore-ejb/OrderService";
-    private static final String CUSTOMER_SERVICE_NAME = "java:global/bookstore-ear/bookstore-ejb/CustomerService";
+    private static final String ORDER_SERVICE_NAME = "java:global/bookstore-ear/bookstore-ejb/OrderService!org.books.ejb.OrderServiceRemote";
+    private static final String CUSTOMER_SERVICE_NAME = "java:global/bookstore-ear/bookstore-ejb/CustomerService!org.books.ejb.CustomerServiceRemote";
     
     private static final int QUEUE_WAIT_TIME = 5000;
     
-    private static OrderService orderService;
+    private static OrderServiceRemote orderService;
     
-    private static CustomerService customerService;
+    private static CustomerServiceRemote customerService;
 
     @BeforeClass
     public static void setup() throws Exception {
-        orderService = (OrderService) new InitialContext().lookup(ORDER_SERVICE_NAME);
-        customerService = (CustomerService) new InitialContext().lookup(CUSTOMER_SERVICE_NAME);
+        orderService = (OrderServiceRemote) new InitialContext().lookup(ORDER_SERVICE_NAME);
+        customerService = (CustomerServiceRemote) new InitialContext().lookup(CUSTOMER_SERVICE_NAME);
     }
 
     private List<OrderItem> getOrderItems() {

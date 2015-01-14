@@ -22,9 +22,10 @@ import javax.jms.Queue;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import org.books.ejb.CatalogService;
-import org.books.ejb.CustomerService;
-import org.books.ejb.OrderService;
+import org.books.ejb.CatalogServiceRemote;
+import org.books.ejb.CustomerServiceLocal;
+import org.books.ejb.OrderServiceLocal;
+import org.books.ejb.OrderServiceRemote;
 import org.books.ejb.exception.BookNotFoundException;
 import org.books.ejb.exception.CustomerNotFoundException;
 import org.books.ejb.exception.InvalidOrderStatusException;
@@ -43,7 +44,7 @@ import org.books.persistence.entity.Order;
  * @author Sigi
  */
 @Stateless(name = "OrderService")
-public class OrderServiceBean implements OrderService {
+public class OrderServiceBean implements OrderServiceRemote, OrderServiceLocal {
 
     private static final Pattern CREDIT_CARD_PATTERN = Pattern.compile("\\d{16}");
 
@@ -53,10 +54,10 @@ public class OrderServiceBean implements OrderService {
     private EntityManager em;
 
     @EJB
-    private CustomerService customerService;
+    private CustomerServiceLocal customerService;
 
     @EJB
-    private CatalogService catalogService;
+    private CatalogServiceRemote catalogService;
 
     @Inject
     @JMSConnectionFactory("jms/ConnectionFactory")

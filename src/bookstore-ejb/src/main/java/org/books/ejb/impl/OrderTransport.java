@@ -15,7 +15,7 @@ public class OrderTransport implements Serializable {
 
     public static String JMS_TYPE_STRING = OrderTransport.class.getName();
     
-    private Long orderId;
+    private final Long orderId;
 
     public OrderTransport(Long orderId) {
         this.orderId = orderId;

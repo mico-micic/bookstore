@@ -10,7 +10,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.books.ejb.CustomerService;
+import org.books.ejb.CustomerServiceLocal;
+import org.books.ejb.CustomerServiceRemote;
 import org.books.ejb.exception.CustomerNotFoundException;
 import org.books.ejb.exception.EmailAlreadyUsedException;
 import org.books.ejb.exception.InvalidCredentialsException;
@@ -24,7 +25,7 @@ import org.books.persistence.entity.Login;
  * @author micic
  */
 @Stateless(name = "CustomerService")
-public class CustomerServiceBean implements CustomerService {
+public class CustomerServiceBean implements CustomerServiceRemote, CustomerServiceLocal {
 
     @PersistenceContext
     private EntityManager mgr;

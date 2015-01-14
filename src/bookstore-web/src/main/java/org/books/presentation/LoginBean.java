@@ -6,13 +6,14 @@
 package org.books.presentation;
 
 import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
-import org.books.application.Bookstore;
 import org.books.application.MessageFactory;
-import org.books.application.exception.InvalidCredentialsException;
-import org.books.persistence.Customer;
+import org.books.ejb.CustomerServiceLocal;
+import org.books.ejb.exception.CustomerNotFoundException;
+import org.books.ejb.exception.InvalidCredentialsException;
 import org.books.type.EnumActionResult;
 import org.books.type.MessageKey;
 
@@ -31,8 +32,8 @@ import org.books.type.MessageKey;
 @SessionScoped
 public class LoginBean implements Serializable {
 
-    @Inject
-    private Bookstore bookstore;
+    @EJB
+    private CustomerServiceLocal customerService;
 
     @Inject
     private CustomerBean customerBean;
@@ -76,11 +77,14 @@ public class LoginBean implements Serializable {
 
         if (!this.customerBean.isLoggedIn()) {
             try {
-                Customer customer = bookstore.authenticateCustomer(this.email, this.password);
-                this.customerBean.setCustomer(customer);
+                customerService.authenticateCustomer(this.email, this.password);
+                this.customerBean.setCustomer(this.customerService.findCustomer(this.email));
                 this.customerBean.setLoggedIn(true);
             } catch (InvalidCredentialsException ex) {
                 MessageFactory.error(MessageKey.INVALID_USER);
+                return null;
+            } catch (CustomerNotFoundException ex) {
+                MessageFactory.error(MessageKey.CUSTOMER_NOT_FOUND);
                 return null;
             }
 

@@ -2,7 +2,7 @@ package org.books.ejb.impl;
 
 import javax.ejb.EJBException;
 import javax.naming.InitialContext;
-import org.books.ejb.CatalogService;
+import org.books.ejb.CatalogServiceRemote;
 import org.books.ejb.exception.BookNotFoundException;
 import org.books.persistence.entity.Book;
 import org.books.persistence.testdata.AbstractTestBase;
@@ -13,13 +13,13 @@ import org.junit.Test;
 
 public class CatalogServiceBeanTest extends AbstractTestBase {
 
-    private static final String CATALOG_SERVICE_NAME = "java:global/bookstore-ear/bookstore-ejb/CatalogService";
+    private static final String CATALOG_SERVICE_NAME = "java:global/bookstore-ear/bookstore-ejb/CatalogService!org.books.ejb.CatalogServiceRemote";
 
-    private static CatalogService catalogService;
+    private static CatalogServiceRemote catalogService;
 
     @BeforeClass
     public static void setup() throws Exception {
-        catalogService = (CatalogService) new InitialContext().lookup(CATALOG_SERVICE_NAME);
+        catalogService = (CatalogServiceRemote) new InitialContext().lookup(CATALOG_SERVICE_NAME);
     }
 
     @Test

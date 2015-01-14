@@ -15,6 +15,7 @@ and open the template in the editor.
         <c:interface>
             <c:attribute name="value" required="true"/>
             <c:attribute name="country" type="org.books.presentation.CountriesBean" required="true"/>
+            <c:attribute name="creditCard" type="org.books.presentation.CreditCardsBean" required="true"/>
             <c:attribute name="isNew" /> <!-- default := false -->
         </c:interface>
         <c:implementation>
@@ -92,11 +93,11 @@ and open the template in the editor.
                     <h:panelGrid columns="2" columnClasses="labelColumn," >
 
                         <h:outputLabel for="password" value="#{texts.password}" />
-                        <h:inputSecret id="password" value="#{cc.attrs.value.customer.password}" label="#{texts.password}" required="true" />
+                        <h:inputSecret id="password" value="#{cc.attrs.value.newPassword}" label="#{texts.password}" required="true" />
 
                         <h:outputLabel for="passwordConfirm" value="#{texts.confirmPassword}" />
                         <h:panelGroup>
-                            <h:inputSecret id="passwordConfirm" value="#{cc.attrs.value.customer.password}" label="#{texts.confirmPassword}" required="true">
+                            <h:inputSecret id="passwordConfirm" value="#{cc.attrs.value.newPassword}" label="#{texts.confirmPassword}" required="true">
                                 <b:validatePassword firstPassFieldId="password" minPasswordLength="8" />
                             </h:inputSecret>
                             <div class="elementMessageDiv">
@@ -111,7 +112,7 @@ and open the template in the editor.
 
                     <h:outputLabel for="creditCardType" value="#{texts.type}" />
                     <h:selectOneMenu id="creditCardType" value="#{cc.attrs.value.customer.creditCard.type}">
-                        <f:selectItems value="#{cc.attrs.value.customer.creditCard.supportedTypes}" />
+                        <f:selectItems value="#{cc.attrs.creditCard.supportedTypes}" />
                     </h:selectOneMenu>
 
                     <h:outputLabel for="creditCardNumber" value="#{texts.number}" />

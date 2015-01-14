@@ -6,7 +6,6 @@
 package org.books.ejb;
 
 import java.util.List;
-import javax.ejb.Remote;
 import org.books.ejb.exception.CustomerNotFoundException;
 import org.books.ejb.exception.EmailAlreadyUsedException;
 import org.books.ejb.exception.InvalidCredentialsException;
@@ -17,9 +16,8 @@ import org.books.persistence.entity.Customer;
  *
  * @author micic
  */
-@Remote
 public interface CustomerService {
-
+    
     /**
      * @param email not null, nor empty.
      * @param password not null, nor empty.

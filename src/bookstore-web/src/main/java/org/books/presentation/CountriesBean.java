@@ -17,7 +17,6 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import org.books.application.ResourceBundleHelper;
-import org.books.persistence.Country;
 
 /**
  * Brean providing the supported countries loaded from the global application

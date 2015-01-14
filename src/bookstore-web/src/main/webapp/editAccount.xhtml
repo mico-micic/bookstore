@@ -19,7 +19,7 @@ and open the template in the editor.
             <h2>#{texts.profile}</h2>
             <div class="clr"></div>
 
-            <cc:editableAccount value="#{customerBean}" country="#{countriesBean}" isNew="false" />
+            <cc:editableAccount value="#{customerBean}" creditCard="#{creditCardsBean}" country="#{countriesBean}" isNew="false" />
 
             <h:form>
                 <h:commandLink value="#{texts.back}" action="#{customerBean.navigateBack}" />
