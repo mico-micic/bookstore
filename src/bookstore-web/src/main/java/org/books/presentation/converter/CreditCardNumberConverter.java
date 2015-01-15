@@ -27,5 +27,4 @@ public class CreditCardNumberConverter implements Converter {
     public String getAsString(FacesContext context, UIComponent component, Object value) throws ConverterException {
         return String.valueOf(value).replaceAll("\\d{4}", "$0 ").trim();
     }
-
 }

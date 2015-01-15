@@ -11,7 +11,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.books.application.MessageFactory;
-import org.books.ejb.OrderServiceRemote;
+import org.books.ejb.OrderServiceLocal;
 import org.books.ejb.exception.BookNotFoundException;
 import org.books.ejb.exception.CustomerNotFoundException;
 import org.books.ejb.exception.PaymentFailedException;
@@ -22,11 +22,11 @@ import org.books.type.MessageKey;
 /**
  * Bean containing the shopping cart functionality. 
  * 
- * The book orders are stored in the persistence class {@link Cart} and
- * handled by {@link Bookstore}.
+ * The book orders are held in the class {@link Cart} and
+ * handled by the {@link OrderServiceLocal} EJB.
  * 
  * @see Cart
- * @see Bookstore
+ * @see OrderServiceLocal
  *
  * @author Sigi
  * @author Mico
@@ -36,11 +36,12 @@ import org.books.type.MessageKey;
 public class CartBean implements Serializable {
 
     @EJB
-    private OrderServiceRemote orderService;
+    private OrderServiceLocal orderService;
 
     @Inject
     private CustomerBean customerBean;
 
+    // Cart holding the line items
     private Cart cart;
 
     public Cart getCart() {

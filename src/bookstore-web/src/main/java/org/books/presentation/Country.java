@@ -6,7 +6,8 @@
 package org.books.presentation;
 
 /**
- *
+ * Class used to hold the supported countries loaded in {@link CountriesBean}.
+ * 
  * @author micic
  */
 public class Country {

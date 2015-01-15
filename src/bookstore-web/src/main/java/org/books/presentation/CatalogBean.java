@@ -12,7 +12,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import org.books.application.MessageFactory;
-import org.books.ejb.CatalogServiceRemote;
+import org.books.ejb.CatalogServiceLocal;
 import org.books.ejb.exception.BookNotFoundException;
 import org.books.persistence.entity.Book;
 import org.books.type.MessageKey;
@@ -28,7 +28,7 @@ import org.books.type.MessageKey;
 public class CatalogBean implements Serializable {
 
     @EJB
-    private CatalogServiceRemote catalogService;
+    private CatalogServiceLocal catalogService;
 
     private String isbn;
     private String searchKey;
@@ -77,7 +77,6 @@ public class CatalogBean implements Serializable {
     public EnumActionResult searchBooks() {
 
         EnumActionResult ret;
-
         books = this.catalogService.searchBooks(this.searchKey);
 
         if (books != null && books.size() > 0) {

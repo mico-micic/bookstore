@@ -18,7 +18,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.books.application.MessageFactory;
 import org.books.ejb.CustomerServiceLocal;
-import org.books.ejb.OrderServiceRemote;
+import org.books.ejb.OrderServiceLocal;
 import org.books.ejb.exception.CustomerNotFoundException;
 import org.books.ejb.exception.EmailAlreadyUsedException;
 import org.books.ejb.exception.InvalidOrderStatusException;
@@ -43,7 +43,7 @@ public class CustomerBean implements Serializable {
     private CustomerServiceLocal customerService;
     
     @EJB
-    private OrderServiceRemote orderService;
+    private OrderServiceLocal orderService;
 
     private boolean loggedIn = false;
 
@@ -53,7 +53,7 @@ public class CustomerBean implements Serializable {
 
     private String wayBack;
 
-    private Integer year = 2014;
+    private Integer year = Year.now().getValue();
 
     private List<OrderInfo> allOrdersOfYear;
     
@@ -130,8 +130,7 @@ public class CustomerBean implements Serializable {
         return EnumActionResult.ORDER_DETAILS;
     }
     
-    public void cancelOrder(Order order) {
-        
+    public void cancelOrder(Order order) {       
         try {
             this.orderService.cancelOrder(order.getId());
             MessageFactory.info(MessageKey.ORDER_CANCELLED);

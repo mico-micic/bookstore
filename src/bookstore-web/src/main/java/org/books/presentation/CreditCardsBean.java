@@ -14,7 +14,10 @@ import javax.inject.Named;
 import org.books.persistence.entity.CreditCard;
 
 /**
- *
+ * Bean providing the supported credit card types.
+ * 
+ * The supported types are defined by {@link CreditCart.Type}.
+ * 
  * @author micic
  */
 @Named("creditCardsBean")
