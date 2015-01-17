@@ -25,11 +25,11 @@ public class TestDataFactory {
 
     private final EntityManager em;
 
-    TestDataFactory(EntityManager em) {
+    public TestDataFactory(EntityManager em) {
         this.em = em;
     }
 
-    void prepareTestData() {
+    public void prepareTestData() {
 
         Book book1 = createNewBook("Java Insel", IsbnNumber.ISBN_978_3897214484.number(), new BigDecimal(105.50), "Fowler", "O'Reilly Verlag GmbH", 1919);
         Book book2 = createNewBook("Programmieren mit Java", IsbnNumber.ISBN_978_3836217408.number(), new BigDecimal(105.50), "Philip Ackermann", "Wiley-VCH", 2001);
