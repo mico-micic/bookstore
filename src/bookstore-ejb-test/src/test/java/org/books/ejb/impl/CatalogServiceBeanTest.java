@@ -52,10 +52,10 @@ public class CatalogServiceBeanTest extends AbstractTestBase {
 
     @Test
     public void testFindBookById() throws BookNotFoundException {
-        Book book = catalogService.findBook(10_010L);
+        Book book = catalogService.findBook(9L);
 
         Assert.assertNotNull(book);
-        Assert.assertEquals(Long.valueOf(10_010L), book.getId());
+        Assert.assertEquals(Long.valueOf(9), book.getId());
     }
 
     @Test(expected = IllegalArgumentException.class)

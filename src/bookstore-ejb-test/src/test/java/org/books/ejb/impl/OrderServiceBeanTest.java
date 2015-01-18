@@ -20,7 +20,6 @@ import org.books.persistence.testdata.AbstractTestBase;
 import org.books.persistence.testdata.CustomerData;
 import org.books.persistence.testdata.OrderData;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -40,9 +39,12 @@ public class OrderServiceBeanTest extends AbstractTestBase {
 
     @Test
     public void testFindOrderWithOrderId() throws OrderNotFoundException {
-        Order order = orderService.findOrder(10200L);
+        
+        Order test = orderService.findOrder(OrderData.O_1111_002.number());
+        Order order = orderService.findOrder(test.getId());
+        
         Assert.assertNotNull(order);
-        Assert.assertEquals(Long.valueOf(10200L), order.getId());
+        Assert.assertEquals(test.getId(), order.getId());
     }
 
     @Test(expected = OrderNotFoundException.class)

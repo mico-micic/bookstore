@@ -36,7 +36,7 @@ public class Order extends IdentifiableObject {
     @Column(
             name = "ORDER_DATE",
             nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
     @Column(nullable = false,

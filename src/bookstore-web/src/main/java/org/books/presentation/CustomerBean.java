@@ -130,7 +130,7 @@ public class CustomerBean implements Serializable {
         return EnumActionResult.ORDER_DETAILS;
     }
     
-    public void cancelOrder(Order order) {       
+    public void cancelOrder(OrderInfo order) {       
         try {
             this.orderService.cancelOrder(order.getId());
             MessageFactory.info(MessageKey.ORDER_CANCELLED);

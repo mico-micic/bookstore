@@ -83,10 +83,13 @@ public class OrderProcessorBeanTest extends AbstractTestBase {
         Customer customer = customerService.findCustomer(CustomerData.SUPER_USER.email());    
         OrderInfo info = orderService.placeOrder(customer.getId(), getOrderItems());
         
+        // Wait some time to give the queue a chance to process the order
+        Thread.sleep(QUEUE_WAIT_TIME);
+        
         // Cancel the order
         orderService.cancelOrder(info.getId());
         
-        // Wait some time to give the queue a chance to process the order and update the status
+        // Wait again
         Thread.sleep(QUEUE_WAIT_TIME + OrderProcessorBean.STATUS_AUTO_CHANGE_TIMEOUT);
         
         // Check the order status
