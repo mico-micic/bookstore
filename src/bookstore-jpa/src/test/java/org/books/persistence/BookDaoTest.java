@@ -57,6 +57,15 @@ public class BookDaoTest extends AbstractTestBase {
     }
 
     @Test
+    public void testSearchConcatMatch() {
+        
+        BookDao bookDao = new BookDao(getEm());
+        List<Book> result = bookDao.searchByKeywords(new String[]{"elFow"});
+        
+        assertTrue(result.isEmpty());
+    }
+    
+    @Test
     public void testLatest3Books() {
         BookDao bookDao = new BookDao(getEm());
         List<BookInfo> latestBooks = bookDao.findLatestBooks(3);

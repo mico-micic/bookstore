@@ -16,7 +16,6 @@ import javax.persistence.criteria.Root;
 import org.books.persistence.entity.Book;
 import org.books.persistence.entity.Book_;
 import org.books.persistence.dto.BookInfo;
-import org.books.persistence.entity.IdentifiableObject_;
 
 /**
  * @author micic
@@ -46,7 +45,9 @@ public class BookDao {
         Root<Book> book = cq.from(Book.class);
 
         // Concatinate title, authors and publisher to one string
-        Expression<String> exp1 = cb.concat(book.get(Book_.title), book.get(Book_.authors));
+        Expression<String> exp1 = cb.concat(book.get(Book_.title), "\t");
+        exp1 = cb.concat(exp1, book.get(Book_.authors));
+        exp1 = cb.concat(exp1, "\t");
         exp1 = cb.concat(exp1, book.get(Book_.publisher));
 
         // Add LIKE statement for each keyword
@@ -55,12 +56,6 @@ public class BookDao {
             predicates.add(cb.like(cb.upper(exp1), "%" + key.toUpperCase() + "%"));
         }
 
-        // cq.select(cb.construct(Book.class,
-        //        book.get(IdentifiableObject_.id),
-        //        book.get(Book_.title),
-        //        book.get(Book_.isbn),
-        //        book.get(Book_.price)))
-        //        .where(cb.or(predicates.toArray(new Predicate[]{})));
         cq.select(book).where(cb.or(predicates.toArray(new Predicate[]{})));
 
         return this.mgr.createQuery(cq).getResultList();
