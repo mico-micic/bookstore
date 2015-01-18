@@ -155,12 +155,22 @@ public class CustomerBean implements Serializable {
     }
     
     public EnumActionResult updateCustomer() {
-        try {
+        
+        try {            
             this.customerService.updateCustomer(customer);
             MessageFactory.info(MessageKey.SAVE_SUCCESSFUL);
             return navigateBack();
         } catch (EmailAlreadyUsedException ex) {
-            MessageFactory.error(MessageKey.SAVE_UNSUCCESSFUL);
+            MessageFactory.error(MessageKey.EMAIL_ALREADY_EXISTS);
+            
+            try {
+                // Reload customer
+                this.customer = this.customerService.findCustomer(customer.getId());
+            } catch (CustomerNotFoundException ex1) {
+                MessageFactory.error(MessageKey.CUSTOMER_NOT_FOUND, customer.getId());
+                Logger.getLogger(CustomerBean.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+            
             return null;
         } catch (CustomerNotFoundException ex) {
             MessageFactory.error(MessageKey.CUSTOMER_NOT_FOUND, customer.getId());
