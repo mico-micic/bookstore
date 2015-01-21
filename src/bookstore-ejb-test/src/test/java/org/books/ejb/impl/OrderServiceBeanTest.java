@@ -21,8 +21,10 @@ import org.books.persistence.testdata.CustomerData;
 import org.books.persistence.testdata.OrderData;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class OrderServiceBeanTest extends AbstractTestBase {
 
     private static final String ORDER_SERVICE_NAME = "java:global/bookstore-ear/bookstore-ejb/OrderService!org.books.ejb.OrderServiceRemote";

@@ -9,8 +9,10 @@ import org.books.persistence.testdata.AbstractTestBase;
 import org.books.persistence.testdata.IsbnNumber;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class CatalogServiceBeanTest extends AbstractTestBase {
 
     private static final String CATALOG_SERVICE_NAME = "java:global/bookstore-ear/bookstore-ejb/CatalogService!org.books.ejb.CatalogServiceRemote";
