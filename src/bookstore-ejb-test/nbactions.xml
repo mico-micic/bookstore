@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actions>
-        <action>
-            <actionName>CUSTOM-arquillian-glassfish-remote</actionName>
-            <displayName>arquillian-glassfish-remote</displayName>
-            <goals>
-                <goal>clean</goal>
-                <goal>package</goal>
-            </goals>
-            <activatedProfiles>
-                <activatedProfile>arquillian-glassfish-remote</activatedProfile>
-            </activatedProfiles>
-        </action>
-    </actions>
+    <action>
+        <actionName>CUSTOM-arquillian-glassfish-remote</actionName>
+        <displayName>arquillian-glassfish-remote</displayName>
+        <goals>
+            <goal>clean</goal>
+            <goal>package</goal>
+        </goals>
+        <activatedProfiles>
+            <activatedProfile>arquillian-glassfish-remote</activatedProfile>
+        </activatedProfiles>
+    </action>
+</actions>
