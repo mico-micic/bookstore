@@ -5,37 +5,17 @@
  */
 package org.books.ejb.impl;
 
-import java.io.File;
 import javax.ejb.EJB;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.UserTransaction;
-import org.apache.log4j.Logger;
-import org.apache.log4j.spi.AppenderAttachable;
-import org.books.ejb.CatalogService;
-import org.books.ejb.CatalogServiceLocal;
-import org.books.ejb.CatalogServiceRemote;
 import org.books.ejb.CustomerServiceLocal;
-import org.books.ejb.exception.BookNotFoundException;
-import org.books.persistence.converter.AesEncryptorConverter;
-import org.books.persistence.dao.BookDao;
-import org.books.persistence.dto.OrderInfo;
-import org.books.persistence.entity.Customer;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
-import org.jboss.shrinkwrap.resolver.api.maven.MavenResolvedArtifact;
-import org.jboss.shrinkwrap.resolver.api.maven.MavenResolverSystem;
 import org.jboss.shrinkwrap.resolver.api.maven.PomEquippedResolveStage;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
