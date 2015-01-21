@@ -19,6 +19,7 @@ public class CatalogServiceBeanTest extends AbstractTestBase {
 
     private static CatalogServiceRemote catalogService;
 
+    
     @BeforeClass
     public static void setup() throws Exception {
         catalogService = (CatalogServiceRemote) new InitialContext().lookup(CATALOG_SERVICE_NAME);

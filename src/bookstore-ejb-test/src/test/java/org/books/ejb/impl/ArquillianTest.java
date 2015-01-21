@@ -64,7 +64,7 @@ public class ArquillianTest {
     CustomerServiceLocal customerService;
 
     @Test
-    public void AlbumRepository_should_return_album_by_id() {
+    public void testCustomerServiceNotNull() {
 
         Assert.assertNotNull(customerService);
     }
