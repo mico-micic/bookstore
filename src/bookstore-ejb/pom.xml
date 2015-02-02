@@ -73,7 +73,7 @@
                             </wsdlUrls>
                             <packageName>com.amazon.webservice</packageName>
                             <sourceDestDir>${project.build.directory}/generated-sources/wsimport</sourceDestDir>
-                            <destDir>${project.build.directory}/generated-sources/handler</destDir>
+                            <destDir>src/main/resources</destDir>
                             <vmArgs>
                                 <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
                             </vmArgs>
