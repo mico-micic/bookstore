@@ -71,7 +71,7 @@
                             <wsdlUrls>
                                 <wsdlUrl>${wsdl.url}</wsdlUrl>
                             </wsdlUrls>
-                            <packageName>org.amazon</packageName>
+                            <packageName>com.amazon.webservice</packageName>
                             <sourceDestDir>${project.build.directory}/generated-sources/wsimport</sourceDestDir>
                             <destDir>${project.build.directory}/generated-sources/handler</destDir>
                             <vmArgs>
