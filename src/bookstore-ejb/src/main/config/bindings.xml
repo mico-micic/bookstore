@@ -1,0 +1,17 @@
+<bindings xmlns="http://java.sun.com/xml/ns/jaxws" wsdlLocation="http://webservices.amazon.com/AWSECommerceService/AWSECommerceService.wsdl">
+    <enableWrapperStyle>false</enableWrapperStyle>
+    
+    <handler-chains xmlns="http://java.sun.com/xml/ns/javaee">
+        <handler-chain>
+            <handler>
+                <handler-name>SecurityHandler</handler-name>
+                <handler-class>org.books.ejb.webservice.handler.SecurityHandler</handler-class>
+            </handler>
+            <handler>
+                <handler-name>LogHandler</handler-name>
+                <handler-class>org.books.ejb.webservice.handler.LogHandler</handler-class>
+            </handler>
+        </handler-chain>
+    </handler-chains>
+    
+</bindings>
