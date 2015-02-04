@@ -11,7 +11,7 @@ public class Book extends IdentifiableObject {
 
     public enum Binding {
 
-        Hardcover, Paperback
+        Hardcover, Paperback, Unknown
     }
 
     @Column(
