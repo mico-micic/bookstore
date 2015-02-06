@@ -7,20 +7,16 @@ package org.books.ejb.impl;
 
 import com.amazon.webservice.AWSECommerceService;
 import com.amazon.webservice.AWSECommerceServicePortType;
-import com.amazon.webservice.Errors;
 import com.amazon.webservice.Item;
 import com.amazon.webservice.ItemAttributes;
 import com.amazon.webservice.ItemLookup;
 import com.amazon.webservice.ItemLookupRequest;
 import com.amazon.webservice.ItemLookupResponse;
-import com.amazon.webservice.Items;
 import com.amazon.webservice.OperationRequest;
+import com.amazon.webservice.Price;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -105,10 +101,18 @@ public class AmazonCatalogServiceBean implements AmazonCatalogServiceLocal, Amaz
         ret.setIsbn(itemAttributes.getISBN());
         ret.setTitle(itemAttributes.getTitle());
         ret.setAuthors(String.join(", ", itemAttributes.getAuthor()));
-        ret.setNumberOfPages(itemAttributes.getNumberOfPages().intValue());
-        ret.setPrice(new BigDecimal(itemAttributes.getListPrice().getAmount()).divide(BigDecimal.valueOf(100)));
         ret.setPublisher(itemAttributes.getPublisher());
 
+        BigInteger numberOfPages = itemAttributes.getNumberOfPages();
+        if (numberOfPages != null) {
+            ret.setNumberOfPages(itemAttributes.getNumberOfPages().intValue());
+        }
+        
+        Price listPrice = itemAttributes.getListPrice();
+        if (listPrice != null) {
+            ret.setPrice(new BigDecimal(listPrice.getAmount()).divide(BigDecimal.valueOf(100)));
+        }
+        
         switch(itemAttributes.getBinding()) {
             case "Paperback": ret.setBinding(Binding.Paperback); break;
             case "Hardcover": ret.setBinding(Binding.Hardcover); break;

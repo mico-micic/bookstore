@@ -32,7 +32,16 @@ public class AmazonCatalogServiceBeanTest extends AbstractTestBase {
     @Test
     public void testFindBook() throws BookNotFoundException {
         
-        Book book = amazonService.findBook("076243631X");
+        Book book = amazonService.findBook("0071809252");
+        
         Assert.assertNotNull(book);
+        Assert.assertEquals("0071809252", book.getIsbn());
+        Assert.assertEquals("Java: A Beginner's Guide", book.getTitle());
+        Assert.assertEquals("Herbert Schildt", book.getAuthors());
+        Assert.assertEquals("Mcgraw-Hill Osborne Media", book.getPublisher());
+        Assert.assertEquals(2014, book.getPublicationYear().intValue());
+        Assert.assertEquals(Book.Binding.Paperback, book.getBinding());
+        Assert.assertEquals(699, book.getNumberOfPages().intValue());
+        Assert.assertEquals(40, book.getPrice().doubleValue(), 1E-6);   
     }
 }
