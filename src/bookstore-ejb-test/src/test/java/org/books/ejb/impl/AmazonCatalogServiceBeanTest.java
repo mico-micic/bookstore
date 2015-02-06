@@ -5,6 +5,7 @@
  */
 package org.books.ejb.impl;
 
+import java.util.List;
 import javax.naming.InitialContext;
 import org.books.ejb.AmazonCatalogServiceRemote;
 import org.books.ejb.exception.BookNotFoundException;
@@ -19,7 +20,7 @@ import org.junit.Test;
  * @author micic
  */
 public class AmazonCatalogServiceBeanTest extends AbstractTestBase {
-                                                       
+
     private static final String AMAZON_SERVICE_NAME = "java:global/bookstore-ear/bookstore-ejb/AmazonCatalogService!org.books.ejb.AmazonCatalogServiceRemote";
 
     private static AmazonCatalogServiceRemote amazonService;
@@ -28,20 +29,31 @@ public class AmazonCatalogServiceBeanTest extends AbstractTestBase {
     public static void setup() throws Exception {
         amazonService = (AmazonCatalogServiceRemote) new InitialContext().lookup(AMAZON_SERVICE_NAME);
     }
-    
+
     @Test
     public void testFindBook() throws BookNotFoundException {
-        
-        Book book = amazonService.findBook("0071809252");
-        
+
+        String isbn = "0071809252";
+
+        Book book = amazonService.findBook(isbn);
+
         Assert.assertNotNull(book);
-        Assert.assertEquals("0071809252", book.getIsbn());
+        Assert.assertEquals(isbn, book.getIsbn());
         Assert.assertEquals("Java: A Beginner's Guide", book.getTitle());
         Assert.assertEquals("Herbert Schildt", book.getAuthors());
         Assert.assertEquals("Mcgraw-Hill Osborne Media", book.getPublisher());
         Assert.assertEquals(2014, book.getPublicationYear().intValue());
         Assert.assertEquals(Book.Binding.Paperback, book.getBinding());
         Assert.assertEquals(699, book.getNumberOfPages().intValue());
-        Assert.assertEquals(40, book.getPrice().doubleValue(), 1E-6);   
+        Assert.assertEquals(40, book.getPrice().doubleValue(), 1E-6);
+    }
+
+    @Test
+    public void testSearchBooks() throws BookNotFoundException {
+
+        List<Book> result = amazonService.searchBooks("Java test");
+        
+        Assert.assertNotNull(result);
+        Assert.assertTrue(result.size() >= 100);
     }
 }

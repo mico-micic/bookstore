@@ -7,10 +7,12 @@ package org.books.ejb.impl;
 
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import org.books.ejb.AmazonCatalogServiceLocal;
 import org.books.ejb.CatalogServiceLocal;
 import org.books.ejb.CatalogServiceRemote;
 import org.books.ejb.exception.BookNotFoundException;
@@ -27,6 +29,9 @@ public class CatalogServiceBean implements CatalogServiceRemote, CatalogServiceL
 
     private BookDao bookDao;
 
+    @EJB
+    private AmazonCatalogServiceLocal amazonService;
+    
     @PersistenceContext
     private EntityManager em;
 
@@ -51,13 +56,16 @@ public class CatalogServiceBean implements CatalogServiceRemote, CatalogServiceL
         try {
             return bookDao.getByIsbn(isbn);
         } catch (NoResultException ex) {
-            throw new BookNotFoundException();
+            
+            // Fallback: Try to lookup the ISBN with amazon webservice
+            return amazonService.findBook(isbn);
         }
     }
 
     @Override
     public List<Book> searchBooks(String keywords) {
         BeanHelper.validateInput(keywords);
-        return bookDao.searchByKeywords(keywords.split(PATTERN_FOR_WHITESPACE));
+        // return bookDao.searchByKeywords(keywords.split(PATTERN_FOR_WHITESPACE));
+        return amazonService.searchBooks(keywords);
     }
 }
