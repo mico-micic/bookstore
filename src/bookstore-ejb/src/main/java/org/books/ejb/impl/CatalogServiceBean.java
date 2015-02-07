@@ -37,13 +37,13 @@ public class CatalogServiceBean implements CatalogServiceRemote, CatalogServiceL
 
     @PostConstruct
     public void init() {
-        bookDao = new BookDao(em);
+        this.bookDao = new BookDao(em);
     }
 
     @Override
     public Book findBook(Long bookId) throws BookNotFoundException {
         BeanHelper.validateInput(bookId);
-        Book book = em.find(Book.class, bookId);
+        Book book = this.em.find(Book.class, bookId);
         if (book == null) {
             throw new BookNotFoundException();
         }
@@ -54,18 +54,23 @@ public class CatalogServiceBean implements CatalogServiceRemote, CatalogServiceL
     public Book findBook(String isbn) throws BookNotFoundException {
         BeanHelper.validateInput(isbn);
         try {
-            return bookDao.getByIsbn(isbn);
+            return this.bookDao.getByIsbn(isbn);
         } catch (NoResultException ex) {
             
             // Fallback: Try to lookup the ISBN with amazon webservice
-            return amazonService.findBook(isbn);
+            return this.amazonService.findBook(isbn);
         }
     }
 
     @Override
     public List<Book> searchBooks(String keywords) {
         BeanHelper.validateInput(keywords);
-        // return bookDao.searchByKeywords(keywords.split(PATTERN_FOR_WHITESPACE));
-        return amazonService.searchBooks(keywords);
+        // return this.bookDao.searchByKeywords(keywords.split(PATTERN_FOR_WHITESPACE));
+        return this.amazonService.searchBooks(keywords);
+    }
+    
+    @Override
+    public void ensureBooks(List<Book> books) {
+        this.bookDao.checkAndAddBooks(books);
     }
 }

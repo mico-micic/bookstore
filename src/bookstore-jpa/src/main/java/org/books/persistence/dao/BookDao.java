@@ -8,6 +8,7 @@ package org.books.persistence.dao;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
@@ -77,5 +78,29 @@ public class BookDao {
                 .setMaxResults(maxResults)
                 .getResultList();
     }
-
+    
+    /**
+     * Check all given books if they exists in our local database 
+     * and add them if required.
+     * 
+     * @param books List of books to check or add
+     */
+    public void checkAndAddBooks(List<Book> books) {
+        
+        Book bookInDb;
+        
+        for (Book book : books) {
+            try {
+                // Try to load the book by ISBN
+                bookInDb = this.getByIsbn(book.getIsbn());
+            } catch (NoResultException e) {
+                bookInDb = null;
+            }
+            
+            // Nothing found? --> Insert
+            if (bookInDb == null) {
+                this.mgr.merge(book);
+            }
+        }
+    }
 }

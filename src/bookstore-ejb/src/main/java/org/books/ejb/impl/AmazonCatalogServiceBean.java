@@ -96,10 +96,13 @@ public class AmazonCatalogServiceBean implements AmazonCatalogServiceLocal, Amaz
             if (ret == null) {
                 ret = createBook(resp.getItems().get(0).getItem().get(0).getItemAttributes());
             }
-        } else {
-            throw new BookNotFoundException();
         }
 
+        // For the case that createBook() returns null or the response was invalid
+        if (ret == null) {
+            throw new BookNotFoundException();
+        }
+        
         return ret;
     }
 
@@ -142,7 +145,10 @@ public class AmazonCatalogServiceBean implements AmazonCatalogServiceLocal, Amaz
             BigInteger totalPages = resp.getItems().get(0).getTotalPages();
 
             for (Item item : resp.getItems().get(0).getItem()) {
-                result.add(createBook(item.getItemAttributes()));
+                Book book = createBook(item.getItemAttributes());
+                if (book != null) {
+                    result.add(book);
+                }
             }
 
             nextPage = nextPage.add(BigInteger.ONE);
@@ -210,6 +216,6 @@ public class AmazonCatalogServiceBean implements AmazonCatalogServiceLocal, Amaz
             LOGGER.warn("Cannot parse publication year for ISBN " + ret.getIsbn(), e);
         }
 
-        return ret;
+        return ret.isComplete() ? ret : null;
     }
 }

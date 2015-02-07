@@ -11,6 +11,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.books.application.MessageFactory;
+import org.books.ejb.CatalogServiceLocal;
 import org.books.ejb.OrderServiceLocal;
 import org.books.ejb.exception.BookNotFoundException;
 import org.books.ejb.exception.CustomerNotFoundException;
@@ -38,6 +39,9 @@ public class CartBean implements Serializable {
     @EJB
     private OrderServiceLocal orderService;
 
+    @EJB
+    private CatalogServiceLocal catalogService;
+    
     @Inject
     private CustomerBean customerBean;
 
@@ -59,6 +63,8 @@ public class CartBean implements Serializable {
 
     public EnumActionResult confirmOrder() {
         try {
+            // Make sure that we have all books saved in our database and place order
+            catalogService.ensureBooks(cart.getBooks());
             orderService.placeOrder(customerBean.getCustomer().getId(), cart.getOrderItems());
             MessageFactory.info(MessageKey.ORDER_CONFIRMED);
             cart.reset();

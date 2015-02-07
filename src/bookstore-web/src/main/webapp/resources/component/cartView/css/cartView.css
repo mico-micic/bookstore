@@ -17,3 +17,7 @@ and open the template in the editor.
 .shoppingCartTableTotal #price {
     text-align: right;
 }
+
+.shoppingCartTable #pcs {
+    min-width: 40px;
+}

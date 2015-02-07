@@ -1,6 +1,7 @@
 package org.books.persistence.entity;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -119,5 +120,35 @@ public class Book extends IdentifiableObject {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 11 * hash + Objects.hashCode(this.isbn);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Book other = (Book) obj;
+        if (!Objects.equals(this.isbn, other.isbn)) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isComplete() {
+        return this.getIsbn() != null 
+                && this.getBinding() != null 
+                && this.getNumberOfPages() != null
+                && this.getPrice() != null 
+                && this.getTitle() != null;
     }
 }

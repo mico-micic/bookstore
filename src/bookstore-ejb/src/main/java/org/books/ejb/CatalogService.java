@@ -45,4 +45,11 @@ public interface CatalogService {
      * @return All Books that match all keywords.
      */
     List<Book> searchBooks(String keywords) throws IllegalArgumentException;
+    
+    /**
+     * Make sure that the given list of books is persisted in our local database.
+     * 
+     * @param books List of books to check or add to local database
+     */
+    void ensureBooks(List<Book> books);
 }

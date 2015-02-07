@@ -20,7 +20,7 @@ public class Cart implements Serializable {
     private final List<LineItem> lineItems = new ArrayList<>();
 
     public void addBook(Book book) {
-                
+
         LineItem existing = getExistingLineItem(book);
 
         if (existing != null) {
@@ -29,11 +29,11 @@ public class Cart implements Serializable {
             lineItems.add(new LineItem(book, 1));
         }
     }
-    
+
     public void addLineItem(LineItem item) {
         this.lineItems.add(item);
     }
-    
+
     private LineItem getExistingLineItem(Book book) {
         return this.lineItems.stream().filter(item -> item.getBook().equals(book)).findFirst().orElse(null);
     }
@@ -41,10 +41,24 @@ public class Cart implements Serializable {
     public List<LineItem> getLineItems() {
         return lineItems;
     }
-    
+
     public List<OrderItem> getOrderItems() {
         List<OrderItem> ret = new ArrayList<>();
         this.lineItems.forEach(lineItem -> ret.add(new OrderItem(lineItem.getBook().getIsbn(), lineItem.getQuantity())));
+        return ret;
+    }
+
+    /**
+     * @return List of all books in the shopping cart
+     */
+    public List<Book> getBooks() {
+        List<Book> ret = new ArrayList<>();
+        this.lineItems.forEach(lineItem -> {
+            if (!ret.contains(lineItem.getBook())) {
+                ret.add(lineItem.getBook());
+            }
+        });
+        
         return ret;
     }
 
@@ -66,11 +80,11 @@ public class Cart implements Serializable {
     public void reset() {
         lineItems.clear();
     }
-    
+
     public void incrementQuantity(LineItem item) {
         item.setQuantity(item.getQuantity() + 1);
     }
-    
+
     public void decrementQuantity(LineItem item) {
         int currQuantity = item.getQuantity();
         if (currQuantity > 1) {

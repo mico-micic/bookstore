@@ -59,16 +59,18 @@ and open the template in the editor.
                         <f:facet name="#{cc.attrs.showHeader == true ? 'header' : ''}">
                             <h:outputText value="#{texts.pcs}"></h:outputText>
                         </f:facet>
-                        <h:outputText id="quantity" value="#{lineItem.quantity}" />
-                        &#160; <!-- &nbsp; -->
-                        <h:commandButton id="incrementQuantity" alt="Increment" action="#{cc.attrs.value.incrementQuantity(lineItem)}" 
-                                         rendered="#{cc.attrs.editable == true}" image="#{resource['component:cartView/img/plus.gif']}">
-                            <f:ajax render="@form" />
-                        </h:commandButton>
-                        <h:commandButton alt="Decrement" action="#{cc.attrs.value.decrementQuantity(lineItem)}" 
-                                         rendered="#{cc.attrs.editable == true}" image="#{resource['component:cartView/img/minus.gif']}">
-                            <f:ajax render="@form" />
-                        </h:commandButton>
+                        <div id="pcs">
+                            <h:outputText id="quantity" value="#{lineItem.quantity}" />
+                            &#160; <!-- &nbsp; -->
+                            <h:commandButton id="incrementQuantity" alt="Increment" action="#{cc.attrs.value.incrementQuantity(lineItem)}" 
+                                             rendered="#{cc.attrs.editable == true}" image="#{resource['component:cartView/img/plus.gif']}">
+                                <f:ajax render="@form" />
+                            </h:commandButton>
+                            <h:commandButton alt="Decrement" action="#{cc.attrs.value.decrementQuantity(lineItem)}" 
+                                             rendered="#{cc.attrs.editable == true}" image="#{resource['component:cartView/img/minus.gif']}">
+                                <f:ajax render="@form" />
+                            </h:commandButton>
+                        </div>
                     </h:column>
 
                     <!-- Column with price -->
