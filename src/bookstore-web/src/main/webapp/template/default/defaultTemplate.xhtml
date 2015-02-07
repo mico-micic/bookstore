@@ -113,6 +113,11 @@ and open the template in the editor.
                         show: {ready: true}
                     });
                 });
+                
+                function showWaitIndicator(text) {
+                    if (text &amp;&amp; text.length > 0) { $('#waitIndicatorText').text(text); }
+                    $('#ajaxLoaderDiv').modal();
+                }
 
             </script>
 
@@ -139,13 +144,11 @@ and open the template in the editor.
 
             <div id="ajaxLoaderDiv">
                 <div class="bubblingG">
-                    <span id="bubblingG_1">
-                    </span>
-                    <span id="bubblingG_2">
-                    </span>
-                    <span id="bubblingG_3">
-                    </span>
+                    <span id="bubblingG_1"></span>
+                    <span id="bubblingG_2"></span>
+                    <span id="bubblingG_3"></span>
                 </div>
+                <span id="waitIndicatorText">#{texts.loading}...</span>
             </div>
 
         </h:body>

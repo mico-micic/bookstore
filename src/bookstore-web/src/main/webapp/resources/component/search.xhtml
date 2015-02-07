@@ -31,7 +31,9 @@ and open the template in the editor.
                         <h:message for="searchKey" styleClass="elementMessage" />
                     </div>
                 </span>
-                <h:commandButton action="#{cc.attrs.searchKeyMethod}" styleClass="button_search" image="#{resource['component:search/img/search_btn.gif']}" />
+                <h:commandButton action="#{cc.attrs.searchKeyMethod}" styleClass="button_search" 
+                                 onclick="showWaitIndicator('#{texts.searching}...')"
+                                 image="#{resource['component:search/img/search_btn.gif']}" />
             </h:form>
             
             <span class="searchBoxText"><h:outputText value="#{texts.isbnSearch}" /></span>

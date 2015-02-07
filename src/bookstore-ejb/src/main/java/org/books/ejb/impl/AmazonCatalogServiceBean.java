@@ -143,6 +143,7 @@ public class AmazonCatalogServiceBean implements AmazonCatalogServiceLocal, Amaz
                 && resp.getItems().get(0).getTotalResults().compareTo(BigInteger.ZERO) > 0) {
 
             BigInteger totalPages = resp.getItems().get(0).getTotalPages();
+            LOGGER.info("Total pages: " + totalPages);
 
             for (Item item : resp.getItems().get(0).getItem()) {
                 Book book = createBook(item.getItemAttributes());
@@ -152,7 +153,7 @@ public class AmazonCatalogServiceBean implements AmazonCatalogServiceLocal, Amaz
             }
 
             nextPage = nextPage.add(BigInteger.ONE);
-            if (totalPages.compareTo(BigInteger.ONE) > 0
+            if (totalPages.compareTo(nextPage) >= 0
                     && nextPage.compareTo(AMAZON_MAX_PAGES) <= 0) {
                 internalSearchBooks(keywords, nextPage, result);
             }
@@ -212,8 +213,9 @@ public class AmazonCatalogServiceBean implements AmazonCatalogServiceLocal, Amaz
         try {
             LocalDate dateTime = LocalDate.parse(itemAttributes.getPublicationDate());
             ret.setPublicationYear(dateTime.getYear());
-        } catch (DateTimeParseException e) {
-            LOGGER.warn("Cannot parse publication year for ISBN " + ret.getIsbn(), e);
+        } catch (DateTimeParseException | NullPointerException e) {
+            LOGGER.warn("Cannot parse publication year for ISBN " + ret.getIsbn()
+                    + " Received value: " + itemAttributes.getPublicationDate(), e);
         }
 
         return ret.isComplete() ? ret : null;

@@ -1,5 +1,6 @@
 #ajaxLoaderDiv {
-    display: none;
+  display: none;
+  text-align: center;
 }
 #simplemodal-overlay {
     background-color:#fff;
