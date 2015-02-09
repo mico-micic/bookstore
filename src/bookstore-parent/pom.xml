@@ -11,5 +11,6 @@
         <module>../bookstore-ejb</module>
         <module>../bookstore-web</module>
         <module>../bookstore-ear</module>
+        <module>../bookstore-rs</module>
     </modules>
 </project>

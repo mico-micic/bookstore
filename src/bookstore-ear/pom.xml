@@ -42,6 +42,12 @@
                         <groupId>org.bookstore</groupId>
                         <artifactId>bookstore-web</artifactId>
                         <bundleFileName>bookstore-web.war</bundleFileName>
+                        <contextRoot>/bookstoreapp</contextRoot>
+                    </webModule>
+                    <webModule>
+                        <groupId>org.bookstore</groupId>
+                        <artifactId>bookstore-rs</artifactId>
+                        <bundleFileName>bookstore-rs.war</bundleFileName>
                         <contextRoot>/bookstore</contextRoot>
                     </webModule>
                     <ejbModule>
@@ -59,6 +65,12 @@
     <dependency>
         <groupId>org.bookstore</groupId>
         <artifactId>bookstore-web</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <type>war</type>
+    </dependency>
+    <dependency>
+        <groupId>org.bookstore</groupId>
+        <artifactId>bookstore-rs</artifactId>
         <version>1.0-SNAPSHOT</version>
         <type>war</type>
     </dependency>
