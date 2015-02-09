@@ -51,8 +51,8 @@ public class AmazonRequestGrinchBean implements AmazonRequestGrinchServiceLocal 
     }
 
     @Override
-    public void unlockAndUpdateLastRequest() {
-        lastRequestTs = System.currentTimeMillis();
+    public void unlockAndUpdateLastRequest(long duration) {
+        lastRequestTs = System.currentTimeMillis() - duration;
         masterLock.unlock();
     }
 }

@@ -54,6 +54,6 @@ public class AmazonCatalogServiceBeanTest extends AbstractTestBase {
         List<Book> result = amazonService.searchBooks("Java test");
         
         Assert.assertNotNull(result);
-        Assert.assertTrue(result.size() >= 100);
+        Assert.assertTrue(result.size() >= 50);
     }
 }

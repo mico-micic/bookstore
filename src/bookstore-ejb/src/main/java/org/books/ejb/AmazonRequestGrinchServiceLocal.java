@@ -15,5 +15,5 @@ import javax.ejb.Local;
 public interface AmazonRequestGrinchServiceLocal {
     
     public void lockAndWaitForNextRequest();
-    public void unlockAndUpdateLastRequest();
+    public void unlockAndUpdateLastRequest(long duration);
 }
