@@ -69,9 +69,11 @@ public class AmazonCatalogServiceBean implements AmazonCatalogServiceLocal, Amaz
         lookupBody.getRequest().add(req);
         ItemLookupResponse resp;
 
-        long start = System.currentTimeMillis();
+        long start = 0;
         try {
             amazonRequestGrinch.lockAndWaitForNextRequest();
+            
+            start = System.currentTimeMillis();
             resp = webServicePort.itemLookup(lookupBody);
         } finally {
             amazonRequestGrinch.unlockAndUpdateLastRequest(System.currentTimeMillis() - start);
@@ -128,10 +130,13 @@ public class AmazonCatalogServiceBean implements AmazonCatalogServiceLocal, Amaz
         searchBody.getRequest().add(req);
         ItemSearchResponse resp;
 
-        long start = System.currentTimeMillis();
+        long start = 0;
         try {
             amazonRequestGrinch.lockAndWaitForNextRequest();
+            
             LOGGER.info("Sending search request for page number: " + nextPage.intValue());
+            
+            start = System.currentTimeMillis();
             resp = webServicePort.itemSearch(searchBody);
         } finally {
             amazonRequestGrinch.unlockAndUpdateLastRequest(System.currentTimeMillis() - start);
