@@ -9,13 +9,12 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
 /**
- *
  * @author Sigi
  */
 public class BookNotFoundWebAppException extends WebApplicationException {
-    
+
     public BookNotFoundWebAppException() {
         super(Response.Status.NOT_FOUND);
     }
-    
+
 }

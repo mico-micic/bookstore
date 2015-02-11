@@ -8,9 +8,11 @@ package org.bookstore.rs;
 import java.util.List;
 import javax.ejb.EJBException;
 import javax.naming.InitialContext;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import org.books.ejb.CatalogServiceRemote;
@@ -38,17 +40,21 @@ public class BooksResource {
 
     @GET
     @Path("{id}")
+    @Consumes({"application/xml", "application/json"})
+    @Produces({"application/xml", "application/json"})
     public Book find(@PathParam("id") Long id) {
         System.out.println("Triggered BookResource.find(ID)");
         try {
             return catalogService.findBook(id);
-        } catch (Throwable t) {
-            throw extractedException(t);
+        } catch (BookNotFoundException ex) {
+            throw new BookNotFoundWebAppException();
         }
     }
 
     @GET
     @Path("search")
+    @Consumes({"application/xml", "application/json"})
+    @Produces({"application/xml", "application/json"})
     public List<Book> search(@QueryParam("keywords") String keywords) {
         System.out.println("Triggered BookResource.search(keywords)");
         return catalogService.searchBooks(keywords);
