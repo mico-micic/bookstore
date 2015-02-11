@@ -15,11 +15,13 @@ import javax.persistence.Entity;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Sigi
  */
 @Entity
+@XmlRootElement
 public class Login extends IdentifiableObject {
 
     @Column(

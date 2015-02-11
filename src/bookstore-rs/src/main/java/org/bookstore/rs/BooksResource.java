@@ -7,7 +7,6 @@ package org.bookstore.rs;
 
 import java.util.List;
 import javax.ejb.EJB;
-import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
@@ -23,7 +22,7 @@ import org.books.persistence.entity.Book;
  * @author Sigi
  */
 @Path("books")
-public class BooksResource {
+public class BooksResource extends AbstractResource {
 
     @EJB
     private CatalogServiceLocal catalogService;
@@ -59,18 +58,6 @@ public class BooksResource {
     @Produces({"application/xml", "application/json"})
     public List<Book> search(@QueryParam("keywords") String keywords) {
         return catalogService.searchBooks(keywords);
-    }
-
-    private void validateNotNull(Object id) throws BadRequestException {
-        if (id == null) {
-            throw new BadRequestException();
-        }
-    }
-
-    private void validateNotBlank(String str) {
-        if (str == null || "".equals(str.trim())) {
-            throw new BadRequestException();
-        }
     }
 
 }

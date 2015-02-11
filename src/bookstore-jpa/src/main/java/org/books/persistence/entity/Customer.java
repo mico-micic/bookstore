@@ -3,8 +3,10 @@ package org.books.persistence.entity;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
+@XmlRootElement
 public class Customer extends IdentifiableObject {
 
     @Column(nullable = false)

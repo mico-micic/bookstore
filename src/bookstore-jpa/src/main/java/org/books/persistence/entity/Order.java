@@ -17,9 +17,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "BOOKORDER")
+@XmlRootElement
 public class Order extends IdentifiableObject {
 
     public enum Status {
