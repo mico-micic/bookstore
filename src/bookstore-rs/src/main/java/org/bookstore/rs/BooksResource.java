@@ -8,6 +8,7 @@ package org.bookstore.rs;
 import java.util.List;
 import javax.ejb.EJBException;
 import javax.naming.InitialContext;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
@@ -35,6 +36,7 @@ public class BooksResource {
         }
     }
 
+    @GET
     @Path("{id}")
     public Book find(@PathParam("id") Long id) {
         System.out.println("Triggered BookResource.find(ID)");
@@ -45,6 +47,7 @@ public class BooksResource {
         }
     }
 
+    @GET
     @Path("search")
     public List<Book> search(@QueryParam("keywords") String keywords) {
         System.out.println("Triggered BookResource.search(keywords)");
