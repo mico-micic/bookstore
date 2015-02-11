@@ -6,8 +6,9 @@
 package org.bookstore.rs;
 
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.naming.InitialContext;
+import javax.faces.bean.ManagedBean;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -15,7 +16,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
-import org.books.ejb.CatalogServiceRemote;
+import org.books.ejb.CatalogServiceLocal;
 import org.books.ejb.exception.BookNotFoundException;
 import org.books.persistence.entity.Book;
 import org.bookstore.rs.exception.BookNotFoundWebAppException;
@@ -26,17 +27,8 @@ import org.bookstore.rs.exception.BookNotFoundWebAppException;
 @Path("books")
 public class BooksResource {
 
-    private static final String CATALOG_SERVICE_NAME = "java:global/bookstore-ear/bookstore-ejb/CatalogService!org.books.ejb.CatalogServiceRemote";
-
-    private static CatalogServiceRemote catalogService;
-
-    public BooksResource() {
-        try {
-            catalogService = (CatalogServiceRemote) new InitialContext().lookup(CATALOG_SERVICE_NAME);
-        } catch (Throwable ex) {
-            throw new IllegalStateException("Fehler beim initialisieren der BookResource!", ex);
-        }
-    }
+    @EJB
+    private CatalogServiceLocal catalogService;
 
     @GET
     @Path("{id}")
