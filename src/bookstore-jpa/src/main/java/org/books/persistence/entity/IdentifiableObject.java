@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.TableGenerator;
+import javax.xml.bind.annotation.XmlAttribute;
 
 @MappedSuperclass
 public class IdentifiableObject implements Serializable {
@@ -24,6 +25,7 @@ public class IdentifiableObject implements Serializable {
             generator = "general_sequence")
     private Long id;
 
+    @XmlAttribute
     public Long getId() {
         return id;
     }
