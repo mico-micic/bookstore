@@ -7,9 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 @Entity
 @XmlRootElement
+@XmlType(propOrder = {"isbn", "title", "authors", "publisher", "publicationYear", "binding", "numberOfPages", "price"})
 public class Book extends IdentifiableObject {
 
     public enum Binding {
