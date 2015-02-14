@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -20,6 +21,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import org.books.ejb.CustomerServiceLocal;
 import org.books.ejb.OrderServiceLocal;
 import org.books.ejb.exception.BookNotFoundException;
@@ -44,19 +48,25 @@ import org.bookstore.rs.exception.PreconditionFailedException;
 @Path("orders")
 public class OrdersResource extends AbstractResource {
 
+    @Context
+    private HttpServletResponse response;
+
     @EJB
     private OrderServiceLocal orderService;
 
     @POST
     @Consumes({"application/xml", "application/json"})
     @Produces({"application/xml", "application/json"})
-    public OrderInfo placeOrder(OrderRequest orderRequest) {
+    public Response placeOrder(OrderRequest orderRequest) {
         validateNotNull(orderRequest);
         validateNotNull(orderRequest.getCustomerId());
         validateNotNull(orderRequest.getItems());
         try {
             OrderInfo orderInfo = orderService.placeOrder(orderRequest.getCustomerId(), orderRequest.getItems());
-            return orderInfo;
+            return Response
+                    .status(Status.CREATED.getStatusCode())
+                    .entity(orderInfo)
+                    .build();
         } catch (CustomerNotFoundException ex) {
             throw new NotFoundException("Customer not found!");
         } catch (BookNotFoundException ex) {
@@ -108,7 +118,7 @@ public class OrdersResource extends AbstractResource {
     @DELETE
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void deleteOrder(@PathParam("id") Long id) {
+    public void cancelOrder(@PathParam("id") Long id) {
         validateNotNull(id);
         try {
             orderService.cancelOrder(id);
