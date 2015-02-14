@@ -11,14 +11,6 @@
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="customers">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="customer" minOccurs="0" maxOccurs="unbounded"/>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-
 	<xs:element name="customer">
 		<xs:complexType>
 			<xs:sequence>

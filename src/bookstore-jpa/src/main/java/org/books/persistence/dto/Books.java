@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.bookstore.rs.wrapper;
+package org.books.persistence.dto;
 
 import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
@@ -20,7 +20,7 @@ public class Books {
     @XmlElement(name = "book")
     public List<Book> books = null;
     
-    public Books setBooks(List<Book> books) {
+    public Books set(List<Book> books) {
         this.books = books;
         return this;
     }

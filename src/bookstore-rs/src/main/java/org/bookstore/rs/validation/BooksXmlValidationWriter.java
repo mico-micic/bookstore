@@ -8,7 +8,7 @@ package org.bookstore.rs.validation;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.ext.Provider;
-import org.bookstore.rs.wrapper.Books;
+import org.books.persistence.dto.Books;
 
 /**
  *

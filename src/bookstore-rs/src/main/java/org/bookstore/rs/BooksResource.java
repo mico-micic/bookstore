@@ -5,19 +5,17 @@
  */
 package org.bookstore.rs;
 
-import org.bookstore.rs.wrapper.Books;
+import org.books.persistence.dto.Books;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import org.books.ejb.CatalogServiceLocal;
 import org.books.ejb.exception.BookNotFoundException;
-import org.books.persistence.dto.Registration;
 import org.books.persistence.entity.Book;
 
 /**
@@ -59,7 +57,7 @@ public class BooksResource extends AbstractResource {
     @Consumes({"application/xml", "application/json"})
     @Produces({"application/xml", "application/json"})
     public Books search(@QueryParam("keywords") String keywords) {
-        return new Books().setBooks(catalogService.searchBooks(keywords));
+        return new Books().set(catalogService.searchBooks(keywords));
     }
 
 }

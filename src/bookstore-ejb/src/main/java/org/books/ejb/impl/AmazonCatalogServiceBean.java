@@ -114,6 +114,9 @@ public class AmazonCatalogServiceBean implements AmazonCatalogServiceLocal, Amaz
 
         List<Book> ret = new ArrayList<>();
         internalSearchBooks(keywords, BigInteger.ONE, ret);
+        
+        LOGGER.info("Amazon search returned " + ret.size() + " items");
+        
         return ret;
     }
 
