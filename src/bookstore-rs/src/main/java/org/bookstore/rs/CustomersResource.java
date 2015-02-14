@@ -21,6 +21,7 @@ import org.books.ejb.CustomerServiceLocal;
 import org.books.ejb.exception.CustomerNotFoundException;
 import org.books.ejb.exception.EmailAlreadyUsedException;
 import org.books.persistence.dto.CustomerInfo;
+import org.books.persistence.dto.CustomerInfos;
 import org.books.persistence.dto.Registration;
 import org.books.persistence.entity.Customer;
 import org.bookstore.rs.exception.ConflictException;
@@ -77,9 +78,9 @@ public class CustomersResource extends AbstractResource {
     @Path("search")
     @Consumes({"application/xml", "application/json"})
     @Produces({"application/xml", "application/json"})
-    public List<CustomerInfo> searchByName(@QueryParam("name") String name) {
+    public CustomerInfos searchByName(@QueryParam("name") String name) {
         validateNotBlank(name);
-        return customerService.searchCustomers(name);
+        return new CustomerInfos().set(customerService.searchCustomers(name));
     }
 
     @PUT
