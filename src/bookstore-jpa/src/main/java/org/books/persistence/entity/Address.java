@@ -2,8 +2,10 @@ package org.books.persistence.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.xml.bind.annotation.XmlType;
 
 @Embeddable
+@XmlType(propOrder = {"street", "city", "postalCode", "country"})
 public class Address extends ValueObject {
 
     @Column(nullable = false)

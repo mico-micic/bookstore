@@ -3,56 +3,54 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.bookstore.rs;
+package org.bookstore.rs.validation;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.URL;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.MessageBodyWriter;
-import javax.ws.rs.ext.Provider;
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import org.apache.log4j.Logger;
-import org.books.persistence.entity.Book;
 import org.xml.sax.SAXException;
 
 /**
  *
  * @author micic
  */
-@Provider
-@Consumes(MediaType.APPLICATION_XML)
-public class XmlValidationWriter implements MessageBodyWriter<Book> {
+public abstract class AbstractXmlValidationWriter<T> implements MessageBodyWriter<T> {
 
-    private static final Logger LOGGER = Logger.getLogger(XmlValidationWriter.class);
+    private static final Logger LOGGER = Logger.getLogger(AbstractXmlValidationWriter.class);
 
+    private URL schemaURL;
     private Schema schema;
     private JAXBContext jaxbContext;
+    private Class<?> type;
 
-    public XmlValidationWriter() {
+    public AbstractXmlValidationWriter(String xsdFile) {
+
+        this.type = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 
         try {
-            jaxbContext = JAXBContext.newInstance(Book.class);
+            this.jaxbContext = JAXBContext.newInstance(type);
             SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
-            URL schemaURL = Thread.currentThread().getContextClassLoader().getResource("catalog.xsd");
+            this.schemaURL = Thread.currentThread().getContextClassLoader().getResource(xsdFile);
 
             LOGGER.info("Loaded XML schema: " + schemaURL);
-            schema = sf.newSchema(schemaURL);
+            this.schema = sf.newSchema(this.schemaURL);
         } catch (JAXBException | SAXException e) {
             LOGGER.error("XmlValidationReader initialization error", e);
             throw new RuntimeException(e);
@@ -61,25 +59,27 @@ public class XmlValidationWriter implements MessageBodyWriter<Book> {
 
     @Override
     public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
-        return type == Book.class;
+        return true;
     }
 
     @Override
-    public long getSize(Book t, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
+    public long getSize(T t, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
         return -1;
     }
 
     @Override
-    public void writeTo(Book t, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, Object> httpHeaders, OutputStream entityStream) throws IOException, WebApplicationException {
+    public void writeTo(T t, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType,
+            MultivaluedMap<String, Object> httpHeaders, OutputStream entityStream) throws IOException, WebApplicationException {
+
+        LOGGER.info("Marshalling object " + t + " with XML schema: " + new File(schemaURL.getFile()).getName());
 
         try {
-            Marshaller marshaller = jaxbContext.createMarshaller();
-            marshaller.setSchema(schema);
+            Marshaller marshaller = this.jaxbContext.createMarshaller();
+            marshaller.setSchema(this.schema);
             marshaller.marshal(t, entityStream);
         } catch (JAXBException e) {
             LOGGER.error(e);
             throw new WebApplicationException(e, Response.Status.INTERNAL_SERVER_ERROR);
         }
-
     }
 }

@@ -5,8 +5,10 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.xml.bind.annotation.XmlType;
 
 @Embeddable
+@XmlType(propOrder = {"type", "number", "expirationMonth", "expirationYear"})
 public class CreditCard extends ValueObject {
 
     public enum Type {

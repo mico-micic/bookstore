@@ -4,9 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 @Entity
 @XmlRootElement
+@XmlType(propOrder = {"firstName", "lastName", "email", "address", "creditCard"})
 public class Customer extends IdentifiableObject {
 
     @Column(nullable = false)

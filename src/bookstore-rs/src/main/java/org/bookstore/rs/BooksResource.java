@@ -5,7 +5,7 @@
  */
 package org.bookstore.rs;
 
-import java.util.List;
+import org.bookstore.rs.wrapper.Books;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -56,8 +56,8 @@ public class BooksResource extends AbstractResource {
     @Path("search")
     @Consumes({"application/xml", "application/json"})
     @Produces({"application/xml", "application/json"})
-    public List<Book> search(@QueryParam("keywords") String keywords) {
-        return catalogService.searchBooks(keywords);
+    public Books search(@QueryParam("keywords") String keywords) {
+        return new Books().setBooks(catalogService.searchBooks(keywords));
     }
 
 }
