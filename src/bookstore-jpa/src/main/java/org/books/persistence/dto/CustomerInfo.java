@@ -6,11 +6,13 @@
 package org.books.persistence.dto;
 
 import java.io.Serializable;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author micic
  */
+@XmlRootElement
 public class CustomerInfo implements Serializable {
     
     private final Long id;
@@ -40,4 +42,5 @@ public class CustomerInfo implements Serializable {
     public String getEmail() {
         return email;
     }
+    
 }
