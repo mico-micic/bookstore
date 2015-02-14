@@ -55,7 +55,8 @@ public class OrdersResource extends AbstractResource {
         validateNotNull(orderRequest.getCustomerId());
         validateNotNull(orderRequest.getItems());
         try {
-            return orderService.placeOrder(orderRequest.getCustomerId(), orderRequest.getItems());
+            OrderInfo orderInfo = orderService.placeOrder(orderRequest.getCustomerId(), orderRequest.getItems());
+            return orderInfo;
         } catch (CustomerNotFoundException ex) {
             throw new NotFoundException("Customer not found!");
         } catch (BookNotFoundException ex) {
