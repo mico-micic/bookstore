@@ -7,11 +7,13 @@ package org.books.persistence.dto;
 
 import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  * @author Sigi
  */
 @XmlRootElement
+@XmlType(propOrder = {"customerId", "items"})
 public class OrderRequest {
 
     private Long customerId;

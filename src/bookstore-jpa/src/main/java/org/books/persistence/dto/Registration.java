@@ -6,12 +6,14 @@
 package org.books.persistence.dto;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import org.books.persistence.entity.Customer;
 
 /**
  * @author Sigi
  */
 @XmlRootElement
+@XmlType(propOrder = {"customer", "password"})
 public class Registration {
 
     private Customer customer;

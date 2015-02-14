@@ -15,7 +15,6 @@ import java.net.URL;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.MessageBodyReader;
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
@@ -24,6 +23,7 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import org.apache.log4j.Logger;
+import org.bookstore.rs.exception.BadRequestException;
 import org.xml.sax.SAXException;
 
 /**
@@ -76,7 +76,9 @@ public abstract class AbstractXmlValidationReader<T> implements MessageBodyReade
             return (T) unmarshaller.unmarshal(input);
         } catch (JAXBException e) {
             LOGGER.error(e);
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            Throwable linkedEx = e.getLinkedException();
+            String msg = e.getLocalizedMessage() == null ? "" : e.getLocalizedMessage() + " ";
+            throw new BadRequestException(msg + (linkedEx != null ? linkedEx.getLocalizedMessage() : ""));
         }
     }
 }

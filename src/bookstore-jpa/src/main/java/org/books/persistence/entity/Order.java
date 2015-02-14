@@ -18,10 +18,14 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+import org.books.persistence.dto.CustomerInfo;
 
 @Entity
 @Table(name = "BOOKORDER")
 @XmlRootElement
+@XmlType(propOrder = {"number", "date", "amount", "status", "customerInfo", "address", "creditCard", "items"})
 public class Order extends IdentifiableObject {
 
     public enum Status {
@@ -56,6 +60,8 @@ public class Order extends IdentifiableObject {
     @JoinColumn(name = "CUSTOMER_ID")
     private Customer customer;
 
+    private CustomerInfo customerInfo;
+    
     @Embedded
     private Address address;
 
@@ -116,6 +122,7 @@ public class Order extends IdentifiableObject {
         this.status = status;
     }
 
+    @XmlTransient
     public Customer getCustomer() {
         if (customer == null) {
             customer = new Customer();
@@ -125,6 +132,22 @@ public class Order extends IdentifiableObject {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+    
+    public void setCustomerInfo(CustomerInfo info) {
+        //this.customerInfo = info;
+    }
+    
+    public CustomerInfo getCustomerInfo() {
+        
+        Customer c = getCustomer();
+        if (c != null) {
+            this.customerInfo = new CustomerInfo(c.getId(), c.getFirstName(), c.getLastName(), c.getEmail());
+        } else {
+            this.customerInfo = null;
+        }
+             
+        return this.customerInfo;
     }
 
     public Address getAddress() {

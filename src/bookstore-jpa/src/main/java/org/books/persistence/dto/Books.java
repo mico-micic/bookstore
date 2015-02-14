@@ -27,6 +27,6 @@ public class Books {
     
     @Override
     public String toString() {
-        return "Books " + this.books;
+        return getClass().getSimpleName() + " " + this.books;
     }
 }

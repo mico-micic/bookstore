@@ -13,19 +13,19 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author micic
  */
-@XmlRootElement(name = "customerInfoes")
-public class CustomerInfos {
+@XmlRootElement(name = "orderInfoes")
+public class OrderInfos {
 
-    @XmlElement(name = "customerInfo")
-    public List<CustomerInfo> customerInfos = null;
+    @XmlElement(name = "orderInfo")
+    public List<OrderInfo> orderInfos = null;
 
-    public CustomerInfos set(List<CustomerInfo> infos) {
-        this.customerInfos = infos;
+    public OrderInfos set(List<OrderInfo> infos) {
+        this.orderInfos = infos;
         return this;
     }
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + " " + this.customerInfos;
+        return getClass().getSimpleName() + " " + this.orderInfos;
     }
 }

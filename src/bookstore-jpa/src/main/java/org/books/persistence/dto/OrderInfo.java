@@ -8,16 +8,24 @@ package org.books.persistence.dto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import org.books.persistence.entity.Order;
 
 /**
  * @author micic
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder = {"number", "date", "amount", "status"})
 public class OrderInfo implements Serializable {
 
+    @XmlAttribute
     private Long id;
+    
     private String number;
     private Date date;
     private BigDecimal amount;
@@ -75,6 +83,9 @@ public class OrderInfo implements Serializable {
         this.status = status;
     }
     
-    
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + " [Id: " + getId() + " Status: " + getStatus() + "]";
+    }
     
 }

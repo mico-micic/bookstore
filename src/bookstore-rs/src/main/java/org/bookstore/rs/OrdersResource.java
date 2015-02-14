@@ -5,18 +5,13 @@
  */
 package org.bookstore.rs;
 
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -24,21 +19,16 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import org.books.ejb.CustomerServiceLocal;
 import org.books.ejb.OrderServiceLocal;
 import org.books.ejb.exception.BookNotFoundException;
 import org.books.ejb.exception.CustomerNotFoundException;
-import org.books.ejb.exception.EmailAlreadyUsedException;
 import org.books.ejb.exception.InvalidOrderStatusException;
 import org.books.ejb.exception.OrderNotFoundException;
 import org.books.ejb.exception.PaymentFailedException;
-import org.books.persistence.dto.CustomerInfo;
 import org.books.persistence.dto.OrderInfo;
+import org.books.persistence.dto.OrderInfos;
 import org.books.persistence.dto.OrderRequest;
-import org.books.persistence.dto.Registration;
-import org.books.persistence.entity.Customer;
 import org.books.persistence.entity.Order;
-import org.bookstore.rs.exception.ConflictException;
 import org.bookstore.rs.exception.PaymentRequiredException;
 import org.bookstore.rs.exception.PreconditionFailedException;
 
@@ -105,11 +95,11 @@ public class OrdersResource extends AbstractResource {
     @Path("search")
     @Consumes({"application/xml", "application/json"})
     @Produces({"application/xml", "application/json"})
-    public List<OrderInfo> searchOrders(@QueryParam("customerId") Long customerId, @QueryParam("year") Integer year) {
+    public OrderInfos searchOrders(@QueryParam("customerId") Long customerId, @QueryParam("year") Integer year) {
         validateNotNull(customerId);
         validateNotNull(year);
         try {
-            return orderService.searchOrders(customerId, year);
+            return new OrderInfos().set(orderService.searchOrders(customerId, year));
         } catch (CustomerNotFoundException ex) {
             throw new NotFoundException("Order not found!");
         }

@@ -7,11 +7,13 @@ package org.books.persistence.dto;
 
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  * @author Sigi
  */
 @XmlRootElement
+@XmlType(propOrder = {"isbn", "quantity"})
 public class OrderItem implements Serializable {
 
     private String isbn;

@@ -8,7 +8,7 @@ package org.bookstore.rs.validation;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.ext.Provider;
-import org.books.persistence.dto.CustomerInfos;
+import org.books.persistence.entity.Order;
 
 /**
  *
@@ -16,11 +16,11 @@ import org.books.persistence.dto.CustomerInfos;
  */
 @Provider
 @Produces(MediaType.APPLICATION_XML) 
-public class CustomerInfossXmlValidationWriter extends AbstractXmlValidationWriter<CustomerInfos> {
+public class OrderXmlValidationWriter extends AbstractXmlValidationWriter<Order> {
 
-    private static final String XSD_FILE = "customers.xsd";
+    private static final String XSD_FILE = "orders.xsd";
 
-    public CustomerInfossXmlValidationWriter() {
+    public OrderXmlValidationWriter() {
         super(XSD_FILE);
     }
 }
