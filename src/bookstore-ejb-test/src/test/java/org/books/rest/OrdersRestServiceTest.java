@@ -8,6 +8,7 @@ package org.books.rest;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -18,6 +19,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.books.persistence.dto.OrderInfo;
 import org.books.persistence.dto.OrderItem;
 import org.books.persistence.dto.OrderRequest;
+import org.books.persistence.dto.Registration;
+import org.books.persistence.entity.Address;
+import org.books.persistence.entity.CreditCard;
 import org.books.persistence.entity.Customer;
 import org.books.persistence.entity.Order;
 import org.books.persistence.testdata.CustomerData;
@@ -32,6 +36,41 @@ public class OrdersRestServiceTest {
 
     private final WebTarget customersTarget = ClientBuilder.newClient().target("http://localhost:8080/bookstore/rest/customers");
     private final WebTarget ordersTarget = ClientBuilder.newClient().target("http://localhost:8080/bookstore/rest/orders");
+
+    @Test
+    public void testPlaceOrderForNotExistingCustomer() {
+        OrderRequest orderRequest = createSomeOrderRequestWithCustomerId(0L);
+        Response postResponse = ordersTarget
+                .request(MediaType.APPLICATION_XML)
+                .post(Entity.xml(orderRequest));
+        assertThat(postResponse.getStatus()).isEqualTo(Response.Status.NOT_FOUND.getStatusCode());
+    }
+
+    @Test
+    public void testPlaceOrderForNotExistingBook() {
+        OrderRequest orderRequest = createSomeOrderRequestWithCustomerId(loadCustomer(SUPER_USER).getId());
+        orderRequest.getItems().add(new OrderItem("someInvalidISBN", 1));
+        Response postResponse = ordersTarget
+                .request(MediaType.APPLICATION_XML)
+                .post(Entity.xml(orderRequest));
+        assertThat(postResponse.getStatus()).isEqualTo(Response.Status.NOT_FOUND.getStatusCode());
+    }
+
+    @Test
+    public void testPlaceOrderWithMissingPayment() {
+        Registration registration = createRegistrationWithInvalidCreditCard();
+        Response response = customersTarget
+                .request(MediaType.TEXT_PLAIN)
+                .post(Entity.xml(registration));
+        assertThat(response.getStatus()).isEqualTo(Response.Status.CREATED.getStatusCode());
+        Long customerId = response.readEntity(Long.class);
+
+        OrderRequest orderRequest = createSomeOrderRequestWithCustomerId(customerId);
+        Response postResponse = ordersTarget
+                .request(MediaType.APPLICATION_XML)
+                .post(Entity.xml(orderRequest));
+        assertThat(postResponse.getStatus()).isEqualTo(Response.Status.PAYMENT_REQUIRED.getStatusCode());
+    }
 
     @Test
     public void testPlaceOrderAndFindItById() {
@@ -49,6 +88,16 @@ public class OrdersRestServiceTest {
     }
 
     @Test
+    public void testFindOrderWithInvalidId() {
+        Response getResponse = ordersTarget
+                .path(String.valueOf(0))
+                .request(MediaType.APPLICATION_XML)
+                .get();
+
+        assertThat(getResponse.getStatus()).isEqualTo(Response.Status.NOT_FOUND.getStatusCode());
+    }
+
+    @Test
     public void testPlaceOrderAndFindItByNumber() {
         OrderInfo orderInfo = placeOrderFor(BONDS_MOTHER);
 
@@ -61,6 +110,26 @@ public class OrdersRestServiceTest {
         Order order = getResponse.readEntity(Order.class);
         assertThat(order).isNotNull();
         assertThat(order.getNumber()).isEqualTo(orderInfo.getNumber());
+    }
+
+    @Test
+    public void testFindOrderWithInvalidNumber() {
+        Response getResponse = ordersTarget
+                .queryParam("number", 0)
+                .request(MediaType.APPLICATION_XML)
+                .get();
+
+        assertThat(getResponse.getStatus()).isEqualTo(Response.Status.NOT_FOUND.getStatusCode());
+    }
+
+    @Test
+    public void testFindOrderWithMissingNumber() {
+        Response getResponse = ordersTarget
+                // No OrderNumber: .queryParam("number", 0)
+                .request(MediaType.APPLICATION_XML)
+                .get();
+
+        assertThat(getResponse.getStatus()).isEqualTo(Response.Status.BAD_REQUEST.getStatusCode());
     }
 
     @Test
@@ -151,26 +220,45 @@ public class OrdersRestServiceTest {
 
     private Entity<OrderRequest> orderFor(CustomerData customerData) {
         Customer customer = loadCustomer(customerData);
+        OrderRequest orderRequest = createSomeOrderRequestWithCustomerId(customer.getId());
+        return Entity.xml(orderRequest);
+    }
 
+    private OrderRequest createSomeOrderRequestWithCustomerId(Long customerId) {
         OrderRequest orderRequest = new OrderRequest();
-        orderRequest.setCustomerId(customer.getId());
-
+        orderRequest.setCustomerId(customerId);
         List<OrderItem> items = new ArrayList<>();
         items.add(new OrderItem(IsbnNumber.ISBN_978_3527710706.number(), 1));
         items.add(new OrderItem(IsbnNumber.ISBN_978_3836217408.number(), 2));
         items.add(new OrderItem(IsbnNumber.ISBN_978_3836217880.number(), 3));
         orderRequest.setItems(items);
-
-        return Entity.xml(orderRequest);
+        return orderRequest;
     }
 
     private Customer loadCustomer(CustomerData customerData) {
+        return loadCustomer(customerData.email());
+    }
+
+    private Customer loadCustomer(String email) {
         Customer customer = customersTarget
-                .queryParam("email", customerData.email())
+                .queryParam("email", email)
                 .request(MediaType.APPLICATION_XML)
                 .get()
                 .readEntity(Customer.class);
         return customer;
+    }
+
+    private Registration createRegistrationWithInvalidCreditCard() {
+        Registration registration = new Registration();
+        Customer customer = new Customer();
+        customer.setAddress(new Address("Street", "city", "PC", "country"));
+        customer.setCreditCard(new CreditCard(CreditCard.Type.Visa, "someInvalidNumber", 01, 2020));
+        customer.setEmail(UUID.randomUUID() + "@mail.org");
+        customer.setFirstName("NewCustomer");
+        customer.setLastName("LastNameOfNewCustomer");
+        registration.setCustomer(customer);
+        registration.setPassword("pass@word");
+        return registration;
     }
 
 }
