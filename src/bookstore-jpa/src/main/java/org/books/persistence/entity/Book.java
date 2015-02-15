@@ -153,6 +153,9 @@ public class Book extends IdentifiableObject {
                 && this.getBinding() != null 
                 && this.getNumberOfPages() != null
                 && this.getPrice() != null 
-                && this.getTitle() != null;
+                && this.getTitle() != null
+                && this.getPublicationYear() != null
+                && this.getAuthors() != null
+                && this.getPublisher() != null;
     }
 }

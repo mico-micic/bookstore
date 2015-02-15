@@ -252,7 +252,7 @@ public class OrdersRestServiceTest {
         Registration registration = new Registration();
         Customer customer = new Customer();
         customer.setAddress(new Address("Street", "city", "PC", "country"));
-        customer.setCreditCard(new CreditCard(CreditCard.Type.Visa, "someInvalidNumber", 01, 20));
+        customer.setCreditCard(new CreditCard(CreditCard.Type.Visa, "1000000000000000", 11, 2015));
         customer.setEmail(UUID.randomUUID() + "@mail.org");
         customer.setFirstName("NewCustomer");
         customer.setLastName("LastNameOfNewCustomer");

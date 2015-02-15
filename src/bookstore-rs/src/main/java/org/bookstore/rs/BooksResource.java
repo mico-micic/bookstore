@@ -7,6 +7,7 @@ package org.bookstore.rs;
 
 import org.books.persistence.dto.Books;
 import javax.ejb.EJB;
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
@@ -57,7 +58,11 @@ public class BooksResource extends AbstractResource {
     @Consumes({"application/xml", "application/json"})
     @Produces({"application/xml", "application/json"})
     public Books search(@QueryParam("keywords") String keywords) {
-        return new Books().set(catalogService.searchBooks(keywords));
+        try {
+            return new Books().set(catalogService.searchBooks(keywords));
+        } catch (IllegalArgumentException ex) {
+            throw new BadRequestException(ex.getMessage());
+        }
     }
 
 }
