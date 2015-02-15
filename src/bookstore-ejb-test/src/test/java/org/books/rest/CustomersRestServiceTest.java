@@ -249,16 +249,16 @@ public class CustomersRestServiceTest {
         Assert.assertEquals(MediaType.TEXT_PLAIN, postResponse.getMediaType().toString());
         Long newId = postResponse.readEntity(Long.class);
         Assert.assertTrue(newId > 0);
-        
+
         reg.getCustomer().setFirstName("ChangedFirstName");
         reg.getCustomer().setId(newId);
         Response putResponse = customersTarget
                 .path(newId.toString())
                 .request()
                 .put(Entity.xml(reg.getCustomer()));
-        
+
         assertThat(putResponse.getStatus()).isEqualTo(Response.Status.NO_CONTENT.getStatusCode());
-        
+
         Response getResponse = customersTarget
                 .path(newId.toString())
                 .request(MediaType.TEXT_PLAIN)
@@ -268,8 +268,108 @@ public class CustomersRestServiceTest {
         assertThat(getResponse.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
         Assert.assertEquals(MediaType.APPLICATION_XML, getResponse.getMediaType().toString());
         Customer customer = getResponse.readEntity(Customer.class);
-        
+
         Assert.assertEquals(reg.getCustomer().getFirstName(), customer.getFirstName());
+    }
+
+    @Test
+    public void testUpdateCustomerBadRequest() {
+        Registration reg = createRegistration();
+        Response postResponse = customersTarget
+                .request(MediaType.TEXT_PLAIN)
+                .post(Entity.xml(reg));
+
+        assertThat(postResponse.getStatus()).isEqualTo(Response.Status.CREATED.getStatusCode());
+        Assert.assertEquals(MediaType.TEXT_PLAIN, postResponse.getMediaType().toString());
+        Long newId = postResponse.readEntity(Long.class);
+        Assert.assertTrue(newId > 0);
+
+        reg.getCustomer().setAddress(null);
+        reg.getCustomer().setId(newId);
+        Response putResponse = customersTarget
+                .path(newId.toString())
+                .request()
+                .put(Entity.xml(reg.getCustomer()));
+
+        assertThat(putResponse.getStatus()).isEqualTo(Response.Status.BAD_REQUEST.getStatusCode());
+    }
+
+    @Test
+    public void testUpdateCustomerNotFound() {
+        Registration reg = createRegistration();
+        Response postResponse = customersTarget
+                .request(MediaType.TEXT_PLAIN)
+                .post(Entity.xml(reg));
+
+        assertThat(postResponse.getStatus()).isEqualTo(Response.Status.CREATED.getStatusCode());
+        Assert.assertEquals(MediaType.TEXT_PLAIN, postResponse.getMediaType().toString());
+        Long newId = postResponse.readEntity(Long.class);
+        Assert.assertTrue(newId > 0);
+
+        reg.getCustomer().setFirstName("ChangedFirstName");
+        reg.getCustomer().setId(99999L);
+        Response putResponse = customersTarget
+                .path("99999")
+                .request()
+                .put(Entity.xml(reg.getCustomer()));
+
+        assertThat(putResponse.getStatus()).isEqualTo(Response.Status.NOT_FOUND.getStatusCode());
+    }
+
+    @Test
+    public void testUpdateCustomerDifferentIds() {
+        Registration reg = createRegistration();
+        Response postResponse = customersTarget
+                .request(MediaType.TEXT_PLAIN)
+                .post(Entity.xml(reg));
+
+        assertThat(postResponse.getStatus()).isEqualTo(Response.Status.CREATED.getStatusCode());
+        Assert.assertEquals(MediaType.TEXT_PLAIN, postResponse.getMediaType().toString());
+        Long newId = postResponse.readEntity(Long.class);
+        Assert.assertTrue(newId > 0);
+
+        reg.getCustomer().setFirstName("ChangedFirstName");
+        reg.getCustomer().setId(newId);
+        Response putResponse = customersTarget
+                .path("99999")
+                .request()
+                .put(Entity.xml(reg.getCustomer()));
+
+        assertThat(putResponse.getStatus()).isEqualTo(Response.Status.BAD_REQUEST.getStatusCode());
+    }
+
+    @Test
+    public void testUpdateCustomerConflict() {
+        Registration reg1 = createRegistration();
+        Registration reg2 = createRegistration();
+
+        Response postResponse1 = customersTarget
+                .request(MediaType.TEXT_PLAIN)
+                .post(Entity.xml(reg1));
+
+        assertThat(postResponse1.getStatus()).isEqualTo(Response.Status.CREATED.getStatusCode());
+        Assert.assertEquals(MediaType.TEXT_PLAIN, postResponse1.getMediaType().toString());
+        Long newId1 = postResponse1.readEntity(Long.class);
+        Assert.assertTrue(newId1 > 0);
+
+        Response postResponse2 = customersTarget
+                .request(MediaType.TEXT_PLAIN)
+                .post(Entity.xml(reg2));
+
+        assertThat(postResponse2.getStatus()).isEqualTo(Response.Status.CREATED.getStatusCode());
+        Assert.assertEquals(MediaType.TEXT_PLAIN, postResponse2.getMediaType().toString());
+        Long newId2 = postResponse2.readEntity(Long.class);
+        Assert.assertTrue(newId2 > 0);
+
+        reg1.getCustomer().setFirstName("ChangedFirstName");
+        reg1.getCustomer().setId(newId1);
+        reg1.getCustomer().setEmail(reg2.getCustomer().getEmail());
+        Response putResponse = customersTarget
+                .path(newId1.toString())
+                .request()
+                .put(Entity.xml(reg1.getCustomer()));
+
+        assertThat(putResponse.getStatus()).isEqualTo(Response.Status.CONFLICT.getStatusCode());
     }
 
     // -----------------------------------------------------------------------------
