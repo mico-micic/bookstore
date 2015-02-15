@@ -255,7 +255,7 @@ public class CustomersRestServiceTest {
         Response putResponse = customersTarget
                 .path(newId.toString())
                 .request()
-                .put(Entity.xml(reg));
+                .put(Entity.xml(reg.getCustomer()));
         
         assertThat(putResponse.getStatus()).isEqualTo(Response.Status.NO_CONTENT.getStatusCode());
         
