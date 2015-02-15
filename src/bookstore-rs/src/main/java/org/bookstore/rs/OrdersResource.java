@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
@@ -30,7 +31,6 @@ import org.books.persistence.dto.OrderInfos;
 import org.books.persistence.dto.OrderRequest;
 import org.books.persistence.entity.Order;
 import org.bookstore.rs.exception.PaymentRequiredException;
-import org.bookstore.rs.exception.PreconditionFailedException;
 
 /**
  * @author Sigi
@@ -83,7 +83,7 @@ public class OrdersResource extends AbstractResource {
     @Consumes({"application/xml", "application/json"})
     @Produces({"application/xml", "application/json"})
     public Order findByNumber(@QueryParam("number") String number) {
-        validateNotNull(number);
+        validateNotBlank(number);
         try {
             return orderService.findOrder(number);
         } catch (OrderNotFoundException ex) {
@@ -115,8 +115,7 @@ public class OrdersResource extends AbstractResource {
         } catch (OrderNotFoundException ex) {
             throw new NotFoundException("Order not Found!");
         } catch (InvalidOrderStatusException ex) {
-            throw new PreconditionFailedException("The order is not in a valid status to be deleted!");
+            throw new ForbiddenException("The order is not in a valid status to be deleted!");
         }
     }
-
 }

@@ -5,9 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 @Entity
 @XmlRootElement
+@XmlType(propOrder = {"book", "quantity"})
 public class LineItem extends IdentifiableObject {
 
     @ManyToOne
