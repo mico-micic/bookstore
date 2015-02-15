@@ -156,6 +156,7 @@ public class Book extends IdentifiableObject {
                 && this.getTitle() != null
                 && this.getPublicationYear() != null
                 && this.getAuthors() != null
+                && this.getAuthors().length() > 0
                 && this.getPublisher() != null;
     }
 }

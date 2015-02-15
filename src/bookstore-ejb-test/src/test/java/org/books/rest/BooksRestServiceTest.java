@@ -77,39 +77,39 @@ public class BooksRestServiceTest {
     @Test
     public void testSearchBooksWithKeywords_LondonByTube() {
         String keywords = "London by Tube";
-        int expected = 75;
-        searchByKeywordsAndCheckResult(keywords, expected);
+        int expectedResults = 75;
+        searchByKeywordsAndCheckResult(keywords, expectedResults);
     }
 
     @Test
     public void testSearchBooksWithKeywords_JavaEE() {
         String keywords = "Java EE";
-        int expected = 85;
-        searchByKeywordsAndCheckResult(keywords, expected);
+        int expectedResults = 85;
+        searchByKeywordsAndCheckResult(keywords, expectedResults);
     }
 
     @Test
     public void testSearchBooksWithKeywords_ParisAtNight() {
         String keywords = "Paris at Night";
-        int expected = 66;
-        searchByKeywordsAndCheckResult(keywords, expected);
+        int expectedResults = 66;
+        searchByKeywordsAndCheckResult(keywords, expectedResults);
     }
 
     @Test
     public void testSearchBooksWithKeywords_HomerSimpson() {
         String keywords = "Homer Simpson";
-        int expected = 59;
-        searchByKeywordsAndCheckResult(keywords, expected);
+        int expectedResults = 59;
+        searchByKeywordsAndCheckResult(keywords, expectedResults);
     }
 
     @Test
     public void testSearchBooksWithKeywords_JavaFlanaganReilly() {
         String keywords = "Java Flanagan Reilly";
-        int expected = 21;
-        searchByKeywordsAndCheckResult(keywords, expected);
+        int expectedResults = 21;
+        searchByKeywordsAndCheckResult(keywords, expectedResults);
     }
 
-    private void searchByKeywordsAndCheckResult(String keywords, int expected) {
+    private void searchByKeywordsAndCheckResult(String keywords, int expectedResults) {
         Response response = booksTarget
                 .path("search")
                 .queryParam("keywords", keywords)
@@ -120,10 +120,12 @@ public class BooksRestServiceTest {
         });
         assertThat(books).isNotNull();
 
-        int expectedMin = (int) Math.ceil(expected * 0.9);
-        int expectedMax = (int) Math.ceil(expected * 1.1);
-        assertThat(books.size()).isGreaterThan(expectedMin);
-        assertThat(books.size()).isLessThan(expectedMax);
+        int numberOfResults = books.size();
+        System.out.println("Number of Results for: <" + keywords + "> = " + numberOfResults);
+        int expectedMin = (int) Math.floor(expectedResults * 0.9);
+        assertThat(numberOfResults).isGreaterThan(expectedMin);
+        int expectedMax = (int) Math.ceil(expectedResults * 1.1);
+        assertThat(numberOfResults).isLessThan(expectedMax);
     }
 
 }
