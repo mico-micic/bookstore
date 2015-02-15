@@ -36,6 +36,7 @@ public class OrdersRestServiceTest {
 
     private final WebTarget customersTarget = ClientBuilder.newClient().target("http://localhost:8080/bookstore/rest/customers");
     private final WebTarget ordersTarget = ClientBuilder.newClient().target("http://localhost:8080/bookstore/rest/orders");
+    private final WebTarget adminTarget = ClientBuilder.newClient().target("http://localhost:8080/bookstore/rest/admin");
 
     @Test
     public void testPlaceOrderForNotExistingCustomer() {
@@ -136,8 +137,8 @@ public class OrdersRestServiceTest {
     public void testPlaceOrderAndSearchByCustomer() {
         placeOrderFor(HANS_WURST);
 
-        Response response = ordersTarget
-                .path("search")
+        Response response = adminTarget
+                .path("orders/search")
                 .queryParam("customerId", loadCustomer(HANS_WURST).getId())
                 .queryParam("year", Year.now().getValue())
                 .request(MediaType.APPLICATION_XML)
@@ -152,8 +153,8 @@ public class OrdersRestServiceTest {
 
     @Test
     public void testSearchByCustomerWithoutCustomerId() {
-        Response response = ordersTarget
-                .path("search")
+        Response response = adminTarget
+                .path("orders/search")
                 .queryParam("customerId", loadCustomer(HANS_WURST).getId())
                 // No Year: .queryParam("year", Year.now().getValue())
                 .request(MediaType.APPLICATION_XML)
@@ -163,8 +164,8 @@ public class OrdersRestServiceTest {
 
     @Test
     public void testSearchByCustomerWithNotExistingCustomer() {
-        Response response = ordersTarget
-                .path("search")
+        Response response = adminTarget
+                .path("orders/search")
                 .queryParam("customerId", 0)
                 .queryParam("year", Year.now().getValue())
                 .request(MediaType.APPLICATION_XML)
@@ -174,8 +175,8 @@ public class OrdersRestServiceTest {
 
     @Test
     public void testSearchByCustomerWithoutYear() {
-        Response response = ordersTarget
-                .path("search")
+        Response response = adminTarget
+                .path("orders/search")
                 // No Customer: .queryParam("customerId", loadCustomer(HANS_WURST).getId())
                 .queryParam("year", Year.now().getValue())
                 .request(MediaType.APPLICATION_XML)

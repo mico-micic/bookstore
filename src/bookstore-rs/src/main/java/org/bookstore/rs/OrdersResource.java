@@ -91,20 +91,6 @@ public class OrdersResource extends AbstractResource {
         }
     }
 
-    @GET
-    @Path("search")
-    @Consumes({"application/xml", "application/json"})
-    @Produces({"application/xml", "application/json"})
-    public OrderInfos searchOrders(@QueryParam("customerId") Long customerId, @QueryParam("year") Integer year) {
-        validateNotNull(customerId);
-        validateNotNull(year);
-        try {
-            return new OrderInfos().set(orderService.searchOrders(customerId, year));
-        } catch (CustomerNotFoundException ex) {
-            throw new NotFoundException("Order not found!");
-        }
-    }
-
     @DELETE
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
