@@ -25,36 +25,27 @@
         
     <login-config>
         <auth-method>BASIC</auth-method>
-        <realm-name>JdbcRealm</realm-name>
+        <realm-name>SecureRealm</realm-name>
     </login-config>
 
     <security-role>
         <description/>
-        <role-name>user</role-name>
-    </security-role>
-    <security-role>
-        <description/>
         <role-name>administrator</role-name>
     </security-role>
-    <security-role>
-        <description/>
-        <role-name>employee</role-name>
-    </security-role>
-    
-<!--    <security-constraint>
+
+    <security-constraint>
         <web-resource-collection>
             <web-resource-name>SecureServlet</web-resource-name>
             <description>Matches all pages from protected</description>
             <url-pattern>/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
-            <role-name>user</role-name>
             <role-name>administrator</role-name>
         </auth-constraint>
         <user-data-constraint>
             <description>SSL not required</description>
             <transport-guarantee>NONE</transport-guarantee>
         </user-data-constraint>
-    </security-constraint>-->
+    </security-constraint>
 
 </web-app>

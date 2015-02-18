@@ -8,13 +8,12 @@ package org.books.persistence.entity;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
-import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
+import javax.xml.bind.DatatypeConverter;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -81,21 +80,19 @@ public class Login extends IdentifiableObject {
     }
 
     public boolean isPasswordValid(String password) {
-        return this.password !=  null && this.password.equals(hashString(password));
+        return this.password != null && this.password.equals(hashString(password));
     }
 
     private String hashString(String password) {
-        return Base64.getEncoder().encodeToString(hash(password));
+        return DatatypeConverter.printHexBinary(hash(password));
     }
-    
+
     private byte[] hash(String password) {
-        String saltedPwd = new StringBuilder()
-                .append(password)
-                .toString();
+
         try {
             return MessageDigest
                     .getInstance("SHA-256")
-                    .digest(saltedPwd.getBytes("UTF-8"));
+                    .digest(password.getBytes("UTF-8"));
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
             throw new IllegalStateException("Error in the static setup of the Hashing-Algorithm");
         }
