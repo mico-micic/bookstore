@@ -19,7 +19,7 @@ public class Login implements Serializable {
 	@GeneratedValue
 	@Column(name = "ID")
 	protected Long id;
-	@Column(name = "USER_NAME", nullable = false, unique = true)
+	@Column(name = "USERNAME", nullable = false, unique = true)
 	private String userName;
 	@Column(name = "PASSWORD")
 	private String password;
