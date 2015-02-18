@@ -23,7 +23,6 @@ public class Login implements Serializable {
             allocationSize = 10
     )
 
-
     @Id
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
@@ -35,12 +34,24 @@ public class Login implements Serializable {
     @Column(name = "PASSWORD")
     private String password;
 
+    @Column
+    private String groupname;
+
     public Login() {
     }
 
-    public Login(String userName, String password) {
+    public String getGroupname() {
+        return groupname;
+    }
+
+    public void setGroupname(String groupname) {
+        this.groupname = groupname;
+    }
+
+    public Login(String userName, String password, String groupname) {
         this.userName = userName;
         this.password = password;
+        this.groupname = groupname;
     }
 
     public Long getId() {

@@ -54,7 +54,7 @@ public class AdminBean implements Serializable {
                 MessageFactory.info("org.books.Bookstore.EMPLOYEE_ALREADY_REGISTERED");
             } catch (NoResultException ex) {
                 transaction.begin();
-                entityManager.persist(new Login(userName, hashString(password)));
+                entityManager.persist(new Login(userName, hashString(password), "employee"));
                 transaction.commit();
                 userName = password = null;
                 MessageFactory.info("org.books.Bookstore.EMPLOYEE_REGISTERED");
