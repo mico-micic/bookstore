@@ -8,7 +8,7 @@ package org.books.persistence.entity;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
+import java.util.Base64;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,11 +33,10 @@ public class Login extends IdentifiableObject {
     private String plainTextPassword;
 
     @Column(nullable = false)
-    private byte[] password;
+    private String password;
 
-    @Column(nullable = false)
-    // @Convert(converter = AesEncryptorConverter.class)
-    private String salt;
+    @Column
+    private String groupname;
 
     public Login() {
     }
@@ -49,14 +48,13 @@ public class Login extends IdentifiableObject {
 
     @PrePersist
     public void createSaltAndHashPassword() {
-        salt = UUID.randomUUID().toString();
-        password = hash(plainTextPassword, salt);
+        password = hashString(plainTextPassword);
     }
 
     @PreUpdate
     public void handlePasswordChanged() {
         if (plainTextPassword != null && !isPasswordValid(plainTextPassword)) {
-            password = hash(plainTextPassword, salt);
+            password = hashString(plainTextPassword);
         }
     }
 
@@ -70,17 +68,20 @@ public class Login extends IdentifiableObject {
 
     public void setPassword(String password) {
         // Reset password, otherwise the handePasswordChanged method will not be called
-        this.password = new byte[]{0}; 
+        this.password = "";
         this.plainTextPassword = password;
     }
 
     public boolean isPasswordValid(String password) {
-        return Arrays.equals(this.password, hash(password, salt));
+        return this.password !=  null && this.password.equals(hashString(password));
     }
 
-    private byte[] hash(String password, String salt) {
+    private String hashString(String password) {
+        return Base64.getEncoder().encodeToString(hash(password));
+    }
+    
+    private byte[] hash(String password) {
         String saltedPwd = new StringBuilder()
-                .append(salt)
                 .append(password)
                 .toString();
         try {
